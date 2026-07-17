@@ -1,0 +1,60 @@
+{
+  "name": "Home entrance route",
+  "category": "Home",
+  "familiarity": 5,
+  "intendedUse": "Reusable short lists",
+  "reusable": true,
+  "routeDescription": "Walk from the front gate into the living room",
+  "locations": [
+    {
+      "name": "Front gate",
+      "description": "A fixed, distinct point on the route",
+      "feature": "Easy to see and interact with"
+    },
+    {
+      "name": "Path",
+      "description": "A fixed, distinct point on the route",
+      "feature": "Easy to see and interact with"
+    },
+    {
+      "name": "Front door",
+      "description": "A fixed, distinct point on the route",
+      "feature": "Easy to see and interact with"
+    },
+    {
+      "name": "Doormat",
+      "description": "A fixed, distinct point on the route",
+      "feature": "Easy to see and interact with"
+    },
+    {
+      "name": "Hall table",
+      "description": "A fixed, distinct point on the route",
+      "feature": "Easy to see and interact with"
+    },
+    {
+      "name": "Mirror",
+      "description": "A fixed, distinct point on the route",
+      "feature": "Easy to see and interact with"
+    },
+    {
+      "name": "Stairs",
+      "description": "A fixed, distinct point on the route",
+      "feature": "Easy to see and interact with"
+    },
+    {
+      "name": "Living-room door",
+      "description": "A fixed, distinct point on the route",
+      "feature": "Easy to see and interact with"
+    },
+    {
+      "name": "Sofa",
+      "description": "A fixed, distinct point on the route",
+      "feature": "Easy to see and interact with"
+    },
+    {
+      "name": "Fireplace",
+      "description": "A fixed, distinct point on the route",
+      "feature": "Easy to see and interact with"
+    }
+  ]
+}
