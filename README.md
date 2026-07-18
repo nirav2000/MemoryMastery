@@ -58,10 +58,11 @@ Firebase is optional. Guest mode is the default and requires no account.
 
 1. At [Firebase Console](https://console.firebase.google.com/), create a project.
 2. Add a **Web app** (the `</>` icon); no Hosting setup is required for GitHub Pages.
-3. In **Authentication → Sign-in method**, enable the provider you plan to use. Add your GitHub Pages domain to **Authentication → Settings → Authorized domains**.
-4. In **Firestore Database**, create a database in production mode and choose the nearest region.
-5. Copy the web configuration values into `js/firebase.js`.
-6. Install the Firebase CLI only on a machine where you want to deploy rules, then run:
+3. In **Authentication → Sign-in method**, select **Google**, switch it to **Enable**, choose a support email, and save. Memory Dojo currently implements Google sign-in in the frontend.
+4. In **Authentication → Settings → Authorized domains**, add the GitHub Pages host for this site, for example `nirav2000.github.io`. Keep `localhost` for local testing.
+5. In **Firestore Database**, create a database in production mode and choose the nearest region.
+6. Copy the web configuration values into `js/firebase.js`.
+7. Install the Firebase CLI only on a machine where you want to deploy rules, then run:
 
    ```bash
    firebase login
@@ -71,7 +72,17 @@ Firebase is optional. Guest mode is the default and requires no account.
 
 The Firebase web configuration is **public by design**, not a secret. Do not put an admin key or service-account file in this repository. Authentication plus `firestore.rules` protects user data. The provided model stores private records below `users/{uid}/...`, and rules only allow that authenticated UID to access them.
 
-Guest-to-cloud migration should always be offered explicitly at first sign-in: export a local backup, verify that the destination is the expected account, and never silently overwrite existing cloud documents. The included frontend remains fully functional if Firebase is not configured or temporarily unavailable.
+The **Sign in** button uses Firebase Authentication with the Google provider. On first sign-in the app asks before saving guest data to `users/{uid}/app/state`; if a cloud backup already exists it asks before loading it onto the device. The included frontend remains fully functional if Firebase is not configured or temporarily unavailable.
+
+## Changing themes and look
+
+Open **Settings & data → Appearance** to choose:
+
+- **Colour theme**: Classic dojo, Ocean focus, Forest calm, Plum study, or High-contrast mono.
+- **Look and feel**: Classic cards, Soft rounded panels, Compact study dashboard, or Minimal notebook.
+- **Light / dark** mode with the header button or the Settings button.
+
+These preferences are stored in the same guest backup and sync to Firestore after Google sign-in.
 
 ## Data model
 
