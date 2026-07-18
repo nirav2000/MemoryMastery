@@ -78,9 +78,11 @@ The **Sign in** button uses Firebase Authentication with the Google provider. On
 
 Open **Settings & data → Appearance** to choose:
 
-- **Colour theme**: Classic dojo, Ocean focus, Forest calm, Plum study, or High-contrast mono.
-- **Look and feel**: Classic cards, Soft rounded panels, Compact study dashboard, or Minimal notebook.
+- **Colour theme**: Pastel paper, Pastel mint, Pastel lavender, Pastel sunset, Classic dojo, Ocean focus, Forest calm, Plum study, or High-contrast mono.
+- **Layout and look**: SmartPaper inspired, Classic sidebar cards, Top navigation workspace, Focus mode, Soft rounded panels, Compact study dashboard, or Minimal notebook.
 - **Light / dark** mode with the header button or the Settings button.
+
+The hamburger button in the top-left opens and closes the navigation menu on smaller screens. On wider screens the navigation is already visible as a sidebar unless you choose a layout such as Top navigation or Focus mode.
 
 These preferences are stored in the same guest backup and sync to Firestore after Google sign-in.
 
