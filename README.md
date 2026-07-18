@@ -77,7 +77,7 @@ The **Sign in** button uses Firebase Authentication with the Google provider. On
 
 ### SmartPaper-inspired redesign
 
-The default dashboard now uses a SmartPaper-inspired learning-product layout: a large pastel hero message, a floating "Today's paper" mastery card, focus-area bars, short benefit cards and a mini progress chart. The design is intentionally softer and more app-like than the original dojo dashboard while keeping the memory-training curriculum unchanged.
+The default experience now uses a fuller SmartPaper-inspired learning-product redesign: a pale pastel app shell, top scrolling pill navigation, soft glass cards, rounded controls, a large hero message, a floating "Today's paper" mastery card, focus-area bars, short benefit cards and a mini progress chart. The memory-training curriculum is unchanged, but the overall navigation, dashboard, forms, cards and training surfaces are styled as one coherent soft learning app.
 
 ## Changing themes and look
 
