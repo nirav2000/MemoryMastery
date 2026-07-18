@@ -74,6 +74,11 @@ The Firebase web configuration is **public by design**, not a secret. Do not put
 
 The **Sign in** button uses Firebase Authentication with the Google provider. On first sign-in the app asks before saving guest data to `users/{uid}/app/state`; if a cloud backup already exists it asks before loading it onto the device. The included frontend remains fully functional if Firebase is not configured or temporarily unavailable.
 
+
+### SmartPaper-inspired redesign
+
+The default dashboard now uses a SmartPaper-inspired learning-product layout: a large pastel hero message, a floating "Today's paper" mastery card, focus-area bars, short benefit cards and a mini progress chart. The design is intentionally softer and more app-like than the original dojo dashboard while keeping the memory-training curriculum unchanged.
+
 ## Changing themes and look
 
 Open **Settings & data → Appearance** to choose:
