@@ -113,7 +113,7 @@ function bind(hash){
   $('#uiStyle')?.addEventListener('change',e=>{update(s=>s.profile.uiStyle=e.target.value);applyTheme();toast('Layout saved')});
 }
 
-function badges(){const badge=$('#dueBadge');if(badge)badge.textContent=due().length}
+function badges(){const badge=$('#dueBadge');if(!badge)return;const count=due().length;badge.textContent=count;badge.hidden=count===0;badge.setAttribute('aria-label',count===1?'1 review due':`${count} reviews due`)}
 function applyTheme(){const p=get().profile;document.body.classList.toggle('dark',p.theme==='dark');document.body.dataset.theme=p.colorTheme||'pastelPaper';document.body.dataset.ui=p.uiStyle||'smartpaper'}
 function toggleTheme(){update(s=>s.profile.theme=s.profile.theme==='dark'?'light':'dark');applyTheme()}
 let cloudSaveTimer;async function queueCloudSave(){if(!configured())return;const user=await currentFirebaseUser();if(!user)return;clearTimeout(cloudSaveTimer);cloudSaveTimer=setTimeout(()=>saveCloudState(user.uid,get()).catch(e=>console.warn('Cloud autosave failed',e)),900)}

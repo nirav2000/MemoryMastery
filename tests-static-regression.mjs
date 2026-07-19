@@ -14,6 +14,11 @@ assert(app.includes('schedule(firstSuccessSession(c),result)'), 'first-success c
 assert(app.includes('data-recall-item'), 'first-success recall should use item-by-item inputs');
 assert(storage.includes('firstSuccess:{completed:false}'), 'storage migration must include firstSuccess default');
 
+assert(app.includes('badge.hidden=count===0'), 'zero due badge should be hidden');
+assert(app.includes('aria-label'), 'due badge needs an accessible label when visible');
+const css = fs.readFileSync('css/styles.css','utf8');
+assert(css.includes('#dueBadge') && css.includes('margin-left:.55rem'), 'due badge needs spacing from Progress text');
+
 const score = scoreOrderedRecall(['Mercury','Venus','Earth'], 'Mercury\nEarth\nVenus');
 assert.equal(score.correct, 1);
 assert.equal(score.orderErrors, 2);
