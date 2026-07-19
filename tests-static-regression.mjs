@@ -31,10 +31,19 @@ assert(index.includes('© 2026 Memory Mastery.') && !index.includes('not a subst
 assert(storage.includes('firstSuccess:{completed:false}'), 'storage migration must include firstSuccess default');
 assert(storage.includes('mergeBackups'), 'storage must merge cloud and device progress instead of overwriting one source');
 
+assert(app.includes('review-form') && app.includes('data-review-answer'), 'reviews should require recall input before revealing answers');
+assert(app.includes('Check recall') && app.includes('Source, now revealed'), 'reviews should reveal answers only after checking recall');
+assert(app.includes('reviewSummary'), 'reviews should describe what the user is reviewing in plain language');
+assert(app.includes('tool-illustration') && app.includes('assets/tool-palace.svg'), 'library should include useful tool illustrations');
+assert(app.includes('recentRecallList') && !app.includes('aria-label="Recent accuracy chart"'), 'progress should use a clearer recent-recall list instead of the old chart');
+for (const file of ['assets/tool-palace.svg','assets/tool-major.svg','assets/tool-pao.svg','assets/tool-symbols.svg','assets/tool-names.svg','assets/tool-contract.svg']) assert(fs.existsSync(file), `missing tool illustration ${file}`);
+
 assert(app.includes('badge.hidden=count===0'), 'zero due badge should be hidden');
 assert(app.includes('aria-label'), 'due badge needs an accessible label when visible');
 const css = fs.readFileSync('css/styles.css','utf8');
 assert(css.includes('#dueBadge') && /margin-left:\s*\.6rem/.test(css), 'due badge needs spacing from Progress text');
+assert(css.includes('.profile-link, #authButton { padding-inline: 1.15rem;'), 'header text buttons need internal padding');
+assert(css.includes('.recall-list') && css.includes('.review-form'), 'progress and review layouts need dedicated spacing');
 assert(/\.card\s*\{[^}]*padding:[^}]*margin-block:/s.test(css), 'cards need internal padding and vertical separation to prevent edge text and panel collision');
 assert(/pre\s*\{[^}]*overflow-x:\s*auto[^}]*white-space:\s*pre-wrap/s.test(css), 'archive rebuild commands should wrap or scroll without page overflow');
 assert(css.includes('body { margin: 0; min-width: 0; color: var(--ink);'), 'body text colour must follow theme tokens, especially in dark mode');
