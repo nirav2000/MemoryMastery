@@ -81,15 +81,13 @@ The default experience is now organised around a user-first learning journey. Ne
 
 ## Changing themes and look
 
-Open **Settings & data → Appearance** to choose:
+Open **Profile → Settings and data → Appearance** to choose:
 
 - **Colour theme**: Pastel paper, Pastel mint, Pastel lavender, Pastel sunset, Classic dojo, Ocean focus, Forest calm, Plum study, or High-contrast mono.
 - **Layout and look**: SmartPaper inspired, Classic sidebar cards, Top navigation workspace, Focus mode, Soft rounded panels, Compact study dashboard, or Minimal notebook.
-- **Light / dark** mode with the header button or the Settings button.
+- **Light / dark** mode with the header button or the Profile settings button.
 
-The hamburger button in the top-left opens and closes the navigation menu on smaller screens. On wider screens the navigation is already visible as a sidebar unless you choose a layout such as Top navigation or Focus mode.
-
-These preferences are stored in the same guest backup and sync to Firestore after Google sign-in.
+The main app now uses four primary navigation items. Account, export, theme and training-contract options live behind Profile/Settings so the first screen stays focused on the next learning action. These preferences are stored in the same guest backup and sync to Firestore after Google sign-in.
 
 
 ## Product structure
