@@ -30,7 +30,7 @@ If a specific historical build must be published permanently, create a small `ar
 
 ## Inclusion criteria
 
-Archive a version when it changes the learner journey, storage format, navigation model, Firebase sync behaviour, or major visual direction. Do not archive tiny copy or spacing changes unless they explain an important quality lesson.
+Archive a version when it changes the learner journey, storage format, navigation model, Firebase sync behaviour, or major visual direction. Do not archive every commit: tiny copy, spacing, or illustration fixes should update `data/version-archive.json` as a ledger entry, while full `archive/builds/<commit>/` copies are reserved for meaningful visual or product milestones.
 
 ## Current decision
 

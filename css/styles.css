@@ -100,11 +100,13 @@ body.dark .next-step-panel, body.dark .journey-panel, body.dark .card, body.dark
 .path-card span { color: var(--muted); }
 .tool-illustration { width: 100%; max-width: 150px; aspect-ratio: 4 / 3; object-fit: contain; margin-bottom: var(--space-3); }
 
-.memory-thumb { width: 3.2rem; height: 3.2rem; display: inline-grid; place-items: center; border-radius: 34% 66% 48% 52%; background: linear-gradient(135deg, rgba(24,174,180,.2), rgba(123,142,232,.18)); border: 1px solid var(--line); color: var(--accent-strong); font-weight: 900; letter-spacing: -.04em; flex: 0 0 auto; }
-.memory-thumb span { transform: rotate(-4deg); }
-.number-thumb { background: linear-gradient(135deg, rgba(123,142,232,.22), rgba(255,216,189,.28)); }
-.palace-thumb { background: linear-gradient(135deg, rgba(24,174,180,.22), rgba(255,255,255,.5)); }
+.memory-thumb { width: 3.5rem; height: 3.5rem; display: block; flex: 0 0 auto; }
+.memory-thumb .thumb-bg { fill: var(--surface-soft); stroke: var(--line); }
+.memory-thumb .thumb-line { stroke: var(--accent-strong); }
+.number-thumb .thumb-bg { fill: #f0edff; }
+.palace-thumb .thumb-bg { fill: #eaf7ff; }
 .handbook-thumb { margin-bottom: var(--space-3); }
+body.dark .number-thumb .thumb-bg, body.dark .palace-thumb .thumb-bg { fill: var(--surface-soft); }
 .recall-list { display: grid; gap: var(--space-4); padding: 0; margin: var(--space-5) 0 0; list-style: none; }
 .recall-list li { display: grid; gap: var(--space-2); }
 .recall-row { display: flex; justify-content: space-between; gap: var(--space-3); align-items: baseline; }

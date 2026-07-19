@@ -13,10 +13,26 @@
   },
   "versions": [
     {
+      "label": "Current object-illustration review release",
+      "date": "2026-07-19",
+      "commit": "main",
+      "status": "current",
+      "summary": "Clarifies due-review wording and replaces letter placeholders with lightweight object illustrations for palace locations, Major System examples and handbook cards.",
+      "keyChanges": [
+        "Review labels now say \u201cwords from your first image story\u201d instead of generic \u201cmemory set\u201d copy",
+        "Today guidance uses plain learner language",
+        "Tool SVGs are preloaded and inline object illustrations show examples such as front gate, path, sauce and seed",
+        "Visual regression checks now guard against initials-only thumbnails and generic review labels"
+      ],
+      "archivePath": "",
+      "latestDataPath": "",
+      "compatibilityNote": "This is the live build; a full static archive is created only for larger learner-journey milestones."
+    },
+    {
       "label": "Current detail-quality release",
       "date": "2026-07-19",
       "commit": "0e1f1d5",
-      "status": "current",
+      "status": "previous current",
       "summary": "Fixes card padding, panel separation and safe cloud/device progress merging.",
       "keyChanges": [
         "Training cards no longer put text against the edge",
