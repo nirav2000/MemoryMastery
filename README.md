@@ -1,6 +1,6 @@
-# Memory Dojo
+# Memory Mastery
 
-Memory Dojo is a mobile-first, install-free memory training programme. It turns memory techniques into an 84-day deliberate-practice curriculum with source-hidden recall, honest scoring, error diagnosis, practical missions, delayed review, belt examinations, and editable mnemonic libraries.
+Memory Mastery is a mobile-first, install-free memory training programme. It turns memory techniques into an 84-day deliberate-practice curriculum with source-hidden recall, honest scoring, error diagnosis, practical missions, delayed review, belt examinations, and editable mnemonic libraries.
 
 > **Identity:** I notice, encode, place, retrieve and review.
 
@@ -42,13 +42,13 @@ Open <http://localhost:8000>. Any simple static server works.
 
 ## First user journey
 
-1. Open **Today** and choose **Continue Day 1**.
-2. Do the retrieval warm-up without studying first.
-3. Study the supplied material and press **I’m ready — hide material**.
-4. Enter one answer per line. The app reports correct, incorrect, omitted and order errors.
-5. A 20-minute delayed review appears in **Reviews** automatically.
-6. Open **Palaces** to edit the supplied Home Entrance route or add a palace.
-7. Complete and save the editable contract under **Training contract**.
+1. Open **Today** and choose **Memorise something useful**.
+2. Pick a beginner challenge such as a shopping list or metric conversions.
+3. Look once, hide the list, and recall what you can without judgement.
+4. Build a vivid image story one link at a time.
+5. Retest with the source hidden and compare before-and-after recall.
+6. Save the success, choose a personal memory project, and complete the quick reminder when it appears.
+7. Later, use **Library** for palaces, Major System, PAO and other advanced tools.
 
 Progress is preserved in `localStorage` after refresh. Export a JSON backup before clearing browser data or changing devices.
 
@@ -58,7 +58,7 @@ Firebase is optional. Guest mode is the default and requires no account.
 
 1. At [Firebase Console](https://console.firebase.google.com/), create a project.
 2. Add a **Web app** (the `</>` icon); no Hosting setup is required for GitHub Pages.
-3. In **Authentication → Sign-in method**, select **Google**, switch it to **Enable**, choose a support email, and save. Memory Dojo currently implements Google sign-in in the frontend.
+3. In **Authentication → Sign-in method**, select **Google**, switch it to **Enable**, choose a support email, and save. Memory Mastery currently implements Google sign-in in the frontend.
 4. In **Authentication → Settings → Authorized domains**, add the GitHub Pages host for this site, for example `nirav2000.github.io`. Keep `localhost` for local testing.
 5. In **Firestore Database**, create a database in production mode and choose the nearest region.
 6. Copy the web configuration values into `js/firebase.js`.
