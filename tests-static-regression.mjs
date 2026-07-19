@@ -10,10 +10,13 @@ const archive = JSON.parse(fs.readFileSync('data/version-archive.json','utf8'));
 
 for (const label of ['Today','Learn','Library','Progress']) assert(index.includes(`>${label}`), `missing primary nav ${label}`);
 assert(!index.includes('href="#palaces"'), 'advanced tools must not be primary navigation');
+for (const link of ['#versions','#terms','#privacy','#cookies']) assert(index.includes(`href="${link}"`), `missing footer link ${link}`);
 assert(app.includes('version-archive'), 'app should load the version archive data');
 assert(app.includes('function versions()'), 'settings should expose a version archive route outside primary navigation');
 assert(app.includes('archivePath') && app.includes('latestDataPath'), 'version archive should expose archived builds and latest-data options when available');
+assert(app.includes('function legalPage'), 'footer legal links should resolve inside the app');
 assert.equal(archive.schema, 1);
+assert(archive.versions.filter(v => v.screenshot).length >= 3, 'archived builds should include first-load screenshots');
 assert(archive.versions.length >= 8, 'version archive should include meaningful milestones from git history');
 for (const id of ['shopping','metric','uk-capitals','planets','prime-ministers']) assert(app.includes(`id:'${id}'`), `missing beginner challenge ${id}`);
 assert(app.includes('Source hidden.'), 'final first-success recall must hide source material');

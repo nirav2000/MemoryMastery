@@ -72,7 +72,8 @@
       ],
       "archivePath": "archive/builds/067a2fc/",
       "latestDataPath": "archive/builds/067a2fc/?useLatestData=1",
-      "compatibilityNote": "This archived build includes bundled historical data. The latest-data option is experimental and should be used only when schemas are compatible."
+      "compatibilityNote": "This archived build includes bundled historical data. The latest-data option is experimental and should be used only when schemas are compatible.",
+      "screenshot": "archive/screenshots/067a2fc.png"
     },
     {
       "label": "SmartPaper-style shell",
@@ -87,7 +88,8 @@
       ],
       "archivePath": "archive/builds/7c0f1cd/",
       "latestDataPath": "archive/builds/7c0f1cd/?useLatestData=1",
-      "compatibilityNote": "This archived build includes bundled historical data. The latest-data option is experimental and should be used only when schemas are compatible."
+      "compatibilityNote": "This archived build includes bundled historical data. The latest-data option is experimental and should be used only when schemas are compatible.",
+      "screenshot": "archive/screenshots/7c0f1cd.png"
     },
     {
       "label": "Today's session link patch",
@@ -126,7 +128,8 @@
       ],
       "archivePath": "archive/builds/2ea5e55/",
       "latestDataPath": "archive/builds/2ea5e55/?useLatestData=1",
-      "compatibilityNote": "This archived build includes bundled historical data. The latest-data option is experimental and should be used only when schemas are compatible."
+      "compatibilityNote": "This archived build includes bundled historical data. The latest-data option is experimental and should be used only when schemas are compatible.",
+      "screenshot": "archive/screenshots/2ea5e55.png"
     },
     {
       "label": "Specification upload",
