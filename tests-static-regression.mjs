@@ -6,6 +6,7 @@ import {mergeBackups} from './js/storage.js';
 const index = fs.readFileSync('index.html','utf8');
 const app = fs.readFileSync('js/app.js','utf8');
 const storage = fs.readFileSync('js/storage.js','utf8');
+const training = fs.readFileSync('js/training.js','utf8');
 const archive = JSON.parse(fs.readFileSync('data/version-archive.json','utf8'));
 
 for (const label of ['Today','Learn','Library','Progress']) assert(index.includes(`>${label}`), `missing primary nav ${label}`);
@@ -22,6 +23,11 @@ for (const id of ['shopping','metric','uk-capitals','planets','prime-ministers']
 assert(app.includes('Source hidden.'), 'final first-success recall must hide source material');
 assert(app.includes('schedule(firstSuccessSession(c),result)'), 'first-success completion must schedule a review');
 assert(app.includes('data-recall-item'), 'first-success recall should use item-by-item inputs');
+assert(training.includes('1. Retrieval warm-up · ${escapeHTML(previous.title)}'), 'training warm-up should reference the previous task when available');
+assert(training.includes('data-warm') && training.includes('aria-pressed'), 'warm-up clear/vague/missing controls should be interactive');
+assert(training.includes('4. Recall result') && training.includes('5. Error review') && training.includes('7. Reflection'), 'training flow should not jump from point 3 to point 6 after scoring');
+assert(!training.includes('Never rely on memory alone'), 'training screen should avoid discouraging safety-warning copy in the casual learning flow');
+assert(index.includes('© 2026 Memory Mastery.') && !index.includes('not a substitute for secure records'), 'footer should stay clean and non-distracting');
 assert(storage.includes('firstSuccess:{completed:false}'), 'storage migration must include firstSuccess default');
 assert(storage.includes('mergeBackups'), 'storage must merge cloud and device progress instead of overwriting one source');
 
@@ -33,6 +39,7 @@ assert(/\.card\s*\{[^}]*padding:[^}]*margin-block:/s.test(css), 'cards need inte
 assert(/pre\s*\{[^}]*overflow-x:\s*auto[^}]*white-space:\s*pre-wrap/s.test(css), 'archive rebuild commands should wrap or scroll without page overflow');
 assert(css.includes('body { margin: 0; min-width: 0; color: var(--ink);'), 'body text colour must follow theme tokens, especially in dark mode');
 assert(css.includes('body.dark nav'), 'dark mode must not leave the navigation on a light background');
+assert(css.includes('.page-hero > *') && css.includes('body.dark .page-hero::after'), 'decorative hero art should sit behind content and be subdued in dark mode');
 assert(!css.includes('.smart-hero') && !css.includes('Georgia'), 'legacy SmartPaper/dojo CSS should not remain before the clean design system');
 
 const score = scoreOrderedRecall(['Mercury','Venus','Earth'], 'Mercury\nEarth\nVenus');

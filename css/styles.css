@@ -46,7 +46,7 @@ body.dark header { background: rgba(16,23,35,.96); }
 .brand span { display: block; }
 .brand span::before { content: "MEMORY"; display: block; font-size: .62rem; letter-spacing: .36em; color: var(--muted); font-weight: 800; }
 .brand span::after { content: "Useful recall, one step at a time"; display: block; margin-top: .16rem; font-size: .64rem; letter-spacing: .08em; color: var(--muted); font-weight: 700; }
-.header-actions { margin-left: auto; display: flex; align-items: center; gap: var(--space-2); }
+.header-actions { margin-left: auto; display: flex; align-items: center; gap: var(--space-3); }
 button, .button, input, select, textarea { font: inherit; }
 button, .button, .profile-link { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); border-radius: 14px; font-weight: 800; text-decoration: none; }
 button, .button { border: 0; padding: .7rem 1rem; color: #fff; background: var(--accent); box-shadow: 0 12px 26px rgba(24,174,180,.22); cursor: pointer; }
@@ -79,7 +79,8 @@ p, li, dd, small { max-width: var(--measure); }
 .success { color: var(--success); }
 
 .page-hero { position: relative; display: grid; gap: var(--space-5); padding: clamp(var(--space-5), 6vw, var(--space-7)) 0; overflow: hidden; }
-.page-hero::after { content: ""; position: absolute; right: clamp(.25rem, 5vw, 4rem); top: clamp(1rem, 5vw, 3rem); width: clamp(88px, 16vw, 172px); aspect-ratio: 1; border-radius: 32% 68% 42% 58%; background: radial-gradient(circle at 32% 30%, #fff 0 9%, transparent 10%), linear-gradient(135deg, rgba(170, 226, 233, .45), rgba(218, 211, 255, .35)); border: 1px solid rgba(120, 160, 190, .22); opacity: .72; pointer-events: none; }
+.page-hero > * { position: relative; z-index: 1; }
+.page-hero::after { content: ""; z-index: 0; position: absolute; right: clamp(.25rem, 5vw, 4rem); top: clamp(1rem, 5vw, 3rem); width: clamp(88px, 16vw, 172px); aspect-ratio: 1; border-radius: 32% 68% 42% 58%; background: radial-gradient(circle at 32% 30%, #fff 0 9%, transparent 10%), linear-gradient(135deg, rgba(170, 226, 233, .45), rgba(218, 211, 255, .35)); border: 1px solid rgba(120, 160, 190, .22); opacity: .72; pointer-events: none; }
 .primary-action { justify-self: start; font-size: 1.02rem; }
 .next-step-panel, .journey-panel, .card, .empty-state { background: rgba(255,255,255,.82); border: 1px solid rgba(215,229,242,.92); border-radius: var(--radius-l); box-shadow: var(--shadow); }
 .card { padding: clamp(var(--space-5), 4vw, var(--space-6)); margin-block: var(--space-5); }
@@ -112,6 +113,7 @@ body.dark .next-step-panel, body.dark .journey-panel, body.dark .card, body.dark
 .practice-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: var(--space-3); }
 .success-panel { background: linear-gradient(135deg, var(--surface), #f1fff9); }
 body.dark .success-panel { background: linear-gradient(135deg, var(--surface), #12261f); color: var(--ink); }
+body.dark .page-hero::after { opacity: .18; }
 .result-number { font-size: clamp(3rem, 10vw, 6rem); font-weight: 900; line-height: 1; color: var(--accent-strong); }
 .score-comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
 .score-comparison strong { display: block; font-size: clamp(2rem, 8vw, 4rem); line-height: 1; }
@@ -125,6 +127,12 @@ label { display: grid; gap: var(--space-2); font-weight: 800; }
 input, textarea, select { width: 100%; min-height: 44px; padding: .75rem .85rem; border: 1px solid var(--line); border-radius: var(--radius-s); background: var(--surface); color: var(--ink); }
 textarea { min-height: 110px; resize: vertical; }
 .actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin: var(--space-4) 0; }
+.segmented { align-items: center; }
+.segmented button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+.nested-result { margin-block: var(--space-5) 0; background: var(--surface); box-shadow: none; }
+.nested-result label { margin-top: var(--space-4); }
+.card h2 { letter-spacing: -.035em; }
+
 .material { padding: var(--space-5); border-radius: var(--radius-m); background: var(--surface-soft); border: 1px dashed var(--accent); }
 .hidden { display: none !important; }
 .empty-state { padding: var(--space-6); text-align: center; border-style: dashed; margin-block: var(--space-5); }
