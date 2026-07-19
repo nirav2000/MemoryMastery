@@ -12,6 +12,7 @@ for (const label of ['Today','Learn','Library','Progress']) assert(index.include
 assert(!index.includes('href="#palaces"'), 'advanced tools must not be primary navigation');
 assert(app.includes('version-archive'), 'app should load the version archive data');
 assert(app.includes('function versions()'), 'settings should expose a version archive route outside primary navigation');
+assert(app.includes('archivePath') && app.includes('latestDataPath'), 'version archive should expose archived builds and latest-data options when available');
 assert.equal(archive.schema, 1);
 assert(archive.versions.length >= 8, 'version archive should include meaningful milestones from git history');
 for (const id of ['shopping','metric','uk-capitals','planets','prime-ministers']) assert(app.includes(`id:'${id}'`), `missing beginner challenge ${id}`);
@@ -27,6 +28,8 @@ const css = fs.readFileSync('css/styles.css','utf8');
 assert(css.includes('#dueBadge') && /margin-left:\s*\.6rem/.test(css), 'due badge needs spacing from Progress text');
 assert(/\.card\s*\{[^}]*padding:[^}]*margin-block:/s.test(css), 'cards need internal padding and vertical separation to prevent edge text and panel collision');
 assert(/pre\s*\{[^}]*overflow-x:\s*auto[^}]*white-space:\s*pre-wrap/s.test(css), 'archive rebuild commands should wrap or scroll without page overflow');
+assert(css.includes('body { margin: 0; min-width: 0; color: var(--ink);'), 'body text colour must follow theme tokens, especially in dark mode');
+assert(css.includes('body.dark nav'), 'dark mode must not leave the navigation on a light background');
 assert(!css.includes('.smart-hero') && !css.includes('Georgia'), 'legacy SmartPaper/dojo CSS should not remain before the clean design system');
 
 const score = scoreOrderedRecall(['Mercury','Venus','Earth'], 'Mercury\nEarth\nVenus');

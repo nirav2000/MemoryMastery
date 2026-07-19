@@ -62,6 +62,7 @@ Long headings must wrap normally. Do not solve heading collisions by shrinking t
 * Support reduced motion.
 * Meet WCAG AA contrast.
 * Inspect small detail defects such as badge spacing, icon/text proximity, duplicate affordances, zero states, flicker from legacy styles, and visual remnants from older designs.
+* For dark-mode or theme changes, inspect computed foreground/background colours for page text, cards, navigation, form controls, buttons, muted copy and decorative overlays. Low contrast is a blocker, even when layout screenshots otherwise look acceptable.
 
 ## Code rules
 
@@ -86,7 +87,15 @@ For any interface change:
 6. Check keyboard navigation and visible focus.
 7. Check overflow and text wrapping.
 8. Fix confirmed problems.
-9. Re-check small details: badges, icon spacing, empty/zero states, text/icon alignment, visible focus, and any flash of obsolete styling.
+9. Re-check small details: badges, icon spacing, empty/zero states, text/icon alignment, visible focus, dark-mode contrast and any flash of obsolete styling.
 10. Report exactly what was tested.
 
 Do not declare a visual task complete based only on successful compilation.
+
+## Reusable specialist agents
+
+Reusable role prompts live in `docs/agents/`. When a task asks for agents or specialist review, use those files as the canonical role definitions and improve them when a repeated defect is missed.
+
+## Visual QA tooling
+
+Codex/browser tooling setup lives in `docs/codex-tooling-setup.md`, with an executable helper at `scripts/install-visual-qa-tools.sh` for Chromium, Playwright, Selenium and related tooling.

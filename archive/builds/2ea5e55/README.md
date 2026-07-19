@@ -1,6 +1,6 @@
-# Memory Mastery
+# Memory Dojo
 
-Memory Mastery is a mobile-first, install-free memory training programme. It turns memory techniques into an 84-day deliberate-practice curriculum with source-hidden recall, honest scoring, error diagnosis, practical missions, delayed review, belt examinations, and editable mnemonic libraries.
+Memory Dojo is a mobile-first, install-free memory training programme. It turns memory techniques into an 84-day deliberate-practice curriculum with source-hidden recall, honest scoring, error diagnosis, practical missions, delayed review, belt examinations, and editable mnemonic libraries.
 
 > **Identity:** I notice, encode, place, retrieve and review.
 
@@ -42,13 +42,13 @@ Open <http://localhost:8000>. Any simple static server works.
 
 ## First user journey
 
-1. Open **Today** and choose **Memorise something useful**.
-2. Pick a beginner challenge such as a shopping list or metric conversions.
-3. Look once, hide the list, and recall what you can without judgement.
-4. Build a vivid image story one link at a time.
-5. Retest with the source hidden and compare before-and-after recall.
-6. Save the success, choose a personal memory project, and complete the quick reminder when it appears.
-7. Later, use **Library** for palaces, Major System, PAO and other advanced tools.
+1. Open **Today** and choose **Continue Day 1**.
+2. Do the retrieval warm-up without studying first.
+3. Study the supplied material and press **I’m ready — hide material**.
+4. Enter one answer per line. The app reports correct, incorrect, omitted and order errors.
+5. A 20-minute delayed review appears in **Reviews** automatically.
+6. Open **Palaces** to edit the supplied Home Entrance route or add a palace.
+7. Complete and save the editable contract under **Training contract**.
 
 Progress is preserved in `localStorage` after refresh. Export a JSON backup before clearing browser data or changing devices.
 
@@ -58,11 +58,10 @@ Firebase is optional. Guest mode is the default and requires no account.
 
 1. At [Firebase Console](https://console.firebase.google.com/), create a project.
 2. Add a **Web app** (the `</>` icon); no Hosting setup is required for GitHub Pages.
-3. In **Authentication → Sign-in method**, select **Google**, switch it to **Enable**, choose a support email, and save. Memory Mastery currently implements Google sign-in in the frontend.
-4. In **Authentication → Settings → Authorized domains**, add the GitHub Pages host for this site, for example `nirav2000.github.io`. Keep `localhost` for local testing.
-5. In **Firestore Database**, create a database in production mode and choose the nearest region.
-6. Copy the web configuration values into `js/firebase.js`.
-7. Install the Firebase CLI only on a machine where you want to deploy rules, then run:
+3. In **Authentication → Sign-in method**, enable the provider you plan to use. Add your GitHub Pages domain to **Authentication → Settings → Authorized domains**.
+4. In **Firestore Database**, create a database in production mode and choose the nearest region.
+5. Copy the web configuration values into `js/firebase.js`.
+6. Install the Firebase CLI only on a machine where you want to deploy rules, then run:
 
    ```bash
    firebase login
@@ -72,32 +71,7 @@ Firebase is optional. Guest mode is the default and requires no account.
 
 The Firebase web configuration is **public by design**, not a secret. Do not put an admin key or service-account file in this repository. Authentication plus `firestore.rules` protects user data. The provided model stores private records below `users/{uid}/...`, and rules only allow that authenticated UID to access them.
 
-The **Sign in** button uses Firebase Authentication with the Google provider. On first sign-in the app asks before saving guest data to `users/{uid}/app/state`; if a cloud backup already exists it asks before loading it onto the device. The included frontend remains fully functional if Firebase is not configured or temporarily unavailable.
-
-
-### SmartPaper-inspired redesign
-
-The default experience is now organised around a user-first learning journey. New users start with one dominant action — memorise something useful — then choose a beginner challenge, make a no-pressure baseline attempt, learn one method interactively, retest from memory and choose a personal memory project. The app shell uses a calm SmartPaper-inspired visual system with four primary routes: Today, Learn, Library and Progress.
-
-## Changing themes and look
-
-Open **Profile → Settings and data → Appearance** to choose:
-
-- **Colour theme**: Pastel paper, Pastel mint, Pastel lavender, Pastel sunset, Classic dojo, Ocean focus, Forest calm, Plum study, or High-contrast mono.
-- **Layout and look**: SmartPaper inspired, Classic sidebar cards, Top navigation workspace, Focus mode, Soft rounded panels, Compact study dashboard, or Minimal notebook.
-- **Light / dark** mode with the header button or the Profile settings button.
-
-The main app now uses four primary navigation items. Account, export, theme and training-contract options live behind Profile/Settings so the first screen stays focused on the next learning action. These preferences are stored in the same guest backup and sync to Firestore after Google sign-in.
-
-
-## Product structure
-
-- **Today**: one recommended next action, why it matters, expected time and what happens next.
-- **Learn**: guided first-success journey, daily curriculum, review queue and Memory Handbook.
-- **Library**: personal projects and advanced tools including palaces, Major System, PAO, symbols and name images.
-- **Progress**: retention history, review queue and belt/exam progression.
-
-Advanced tools are preserved, but they are progressively disclosed after the learner has a reason to use them.
+Guest-to-cloud migration should always be offered explicitly at first sign-in: export a local backup, verify that the destination is the expected account, and never silently overwrite existing cloud documents. The included frontend remains fully functional if Firebase is not configured or temporarily unavailable.
 
 ## Data model
 
@@ -136,10 +110,6 @@ Open **Settings & data**:
 - Browser print produces a progress view; the Warm-up Poster has dedicated A4 portrait styles.
 
 Imports intentionally never merge or overwrite without a warning. Keep dated exports in secure personal storage; they may contain names and learning material.
-
-## Version archive
-
-Memory Mastery includes a lightweight version archive in `data/version-archive.json` and a maintainer note in `docs/version-archive.md`. The archive records meaningful milestones from git history, links to commits, and includes selected static build copies under `archive/builds/` for visual comparison. Use the Version archive screen from Settings or open `archive/index.html`. Archived builds show a banner and can optionally try the latest compatible `data/*.json` files, but old schemas may need their bundled data.
 
 ## File structure
 

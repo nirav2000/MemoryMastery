@@ -1,0 +1,332 @@
+[
+  {
+    "id": "white",
+    "name": "White Belt",
+    "subtitle": "Foundations",
+    "color": "#e8e5dc",
+    "purpose": "Create memorable images and use a first palace",
+    "skills": [
+      "attention",
+      "visualisation",
+      "association",
+      "exaggeration",
+      "movement",
+      "location"
+    ],
+    "requiredLessons": 7,
+    "dailyDrills": [
+      "retrieval warm-up",
+      "focused technique drill",
+      "error repair"
+    ],
+    "assignments": [
+      "complete a practical real-life mission",
+      "record a delayed recall result"
+    ],
+    "accuracyTarget": 80,
+    "delayedTarget": 70,
+    "exam": {
+      "title": "White Belt Examination",
+      "brief": "12 words in a palace; 10 immediate and 9 after 20 minutes",
+      "checklist": [
+        "Required lessons complete",
+        "Practical assignment recorded",
+        "Delayed review complete"
+      ],
+      "remediation": [
+        "Repair weak images",
+        "Practise route without material",
+        "Repeat weakest drill"
+      ]
+    },
+    "badge": "\ud83e\udd4b White",
+    "unlock": "Available from your first day"
+  },
+  {
+    "id": "yellow",
+    "name": "Yellow Belt",
+    "subtitle": "Association and Linking",
+    "color": "#d5ad23",
+    "purpose": "Build reliable image chains and repair weak links",
+    "skills": [
+      "link method",
+      "story method",
+      "abstract imagery",
+      "image repair"
+    ],
+    "requiredLessons": 10,
+    "dailyDrills": [
+      "retrieval warm-up",
+      "focused technique drill",
+      "error repair"
+    ],
+    "assignments": [
+      "complete a practical real-life mission",
+      "record a delayed recall result"
+    ],
+    "accuracyTarget": 85,
+    "delayedTarget": 75,
+    "exam": {
+      "title": "Yellow Belt Examination",
+      "brief": "20 mixed words in order and repair weak associations",
+      "checklist": [
+        "Required lessons complete",
+        "Practical assignment recorded",
+        "Delayed review complete"
+      ],
+      "remediation": [
+        "Repair weak images",
+        "Practise route without material",
+        "Repeat weakest drill"
+      ]
+    },
+    "badge": "\ud83e\udd4b Yellow",
+    "unlock": "Pass the previous belt exam"
+  },
+  {
+    "id": "orange",
+    "name": "Orange Belt",
+    "subtitle": "Memory Palaces",
+    "color": "#c66a2b",
+    "purpose": "Navigate stable palaces forwards and backwards",
+    "skills": [
+      "stable loci",
+      "route order",
+      "forward and reverse recall",
+      "interference control"
+    ],
+    "requiredLessons": 13,
+    "dailyDrills": [
+      "retrieval warm-up",
+      "focused technique drill",
+      "error repair"
+    ],
+    "assignments": [
+      "complete a practical real-life mission",
+      "record a delayed recall result"
+    ],
+    "accuracyTarget": 90,
+    "delayedTarget": 80,
+    "exam": {
+      "title": "Orange Belt Examination",
+      "brief": "25 items; 90% forward, 80% reverse and delayed",
+      "checklist": [
+        "Required lessons complete",
+        "Practical assignment recorded",
+        "Delayed review complete"
+      ],
+      "remediation": [
+        "Repair weak images",
+        "Practise route without material",
+        "Repeat weakest drill"
+      ]
+    },
+    "badge": "\ud83e\udd4b Orange",
+    "unlock": "Pass the previous belt exam"
+  },
+  {
+    "id": "green",
+    "name": "Green Belt",
+    "subtitle": "Numbers and the Major System",
+    "color": "#39734d",
+    "purpose": "Convert numbers into images automatically",
+    "skills": [
+      "Major System",
+      "00\u201399 images",
+      "dates",
+      "speed conversion"
+    ],
+    "requiredLessons": 16,
+    "dailyDrills": [
+      "retrieval warm-up",
+      "focused technique drill",
+      "error repair"
+    ],
+    "assignments": [
+      "complete a practical real-life mission",
+      "record a delayed recall result"
+    ],
+    "accuracyTarget": 90,
+    "delayedTarget": 80,
+    "exam": {
+      "title": "Green Belt Examination",
+      "brief": "50 digits in five minutes; 90% immediate and 80% delayed",
+      "checklist": [
+        "Required lessons complete",
+        "Practical assignment recorded",
+        "Delayed review complete"
+      ],
+      "remediation": [
+        "Repair weak images",
+        "Practise route without material",
+        "Repeat weakest drill"
+      ]
+    },
+    "badge": "\ud83e\udd4b Green",
+    "unlock": "Pass the previous belt exam"
+  },
+  {
+    "id": "blue",
+    "name": "Blue Belt",
+    "subtitle": "Names, Faces and Vocabulary",
+    "color": "#34658b",
+    "purpose": "Remember people and new words reliably",
+    "skills": [
+      "facial observation",
+      "name images",
+      "sound-alikes",
+      "bidirectional vocabulary"
+    ],
+    "requiredLessons": 19,
+    "dailyDrills": [
+      "retrieval warm-up",
+      "focused technique drill",
+      "error repair"
+    ],
+    "assignments": [
+      "complete a practical real-life mission",
+      "record a delayed recall result"
+    ],
+    "accuracyTarget": 80,
+    "delayedTarget": 70,
+    "exam": {
+      "title": "Blue Belt Examination",
+      "brief": "Mixed names/faces and vocabulary plus social reflection",
+      "checklist": [
+        "Required lessons complete",
+        "Practical assignment recorded",
+        "Delayed review complete"
+      ],
+      "remediation": [
+        "Repair weak images",
+        "Practise route without material",
+        "Repeat weakest drill"
+      ]
+    },
+    "badge": "\ud83e\udd4b Blue",
+    "unlock": "Pass the previous belt exam"
+  },
+  {
+    "id": "purple",
+    "name": "Purple Belt",
+    "subtitle": "Knowledge and Study",
+    "color": "#674e86",
+    "purpose": "Retain structured, meaningful knowledge",
+    "skills": [
+      "timelines",
+      "definitions",
+      "book structures",
+      "subject palaces"
+    ],
+    "requiredLessons": 22,
+    "dailyDrills": [
+      "retrieval warm-up",
+      "focused technique drill",
+      "error repair"
+    ],
+    "assignments": [
+      "complete a practical real-life mission",
+      "record a delayed recall result"
+    ],
+    "accuracyTarget": 90,
+    "delayedTarget": 80,
+    "exam": {
+      "title": "Purple Belt Examination",
+      "brief": "20 facts, 10 definitions, 10 dates and a structure",
+      "checklist": [
+        "Required lessons complete",
+        "Practical assignment recorded",
+        "Delayed review complete"
+      ],
+      "remediation": [
+        "Repair weak images",
+        "Practise route without material",
+        "Repeat weakest drill"
+      ]
+    },
+    "badge": "\ud83e\udd4b Purple",
+    "unlock": "Pass the previous belt exam"
+  },
+  {
+    "id": "brown",
+    "name": "Brown Belt",
+    "subtitle": "Speeches, Cards and Advanced Systems",
+    "color": "#76513b",
+    "purpose": "Handle longer and more complex material",
+    "skills": [
+      "speech structures",
+      "playing cards",
+      "PAO",
+      "endurance"
+    ],
+    "requiredLessons": 25,
+    "dailyDrills": [
+      "retrieval warm-up",
+      "focused technique drill",
+      "error repair"
+    ],
+    "assignments": [
+      "complete a practical real-life mission",
+      "record a delayed recall result"
+    ],
+    "accuracyTarget": 85,
+    "delayedTarget": 75,
+    "exam": {
+      "title": "Brown Belt Examination",
+      "brief": "Choose two advanced disciplines; 85% immediate, 75% delayed",
+      "checklist": [
+        "Required lessons complete",
+        "Practical assignment recorded",
+        "Delayed review complete"
+      ],
+      "remediation": [
+        "Repair weak images",
+        "Practise route without material",
+        "Repeat weakest drill"
+      ]
+    },
+    "badge": "\ud83e\udd4b Brown",
+    "unlock": "Pass the previous belt exam"
+  },
+  {
+    "id": "black",
+    "name": "Black Belt",
+    "subtitle": "Integration, Teaching and Automatic Use",
+    "color": "#222",
+    "purpose": "Select and combine methods instinctively",
+    "skills": [
+      "method selection",
+      "teaching",
+      "custom systems",
+      "long-term maintenance"
+    ],
+    "requiredLessons": 28,
+    "dailyDrills": [
+      "retrieval warm-up",
+      "focused technique drill",
+      "error repair"
+    ],
+    "assignments": [
+      "complete a practical real-life mission",
+      "record a delayed recall result"
+    ],
+    "accuracyTarget": 90,
+    "delayedTarget": 80,
+    "exam": {
+      "title": "Black Belt Examination",
+      "brief": "Words, digits, names, speech and facts with 7-day recall",
+      "checklist": [
+        "Required lessons complete",
+        "Practical assignment recorded",
+        "Delayed review complete"
+      ],
+      "remediation": [
+        "Repair weak images",
+        "Practise route without material",
+        "Repeat weakest drill"
+      ]
+    },
+    "badge": "\ud83e\udd4b Black",
+    "unlock": "Pass the previous belt exam"
+  }
+]

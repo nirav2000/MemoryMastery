@@ -18,7 +18,11 @@
       "commit": "0e1f1d5",
       "status": "current",
       "summary": "Fixes card padding, panel separation and safe cloud/device progress merging.",
-      "keyChanges": ["Training cards no longer put text against the edge", "Adjacent panels are separated", "Signed-in progress now combines device and cloud backups"]
+      "keyChanges": [
+        "Training cards no longer put text against the edge",
+        "Adjacent panels are separated",
+        "Signed-in progress now combines device and cloud backups"
+      ]
     },
     {
       "label": "Clean design-system release",
@@ -26,7 +30,11 @@
       "commit": "238ded7",
       "status": "milestone",
       "summary": "Removed legacy CSS and tightened the first-time learner flow.",
-      "keyChanges": ["Single coherent CSS token system", "Zero due badge hidden", "First-success flow focus improved"]
+      "keyChanges": [
+        "Single coherent CSS token system",
+        "Zero due badge hidden",
+        "First-success flow focus improved"
+      ]
     },
     {
       "label": "Progress badge patch",
@@ -34,7 +42,10 @@
       "commit": "3f8f7e6",
       "status": "patch",
       "summary": "Separated the Progress label and due-review badge after a visual spacing issue was reported.",
-      "keyChanges": ["Badge spacing fixed", "Zero state made less noisy"]
+      "keyChanges": [
+        "Badge spacing fixed",
+        "Zero state made less noisy"
+      ]
     },
     {
       "label": "First-success quality release",
@@ -42,7 +53,11 @@
       "commit": "a496f81",
       "status": "milestone",
       "summary": "Improved onboarding so learners start with a useful guided memory success before advanced tools.",
-      "keyChanges": ["Beginner challenges", "Baseline and final recall loop", "First review scheduling"]
+      "keyChanges": [
+        "Beginner challenges",
+        "Baseline and final recall loop",
+        "First review scheduling"
+      ]
     },
     {
       "label": "First-success redesign",
@@ -50,7 +65,14 @@
       "commit": "067a2fc",
       "status": "milestone",
       "summary": "Reorganised the product around Today, Learn, Library and Progress.",
-      "keyChanges": ["Four-item primary navigation", "Advanced tools moved to Library", "Theory moved after practice"]
+      "keyChanges": [
+        "Four-item primary navigation",
+        "Advanced tools moved to Library",
+        "Theory moved after practice"
+      ],
+      "archivePath": "archive/builds/067a2fc/",
+      "latestDataPath": "archive/builds/067a2fc/?useLatestData=1",
+      "compatibilityNote": "This archived build includes bundled historical data. The latest-data option is experimental and should be used only when schemas are compatible."
     },
     {
       "label": "SmartPaper-style shell",
@@ -58,7 +80,14 @@
       "commit": "7c0f1cd",
       "status": "superseded",
       "summary": "Introduced the broad visual direction inspired by a softer learning-app style.",
-      "keyChanges": ["New app shell", "Larger typography", "Soft palette experiments"]
+      "keyChanges": [
+        "New app shell",
+        "Larger typography",
+        "Soft palette experiments"
+      ],
+      "archivePath": "archive/builds/7c0f1cd/",
+      "latestDataPath": "archive/builds/7c0f1cd/?useLatestData=1",
+      "compatibilityNote": "This archived build includes bundled historical data. The latest-data option is experimental and should be used only when schemas are compatible."
     },
     {
       "label": "Today's session link patch",
@@ -66,7 +95,10 @@
       "commit": "ab72ab2",
       "status": "patch",
       "summary": "Made the Today session card actionable after it was reported as inert.",
-      "keyChanges": ["Training route easier to reach", "Primary action repaired"]
+      "keyChanges": [
+        "Training route easier to reach",
+        "Primary action repaired"
+      ]
     },
     {
       "label": "Theme and Google sign-in release",
@@ -74,7 +106,11 @@
       "commit": "0393208",
       "status": "milestone",
       "summary": "Added Google sign-in, Firebase sync surface, pastel themes and layout options.",
-      "keyChanges": ["Google provider sign-in", "Theme settings", "Layout settings"]
+      "keyChanges": [
+        "Google provider sign-in",
+        "Theme settings",
+        "Layout settings"
+      ]
     },
     {
       "label": "Initial full app build",
@@ -82,7 +118,15 @@
       "commit": "2ea5e55",
       "status": "foundation",
       "summary": "First complete Memory Dojo static app with curriculum, builders and guest persistence.",
-      "keyChanges": ["84-day curriculum", "Major System and symbol data", "Palace and review tools", "localStorage guest mode"]
+      "keyChanges": [
+        "84-day curriculum",
+        "Major System and symbol data",
+        "Palace and review tools",
+        "localStorage guest mode"
+      ],
+      "archivePath": "archive/builds/2ea5e55/",
+      "latestDataPath": "archive/builds/2ea5e55/?useLatestData=1",
+      "compatibilityNote": "This archived build includes bundled historical data. The latest-data option is experimental and should be used only when schemas are compatible."
     },
     {
       "label": "Specification upload",
@@ -90,7 +134,11 @@
       "commit": "70d4112",
       "status": "source-material",
       "summary": "Documented the original product specification that shaped the app.",
-      "keyChanges": ["Product scope", "Belt system", "Daily memory gym requirements"]
+      "keyChanges": [
+        "Product scope",
+        "Belt system",
+        "Daily memory gym requirements"
+      ]
     }
   ]
 }

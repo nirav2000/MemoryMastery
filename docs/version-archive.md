@@ -2,10 +2,11 @@
 
 Memory Mastery should keep a lightweight version archive, but it should not copy every historical static build into the live GitHub Pages bundle by default. The app contains large JSON curriculum files, so duplicating every old version would quickly make the repository heavy and would expose learners to obsolete flows.
 
-The archive now has two layers:
+The archive now has three layers:
 
 1. `data/version-archive.json` — a learner- and maintainer-readable release ledger generated from meaningful commits.
-2. Git history/tags — the canonical way to reconstruct an old build when needed.
+2. `archive/index.html` and selected `archive/builds/<commit>/` folders — full static copies for visual comparison of important older versions.
+3. Git history/tags — the canonical way to reconstruct any other old build when needed.
 
 ## Recommended workflow
 
@@ -25,7 +26,7 @@ git worktree add ../MemoryMastery-2ea5e55 2ea5e55
 python3 -m http.server 8000 --directory ../MemoryMastery-2ea5e55
 ```
 
-If a specific historical build must be published permanently, create a small `archive/vX/` copy for that milestone only, document why it matters, and avoid including every patch release.
+If a specific historical build must be published permanently, create a small `archive/builds/<commit>/` copy for that milestone only, document why it matters, and avoid including every patch release. Archived builds include a banner warning that the flow may be obsolete and a `?useLatestData=1` option that redirects compatible `data/*.json` requests to the current data files.
 
 ## Inclusion criteria
 
@@ -33,4 +34,4 @@ Archive a version when it changes the learner journey, storage format, navigatio
 
 ## Current decision
 
-The app exposes a Version archive screen from Settings. It explains key changes and links each milestone to its GitHub commit. This gives traceability without bloating the live app.
+The app exposes a Version archive screen from Settings. It explains key changes, links each milestone to its GitHub commit, and opens selected older static builds where available. This gives visual traceability while keeping full archived copies limited to important milestones.
