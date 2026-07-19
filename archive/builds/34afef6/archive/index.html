@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Memory Mastery version archive</title>
+  <style>
+    body{margin:0;font:16px/1.55 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f4f9ff;color:#142033}main{max-width:960px;margin:auto;padding:32px 18px 72px}h1{font-size:clamp(2rem,7vw,4rem);line-height:1;margin:0 0 16px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:18px}.card{background:#fff;border:1px solid #d7e5f2;border-radius:22px;padding:20px;box-shadow:0 12px 32px rgba(85,110,145,.14)}.thumb{width:100%;aspect-ratio:9/13;object-fit:cover;object-position:top;border:1px solid #d7e5f2;border-radius:16px;background:#edf7ff}footer{border-top:1px solid #d7e5f2;margin-top:32px;padding-top:18px;color:#66758c}footer nav{display:flex;flex-wrap:wrap;gap:14px}a{color:#0f8c91;font-weight:800}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.button{display:inline-flex;min-height:44px;align-items:center;padding:0 14px;border-radius:12px;background:#18aeb4;color:white;text-decoration:none}.secondary{background:#edf7ff;color:#142033}</style>
+</head>
+<body>
+<main>
+  <p><a href="../">← Current app</a></p>
+  <h1>Memory Mastery version archive</h1>
+  <p>This archive lets you open selected older static builds. Archived builds may not include the latest curriculum, storage fixes or UI improvements.</p>
+  <section class="grid">
+    <article class="card"><img class="thumb" src="screenshots/2ea5e55.png" alt="First page load of initial full app build"><h2>Initial full app build</h2><p>Commit 2ea5e55 · first complete Memory Dojo app with curriculum, builders and guest persistence.</p><div class="actions"><a class="button" href="builds/2ea5e55/">Open historical build</a><a class="button secondary" href="builds/2ea5e55/?useLatestData=1">Try latest data</a></div></article>
+    <article class="card"><img class="thumb" src="screenshots/7c0f1cd.png" alt="First page load of SmartPaper-style shell"><h2>SmartPaper-style shell</h2><p>Commit 7c0f1cd · broad visual redesign with larger typography and softer learning-app direction.</p><div class="actions"><a class="button" href="builds/7c0f1cd/">Open historical build</a><a class="button secondary" href="builds/7c0f1cd/?useLatestData=1">Try latest data</a></div></article>
+    <article class="card"><img class="thumb" src="screenshots/067a2fc.png" alt="First page load of first-success redesign"><h2>First-success redesign</h2><p>Commit 067a2fc · reorganised the app around Today, Learn, Library and Progress.</p><div class="actions"><a class="button" href="builds/067a2fc/">Open historical build</a><a class="button secondary" href="builds/067a2fc/?useLatestData=1">Try latest data</a></div></article>
+  </section>
+  <p>The “Try latest data” option redirects compatible <code>data/*.json</code> requests to the current app data. If an older build expects a different schema, use its bundled data instead.</p>
+
+  <footer>
+    <nav aria-label="Footer links"><a href="./">Version switcher</a><a href="../#terms">Terms</a><a href="../#privacy">GDPR & privacy</a><a href="../#cookies">Cookie policy</a></nav>
+    <small>© 2026 Memory Mastery. Archived builds are for comparison and may not reflect current guidance.</small>
+  </footer>
+</main>
+</body>
+</html>

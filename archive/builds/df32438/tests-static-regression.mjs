@@ -1,0 +1,63 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {scoreOrderedRecall, firstSuccessSession} from './js/learning.js';
+import {mergeBackups} from './js/storage.js';
+
+const index = fs.readFileSync('index.html','utf8');
+const app = fs.readFileSync('js/app.js','utf8');
+const storage = fs.readFileSync('js/storage.js','utf8');
+const training = fs.readFileSync('js/training.js','utf8');
+const archive = JSON.parse(fs.readFileSync('data/version-archive.json','utf8'));
+
+for (const label of ['Today','Learn','Library','Progress']) assert(index.includes(`>${label}`), `missing primary nav ${label}`);
+assert(!index.includes('href="#palaces"'), 'advanced tools must not be primary navigation');
+for (const link of ['#versions','#terms','#privacy','#cookies']) assert(index.includes(`href="${link}"`), `missing footer link ${link}`);
+assert(app.includes('version-archive'), 'app should load the version archive data');
+assert(app.includes('function versions()'), 'settings should expose a version archive route outside primary navigation');
+assert(app.includes('archivePath') && app.includes('latestDataPath'), 'version archive should expose archived builds and latest-data options when available');
+assert(app.includes('function legalPage'), 'footer legal links should resolve inside the app');
+assert.equal(archive.schema, 1);
+assert(archive.versions.filter(v => v.screenshot).length >= 3, 'archived builds should include first-load screenshots');
+assert(archive.versions.length >= 8, 'version archive should include meaningful milestones from git history');
+for (const id of ['shopping','metric','uk-capitals','planets','prime-ministers']) assert(app.includes(`id:'${id}'`), `missing beginner challenge ${id}`);
+assert(app.includes('Source hidden.'), 'final first-success recall must hide source material');
+assert(app.includes('schedule(firstSuccessSession(c),result)'), 'first-success completion must schedule a review');
+assert(app.includes('data-recall-item'), 'first-success recall should use item-by-item inputs');
+assert(training.includes('1. Retrieval warm-up · ${escapeHTML(previous.title)}'), 'training warm-up should reference the previous task when available');
+assert(training.includes('data-warm') && training.includes('aria-pressed'), 'warm-up clear/vague/missing controls should be interactive');
+assert(training.includes('4. Recall result') && training.includes('5. Error review') && training.includes('7. Reflection'), 'training flow should not jump from point 3 to point 6 after scoring');
+assert(!training.includes('Never rely on memory alone'), 'training screen should avoid discouraging safety-warning copy in the casual learning flow');
+assert(index.includes('© 2026 Memory Mastery.') && !index.includes('not a substitute for secure records'), 'footer should stay clean and non-distracting');
+assert(storage.includes('firstSuccess:{completed:false}'), 'storage migration must include firstSuccess default');
+assert(storage.includes('mergeBackups'), 'storage must merge cloud and device progress instead of overwriting one source');
+
+assert(app.includes('review-form') && app.includes('data-review-answer'), 'reviews should require recall input before revealing answers');
+assert(app.includes('Check recall') && app.includes('Source, now revealed'), 'reviews should reveal answers only after checking recall');
+assert(app.includes('reviewSummary'), 'reviews should describe what the user is reviewing in plain language');
+assert(app.includes('tool-illustration') && app.includes('assets/tool-palace.svg'), 'library should include useful tool illustrations');
+assert(app.includes('recentRecallList') && !app.includes('aria-label="Recent accuracy chart"'), 'progress should use a clearer recent-recall list instead of the old chart');
+for (const file of ['assets/tool-palace.svg','assets/tool-major.svg','assets/tool-pao.svg','assets/tool-symbols.svg','assets/tool-names.svg','assets/tool-contract.svg']) assert(fs.existsSync(file), `missing tool illustration ${file}`);
+
+assert(app.includes('badge.hidden=count===0'), 'zero due badge should be hidden');
+assert(app.includes('aria-label'), 'due badge needs an accessible label when visible');
+const css = fs.readFileSync('css/styles.css','utf8');
+assert(css.includes('#dueBadge') && /margin-left:\s*\.6rem/.test(css), 'due badge needs spacing from Progress text');
+assert(css.includes('.profile-link, #authButton { padding-inline: 1.15rem;'), 'header text buttons need internal padding');
+assert(css.includes('.recall-list') && css.includes('.review-form'), 'progress and review layouts need dedicated spacing');
+assert(/\.card\s*\{[^}]*padding:[^}]*margin-block:/s.test(css), 'cards need internal padding and vertical separation to prevent edge text and panel collision');
+assert(/pre\s*\{[^}]*overflow-x:\s*auto[^}]*white-space:\s*pre-wrap/s.test(css), 'archive rebuild commands should wrap or scroll without page overflow');
+assert(css.includes('body { margin: 0; min-width: 0; color: var(--ink);'), 'body text colour must follow theme tokens, especially in dark mode');
+assert(css.includes('body.dark nav'), 'dark mode must not leave the navigation on a light background');
+assert(css.includes('.page-hero > *') && css.includes('body.dark .page-hero::after'), 'decorative hero art should sit behind content and be subdued in dark mode');
+assert(!css.includes('.smart-hero') && !css.includes('Georgia'), 'legacy SmartPaper/dojo CSS should not remain before the clean design system');
+
+const score = scoreOrderedRecall(['Mercury','Venus','Earth'], 'Mercury\nEarth\nVenus');
+assert.equal(score.correct, 1);
+assert.equal(score.orderErrors, 2);
+assert.equal(score.accuracy, 33);
+assert.equal(firstSuccessSession({title:'Planets', material:['A'], method:'link'}).title, 'First success: Planets');
+const merged = mergeBackups({version:1,profile:{currentDay:3},firstSuccess:{completed:false},results:[{day:1,date:1,accuracy:50}],reviews:[],palaces:[],majorSystem:[],pao:[],symbols:[],nameImages:[],missions:[],achievements:[]},{version:1,profile:{currentDay:6},firstSuccess:{completed:true,challengeTitle:'Planets'},results:[{day:2,date:2,accuracy:80}],reviews:[],palaces:[],majorSystem:[],pao:[],symbols:[],nameImages:[],missions:[],achievements:[]});
+assert.equal(merged.profile.currentDay, 6);
+assert.equal(merged.results.length, 2);
+assert.equal(merged.firstSuccess.completed, true);
+console.log('static regression checks ok');

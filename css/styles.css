@@ -182,6 +182,8 @@ body[data-ui="focus"] main { max-width: 780px; }
 
 .site-footer { max-width: var(--content); margin: 0 auto; padding: var(--space-6) clamp(var(--space-4), 4vw, var(--space-7)) calc(var(--space-6) + env(safe-area-inset-bottom)); color: var(--muted); border-top: 1px solid var(--line); }
 .site-footer nav { position: static; display: flex; flex-wrap: wrap; justify-content: flex-start; gap: var(--space-3); padding: 0 0 var(--space-3); background: transparent; border: 0; backdrop-filter: none; overflow: visible; }
+[data-owner-only] { display: none !important; }
+body.owner-archive [data-owner-only] { display: inline-flex !important; }
 .site-footer a { min-height: 44px; display: inline-flex; align-items: center; color: var(--muted); text-decoration: none; }
 .site-footer a:hover, .site-footer a:focus-visible { color: var(--accent-strong); }
 body.dark .site-footer nav { background: transparent; }
