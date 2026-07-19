@@ -61,6 +61,7 @@ Long headings must wrap normally. Do not solve heading collisions by shrinking t
 * Use animation only to explain change, establish continuity or celebrate genuine progress.
 * Support reduced motion.
 * Meet WCAG AA contrast.
+* Inspect small detail defects such as badge spacing, icon/text proximity, duplicate affordances, zero states, flicker from legacy styles, and visual remnants from older designs.
 
 ## Code rules
 
@@ -85,6 +86,7 @@ For any interface change:
 6. Check keyboard navigation and visible focus.
 7. Check overflow and text wrapping.
 8. Fix confirmed problems.
-9. Report exactly what was tested.
+9. Re-check small details: badges, icon spacing, empty/zero states, text/icon alignment, visible focus, and any flash of obsolete styling.
+10. Report exactly what was tested.
 
 Do not declare a visual task complete based only on successful compilation.

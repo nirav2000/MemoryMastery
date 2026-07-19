@@ -17,7 +17,8 @@ assert(storage.includes('firstSuccess:{completed:false}'), 'storage migration mu
 assert(app.includes('badge.hidden=count===0'), 'zero due badge should be hidden');
 assert(app.includes('aria-label'), 'due badge needs an accessible label when visible');
 const css = fs.readFileSync('css/styles.css','utf8');
-assert(css.includes('#dueBadge') && css.includes('margin-left:.55rem'), 'due badge needs spacing from Progress text');
+assert(css.includes('#dueBadge') && /margin-left:\s*\.6rem/.test(css), 'due badge needs spacing from Progress text');
+assert(!css.includes('.smart-hero') && !css.includes('Georgia'), 'legacy SmartPaper/dojo CSS should not remain before the clean design system');
 
 const score = scoreOrderedRecall(['Mercury','Venus','Earth'], 'Mercury\nEarth\nVenus');
 assert.equal(score.correct, 1);
