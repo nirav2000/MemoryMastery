@@ -137,6 +137,10 @@ Open **Settings & data**:
 
 Imports intentionally never merge or overwrite without a warning. Keep dated exports in secure personal storage; they may contain names and learning material.
 
+## Version archive
+
+Memory Mastery includes a lightweight version archive in `data/version-archive.json` and a maintainer note in `docs/version-archive.md`. The archive records meaningful milestones from git history and links to commits instead of duplicating every historical static build in GitHub Pages. This keeps the learner-facing app small while still allowing old versions to be reconstructed with `git worktree` when needed.
+
 ## File structure
 
 ```text
