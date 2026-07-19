@@ -33,8 +33,11 @@ assert(storage.includes('mergeBackups'), 'storage must merge cloud and device pr
 
 assert(app.includes('review-form') && app.includes('data-review-answer'), 'reviews should require recall input before revealing answers');
 assert(app.includes('Check recall') && app.includes('Source, now revealed'), 'reviews should reveal answers only after checking recall');
-assert(app.includes('reviewSummary'), 'reviews should describe what the user is reviewing in plain language');
+assert(app.includes('words from your first image story'), 'review labels should say what is being reviewed, not generic memory set jargon');
+assert(!app.includes('Try to remember first. Looking again comes after the effort.'), 'today copy should avoid abstract retrieval jargon');
 assert(app.includes('tool-illustration') && app.includes('assets/tool-palace.svg'), 'library should include useful tool illustrations');
+assert(app.includes('memoryThumb') && app.includes('number-thumb') && app.includes('palace-thumb') && app.includes('handbook-thumb'), 'tool pages and handbook should include inline memory thumbnails');
+assert(index.includes('rel="preload" as="image" href="assets/tool-palace.svg"'), 'tool illustrations should be preloaded to avoid slow first display');
 assert(app.includes('recentRecallList') && !app.includes('aria-label="Recent accuracy chart"'), 'progress should use a clearer recent-recall list instead of the old chart');
 for (const file of ['assets/tool-palace.svg','assets/tool-major.svg','assets/tool-pao.svg','assets/tool-symbols.svg','assets/tool-names.svg','assets/tool-contract.svg']) assert(fs.existsSync(file), `missing tool illustration ${file}`);
 
@@ -44,6 +47,7 @@ const css = fs.readFileSync('css/styles.css','utf8');
 assert(css.includes('#dueBadge') && /margin-left:\s*\.6rem/.test(css), 'due badge needs spacing from Progress text');
 assert(css.includes('.profile-link, #authButton { padding-inline: 1.15rem;'), 'header text buttons need internal padding');
 assert(css.includes('.recall-list') && css.includes('.review-form'), 'progress and review layouts need dedicated spacing');
+assert(css.includes('.memory-thumb') && css.includes('grid-template-columns: auto auto minmax(0, 1fr) auto'), 'inline thumbnails should have responsive layout support');
 assert(/\.card\s*\{[^}]*padding:[^}]*margin-block:/s.test(css), 'cards need internal padding and vertical separation to prevent edge text and panel collision');
 assert(/pre\s*\{[^}]*overflow-x:\s*auto[^}]*white-space:\s*pre-wrap/s.test(css), 'archive rebuild commands should wrap or scroll without page overflow');
 assert(css.includes('body { margin: 0; min-width: 0; color: var(--ink);'), 'body text colour must follow theme tokens, especially in dark mode');

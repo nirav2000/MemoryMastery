@@ -99,6 +99,12 @@ body.dark .next-step-panel, body.dark .journey-panel, body.dark .card, body.dark
 .path-card { display: grid; gap: var(--space-2); color: inherit; text-decoration: none; }
 .path-card span { color: var(--muted); }
 .tool-illustration { width: 100%; max-width: 150px; aspect-ratio: 4 / 3; object-fit: contain; margin-bottom: var(--space-3); }
+
+.memory-thumb { width: 3.2rem; height: 3.2rem; display: inline-grid; place-items: center; border-radius: 34% 66% 48% 52%; background: linear-gradient(135deg, rgba(24,174,180,.2), rgba(123,142,232,.18)); border: 1px solid var(--line); color: var(--accent-strong); font-weight: 900; letter-spacing: -.04em; flex: 0 0 auto; }
+.memory-thumb span { transform: rotate(-4deg); }
+.number-thumb { background: linear-gradient(135deg, rgba(123,142,232,.22), rgba(255,216,189,.28)); }
+.palace-thumb { background: linear-gradient(135deg, rgba(24,174,180,.22), rgba(255,255,255,.5)); }
+.handbook-thumb { margin-bottom: var(--space-3); }
 .recall-list { display: grid; gap: var(--space-4); padding: 0; margin: var(--space-5) 0 0; list-style: none; }
 .recall-list li { display: grid; gap: var(--space-2); }
 .recall-row { display: flex; justify-content: space-between; gap: var(--space-3); align-items: baseline; }
@@ -149,10 +155,10 @@ textarea { min-height: 110px; resize: vertical; }
 .empty-state { padding: var(--space-6); text-align: center; border-style: dashed; margin-block: var(--space-5); }
 .metric strong { display: block; font-size: 2.2rem; color: var(--accent-strong); }
 .route { display: grid; gap: var(--space-3); counter-reset: loci; }
-.locus { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: var(--space-3); }
+.locus { display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto; align-items: center; gap: var(--space-3); }
 .locus::before { counter-increment: loci; content: counter(loci); display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 900; }
 .major-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(112px, 1fr)); gap: var(--space-3); }
-.major-cell { display: grid; gap: var(--space-2); padding: var(--space-3); border: 1px solid var(--line); border-radius: var(--radius-m); background: var(--surface); }
+.major-cell { display: grid; gap: var(--space-2); align-content: start; padding: var(--space-3); border: 1px solid var(--line); border-radius: var(--radius-m); background: var(--surface); }
 .major-cell strong { font-size: 1.35rem; }
 .belt { border-top: 9px solid var(--belt, var(--line)); }
 pre { max-width: 100%; overflow-x: auto; white-space: pre-wrap; word-break: break-word; padding: var(--space-4); border-radius: var(--radius-s); background: var(--surface-soft); border: 1px solid var(--line); }
