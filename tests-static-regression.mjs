@@ -8,11 +8,12 @@ const app = fs.readFileSync('js/app.js','utf8');
 const storage = fs.readFileSync('js/storage.js','utf8');
 const training = fs.readFileSync('js/training.js','utf8');
 const archive = JSON.parse(fs.readFileSync('data/version-archive.json','utf8'));
+const majorScenes = JSON.parse(fs.readFileSync('data/major-system-scenes.json','utf8'));
 
 for (const label of ['Today','Learn','Library','Progress']) assert(index.includes(`>${label}`), `missing primary nav ${label}`);
 assert(!index.includes('href="#palaces"'), 'advanced tools must not be primary navigation');
 for (const link of ['#versions','#terms','#privacy','#cookies']) assert(index.includes(`href="${link}"`), `missing footer link ${link}`);
-assert(app.includes('version-archive'), 'app should load the version archive data');
+assert(app.includes('version-archive') && app.includes('major-system-scenes'), 'app should load archive and Major scene data');
 assert(app.includes('function versions()'), 'settings should expose a version archive route outside primary navigation');
 assert(app.includes('ARCHIVE_OWNER_EMAIL') && app.includes('myaeixa@gmail.com'), 'version archive should be gated to the owner email');
 assert(app.includes('memoryMasteryArchiveOwner'), 'owner sign-in should mark the same-origin developer archive session');
@@ -36,12 +37,29 @@ assert(index.includes('© 2026 Memory Mastery.') && !index.includes('not a subst
 assert(storage.includes('firstSuccess:{completed:false}'), 'storage migration must include firstSuccess default');
 assert(storage.includes('mergeBackups'), 'storage must merge cloud and device progress instead of overwriting one source');
 
+
+assert.equal(majorScenes.entries.length, 100, 'Major scene data should represent 00-99');
+assert.equal(majorScenes.entries.filter(e => e.generationReviewStatus === 'reference-approved').length, 10, 'Only 00-09 should be reference-approved in this phase');
+assert.equal(majorScenes.entries.filter(e => e.generationReviewStatus === 'pending').length, 90, '10-99 should remain explicitly pending');
+for (const n of ['00','01','02','03','04','05','06','07','08','09']) {
+  const scene = majorScenes.entries.find(e => e.number === n);
+  assert(scene.fullImageGenerationPrompt.includes(scene.pegWord), `${n} prompt should include peg word`);
+  assert(scene.imaginedSound && scene.imaginedTouch && scene.imaginedSmell && scene.dominantColourPalette, `${n} should include multisensory cues`);
+  assert(scene.imageAssetPath && fs.existsSync(scene.imageAssetPath), `${n} should have a prepared reference image asset`);
+}
+assert(app.includes('function majorScenesReview'), 'developer review page should display scene specifications');
+assert(app.includes('sensory-cues') && app.includes('data-speak-peg') && app.includes('data-narrate'), 'Major cards should reveal sensory cues and separate audio controls');
+assert(app.includes('majorReverseTest'), 'Major System should support reverse recall');
+assert(fs.existsSync('scripts/validate-major-scenes.mjs'), 'Major scene validation script should exist');
+assert(fs.existsSync('scripts/generate-major-scene-asset.mjs'), 'resumable asset-generation script should exist');
+assert(fs.existsSync('docs/major-system-asset-audit.md'), 'Major asset audit report should exist');
+
 assert(app.includes('review-form') && app.includes('data-review-answer'), 'reviews should require recall input before revealing answers');
 assert(app.includes('Check recall') && app.includes('Source, now revealed'), 'reviews should reveal answers only after checking recall');
 assert(app.includes('words from your first image story'), 'review labels should say what is being reviewed, not generic memory set jargon');
 assert(!app.includes('Try to remember first. Looking again comes after the effort.'), 'today copy should avoid abstract retrieval jargon');
 assert(app.includes('tool-illustration') && app.includes('assets/tool-palace.svg'), 'library should include useful tool illustrations');
-assert(app.includes('memoryThumb') && app.includes('number-thumb') && app.includes('palace-thumb') && app.includes('handbook-thumb'), 'tool pages and handbook should include inline memory thumbnails');
+assert(app.includes('memoryThumb') && app.includes('major-scene-figure') && app.includes('palace-thumb') && app.includes('handbook-thumb'), 'tool pages and handbook should include inline memory thumbnails');
 assert(app.includes("sauce:'sauce'") && app.includes("seed:'seed'") && app.includes("'front gate':'gate'"), 'starter words should map to object illustrations, not initials');
 assert(!app.includes('illustrationInitials'), 'memory thumbnails must be object illustrations rather than letter initials');
 assert(index.includes('rel="preload" as="image" href="assets/tool-palace.svg"'), 'tool illustrations should be preloaded to avoid slow first display');
