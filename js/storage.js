@@ -1,5 +1,5 @@
 const KEY='memoryDojo.v1';
-export const defaults={version:1,profile:{name:'',onboarded:false,mode:'standard',currentDay:1,currentBelt:'white',theme:'light',colorTheme:'pastelPaper',uiStyle:'smartpaper'},contract:{},palaces:[],majorSystem:[],pao:[],symbols:[],nameImages:[],results:[],reviews:[],missions:[],achievements:[],settings:{intervals:[20,1440,4320,10080,43200]}};
+export const defaults={version:1,profile:{name:'',onboarded:false,mode:'standard',currentDay:1,currentBelt:'white',theme:'light',colorTheme:'pastelPaper',uiStyle:'smartpaper'},firstSuccess:{completed:false},contract:{},palaces:[],majorSystem:[],pao:[],symbols:[],nameImages:[],results:[],reviews:[],missions:[],achievements:[],settings:{intervals:[20,1440,4320,10080,43200]}};
 let state;
 export function load(){try{state={...structuredClone(defaults),...JSON.parse(localStorage.getItem(KEY)||'{}')}}catch{state=structuredClone(defaults)}return state}
 export function get(){return state||load()}

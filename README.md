@@ -77,7 +77,7 @@ The **Sign in** button uses Firebase Authentication with the Google provider. On
 
 ### SmartPaper-inspired redesign
 
-The default experience now uses a fuller SmartPaper-inspired learning-product redesign: a pale pastel app shell, top scrolling pill navigation, soft glass cards, rounded controls, a large hero message, a floating "Today's paper" mastery card, focus-area bars, short benefit cards and a mini progress chart. The memory-training curriculum is unchanged, but the overall navigation, dashboard, forms, cards and training surfaces are styled as one coherent soft learning app.
+The default experience is now organised around a user-first learning journey. New users start with one dominant action — memorise something useful — then choose a beginner challenge, make a no-pressure baseline attempt, learn one method interactively, retest from memory and choose a personal memory project. The app shell uses a calm SmartPaper-inspired visual system with four primary routes: Today, Learn, Library and Progress.
 
 ## Changing themes and look
 
@@ -90,6 +90,16 @@ Open **Settings & data → Appearance** to choose:
 The hamburger button in the top-left opens and closes the navigation menu on smaller screens. On wider screens the navigation is already visible as a sidebar unless you choose a layout such as Top navigation or Focus mode.
 
 These preferences are stored in the same guest backup and sync to Firestore after Google sign-in.
+
+
+## Product structure
+
+- **Today**: one recommended next action, why it matters, expected time and what happens next.
+- **Learn**: guided first-success journey, daily curriculum, review queue and Memory Handbook.
+- **Library**: personal projects and advanced tools including palaces, Major System, PAO, symbols and name images.
+- **Progress**: retention history, review queue and belt/exam progression.
+
+Advanced tools are preserved, but they are progressively disclosed after the learner has a reason to use them.
 
 ## Data model
 
