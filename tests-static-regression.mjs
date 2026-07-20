@@ -35,9 +35,10 @@ assert(app.includes('data-recall-item'), 'first-success recall should use item-b
 assert(training.includes('1. Retrieval warm-up · ${escapeHTML(previous.title)}'), 'training warm-up should reference the previous task when available');
 assert(!training.includes('previous.material.slice'), 'warm-up must not reveal answers from the previous task');
 assert(training.includes('data-warm') && training.includes('aria-pressed'), 'warm-up clear/vague/missing controls should be interactive');
-assert(training.includes('<h2>4. Recall test</h2>') && training.includes('<h2>5. Error review</h2>') && training.includes('7. Reflection'), 'training flow should show steps 4 and 5 before continuing to 6 and 7');
+assert(training.includes('>4. Recall test</button>') && training.includes('<h2>5. Error review</h2>') && training.includes('7. Reflection'), 'training flow should show steps 4 and 5 before continuing to 6 and 7');
 assert(training.includes('id="recallStep"') && training.includes('id="errorReview"'), 'recall and error review should be separate visible training cards');
-assert(!training.includes('id="recall" class="hidden"') && training.includes('id="scoreRecall" disabled'), 'step 4 controls should stay visible but disabled until the source is hidden');
+assert(training.includes('id="openRecallStep"') && training.includes('aria-expanded="false"') && training.includes('id="recallStepBody" hidden'), 'step 4 should start collapsed to its heading and be expandable');
+assert(training.includes('const openRecallStep') && training.includes("document.querySelector('#encodeStepBody').hidden = true"), 'opening step 4 should collapse step 3 to its heading');
 assert(!training.includes('Never rely on memory alone'), 'training screen should avoid discouraging safety-warning copy in the casual learning flow');
 assert(index.includes('© 2026 Memory Mastery.') && !index.includes('not a substitute for secure records'), 'footer should stay clean and non-distracting');
 assert(storage.includes('firstSuccess:{completed:false}'), 'storage migration must include firstSuccess default');
@@ -81,6 +82,7 @@ assert(css.includes('#dueBadge') && /margin-left:\s*\.6rem/.test(css), 'due badg
 assert(css.includes('.profile-link, #authButton { padding-inline: 1.15rem;'), 'header text buttons need internal padding');
 assert(css.includes('.recall-list') && css.includes('.review-form'), 'progress and review layouts need dedicated spacing');
 assert(css.includes('.training-card > p') && css.includes('max-width: none'), 'training cards should not force awkward short-line wrapping');
+assert(css.includes('.step-toggle') && css.includes('min-height: 44px'), 'step heading toggle should be visible and have a touch-sized target');
 assert(css.includes('.site-footer { display: flex') && css.includes('.site-footer small'), 'footer links and copyright should align on one row when space allows');
 assert(css.includes('.memory-thumb .thumb-line') && css.includes('grid-template-columns: auto auto minmax(0, 1fr) auto'), 'inline illustrations should have responsive layout support');
 assert(/\.card\s*\{[^}]*padding:[^}]*margin-block:/s.test(css), 'cards need internal padding and vertical separation to prevent edge text and panel collision');

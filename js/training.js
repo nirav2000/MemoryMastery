@@ -49,9 +49,9 @@ export function trainingView(curriculum) {
   <p class="lead">Encode and retrieve ${session.material.length} items with deliberate, vivid associations.</p>
   <section class="card training-card" id="warm"><h2>${warmup.title}</h2><p>${warmup.text}</p><blockquote>${warmup.quote}</blockquote><div class="actions segmented" role="group" aria-label="Warm-up recall quality"><button data-warm="clear" aria-pressed="false">Clear</button><button data-warm="vague" class="secondary" aria-pressed="false">Vague</button><button data-warm="missing" class="secondary" aria-pressed="false">Missing</button></div><p id="warmStatus" class="muted" aria-live="polite">Choose the closest match, then repair only weak items.</p></section>
   <section class="card training-card"><h2>2. Technique drill</h2><p>Use <strong>${escapeHTML(session.technique)}</strong>. Make each image move, exaggerate and interact directly with its location.</p></section>
-  <section class="card training-card"><h2>3. Main challenge · ${session.timeLimitMinutes} min</h2><div id="source" class="material"><ol>${materialList(session.material)}</ol></div><div class="actions"><button id="startRecall">I’m ready — hide material</button></div></section>
-  <section class="card training-card" id="recallStep"><h2>4. Recall test</h2><p id="recallPrompt" class="muted">First hide the material in step 3. The answer box is already visible so this step never disappears.</p><form id="recall"><p><strong id="sourceState">Source still visible.</strong> Hide it before scoring.</p><label for="answers">Your recalled answers</label><textarea id="answers" required autocomplete="off" disabled></textarea><button id="scoreRecall" disabled>Score recall</button></form></section>
-  <section class="card training-card" id="errorReview"><h2>5. Error review</h2><p class="muted">This step is visible now. After scoring, it will show your result and unlock a repair choice.</p><div id="score"><label for="error">What should you strengthen next?</label><select id="error" disabled><option>Score recall first</option></select></div></section>
+  <section class="card training-card" id="encodeStep"><h2>3. Main challenge · ${session.timeLimitMinutes} min</h2><div id="encodeStepBody"><div id="source" class="material"><ol>${materialList(session.material)}</ol></div><div class="actions"><button id="startRecall">I’m ready — hide material</button></div></div></section>
+  <section class="card training-card" id="recallStep"><h2><button class="step-toggle" id="openRecallStep" type="button" aria-expanded="false" aria-controls="recallStepBody">4. Recall test</button></h2><div id="recallStepBody" hidden><p id="recallPrompt" class="muted"><strong>Source hidden.</strong> Enter one answer per line, in order.</p><form id="recall"><label for="answers">Your recalled answers</label><textarea id="answers" required autocomplete="off" disabled></textarea><button id="scoreRecall" disabled>Score recall</button></form></div></section>
+  <section class="card training-card" id="errorReview"><h2>5. Error review</h2><p class="muted">After scoring, choose the one repair that will make the next review easier.</p><div id="score"><label for="error">What should you strengthen next?</label><select id="error" disabled><option>Score recall first</option></select></div></section>
   <section class="card training-card"><h2>6. Real-life mission</h2><p>${escapeHTML(session.mission)}</p></section>
   <section class="card training-card"><h2>7. Reflection</h2><p>${escapeHTML(session.reflection)}</p></section>`;
 }
@@ -66,18 +66,17 @@ export function bindTraining() {
     const status = document.querySelector('#warmStatus');
     if (status) status.textContent = button.dataset.warm === 'clear' ? 'Good. Keep the route and begin today’s drill.' : 'Good spot. Spend one minute making the weak image larger, louder, stranger or more active.';
   }));
-  document.querySelector('#startRecall')?.addEventListener('click', () => {
-    document.querySelector('#source').classList.add('hidden');
-    document.querySelector('#startRecall').classList.add('hidden');
-    const prompt = document.querySelector('#recallPrompt');
-    if (prompt) prompt.textContent = 'Source hidden. Write what you can remember before checking anything.';
-    const state = document.querySelector('#sourceState');
-    if (state) state.textContent = 'Source hidden.';
+  const openRecallStep = () => {
+    document.querySelector('#encodeStepBody').hidden = true;
+    document.querySelector('#recallStepBody').hidden = false;
+    document.querySelector('#openRecallStep').setAttribute('aria-expanded', 'true');
     document.querySelector('#answers').disabled = false;
     document.querySelector('#scoreRecall').disabled = false;
     start = Date.now();
     document.querySelector('#answers').focus();
-  });
+  };
+  document.querySelector('#startRecall')?.addEventListener('click', openRecallStep);
+  document.querySelector('#openRecallStep')?.addEventListener('click', openRecallStep);
   document.querySelector('#recall')?.addEventListener('submit', e => {
     e.preventDefault();
     const score = scoreOrderedRecall(session.material, document.querySelector('#answers').value);

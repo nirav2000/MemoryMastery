@@ -100,6 +100,8 @@ body.dark .next-step-panel, body.dark .journey-panel, body.dark .card, body.dark
 .linked-card, .clickable-card { cursor: pointer; }
 .linked-card:focus-visible, .clickable-card:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
 .path-card span { color: var(--muted); }
+.step-toggle { width: 100%; min-height: 44px; padding: 0; justify-content: flex-start; background: transparent; color: inherit; box-shadow: none; text-align: left; }
+.step-toggle:hover { transform: none; box-shadow: none; }
 .tool-illustration { width: 100%; max-width: 150px; aspect-ratio: 4 / 3; object-fit: contain; margin-bottom: var(--space-3); }
 
 .memory-thumb { width: 3.5rem; height: 3.5rem; display: block; flex: 0 0 auto; }
