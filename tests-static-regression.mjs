@@ -37,6 +37,7 @@ assert(!training.includes('previous.material.slice'), 'warm-up must not reveal a
 assert(training.includes('data-warm') && training.includes('aria-pressed'), 'warm-up clear/vague/missing controls should be interactive');
 assert(training.includes('<h2>4. Recall test</h2>') && training.includes('<h2>5. Error review</h2>') && training.includes('7. Reflection'), 'training flow should show steps 4 and 5 before continuing to 6 and 7');
 assert(training.includes('id="recallStep"') && training.includes('id="errorReview"'), 'recall and error review should be separate visible training cards');
+assert(!training.includes('id="recall" class="hidden"') && training.includes('id="scoreRecall" disabled'), 'step 4 controls should stay visible but disabled until the source is hidden');
 assert(!training.includes('Never rely on memory alone'), 'training screen should avoid discouraging safety-warning copy in the casual learning flow');
 assert(index.includes('© 2026 Memory Mastery.') && !index.includes('not a substitute for secure records'), 'footer should stay clean and non-distracting');
 assert(storage.includes('firstSuccess:{completed:false}'), 'storage migration must include firstSuccess default');
@@ -69,6 +70,8 @@ assert(app.includes("sauce:'sauce'") && app.includes("seed:'seed'") && app.inclu
 assert(!app.includes('illustrationInitials'), 'memory thumbnails must be object illustrations rather than letter initials');
 assert(index.includes('rel="preload" as="image" href="assets/tool-palace.svg"'), 'tool illustrations should be preloaded to avoid slow first display');
 assert(app.includes('recentRecallList') && !app.includes('aria-label="Recent accuracy chart"'), 'progress should use a clearer recent-recall list instead of the old chart');
+assert(app.includes('Open current lesson') && app.includes('Open progress details') && app.includes('href="#train"') && app.includes('href="#progress"'), 'Today support cards should be explicit navigable links');
+
 for (const file of ['assets/tool-palace.svg','assets/tool-major.svg','assets/tool-pao.svg','assets/tool-symbols.svg','assets/tool-names.svg','assets/tool-contract.svg']) assert(fs.existsSync(file), `missing tool illustration ${file}`);
 
 assert(app.includes('badge.hidden=count===0'), 'zero due badge should be hidden');
