@@ -13,22 +13,6 @@
   },
   "versions": [
     {
-      "label": "Work branch retrieval fixes",
-      "date": "2026-07-20",
-      "commit": "49d5809",
-      "status": "archived branch snapshot",
-      "summary": "archived the temporary work branch before merging its useful review, scoring and notes changes into main",
-      "keyChanges": [
-        "Captured the temporary work branch state before removing the branch",
-        "Included review deduplication, recall scoring and editable retrieval-note experiments for comparison",
-        "First page-load screenshot available in the archive"
-      ],
-      "archivePath": "archive/builds/49d5809/",
-      "latestDataPath": "archive/builds/49d5809/?useLatestData=1",
-      "screenshot": "archive/screenshots/49d5809.png",
-      "compatibilityNote": "Archived branch snapshot; use main for the merged production path."
-    },
-    {
       "label": "Training warm-up and footer layout details",
       "date": "2026-07-20",
       "commit": "116c987",
