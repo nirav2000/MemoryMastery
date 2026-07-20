@@ -35,7 +35,8 @@ assert(app.includes('data-recall-item'), 'first-success recall should use item-b
 assert(training.includes('1. Retrieval warm-up · ${escapeHTML(previous.title)}'), 'training warm-up should reference the previous task when available');
 assert(!training.includes('previous.material.slice'), 'warm-up must not reveal answers from the previous task');
 assert(training.includes('data-warm') && training.includes('aria-pressed'), 'warm-up clear/vague/missing controls should be interactive');
-assert(training.includes('4. Recall result') && training.includes('5. Error review') && training.includes('7. Reflection'), 'training flow should not jump from point 3 to point 6 after scoring');
+assert(training.includes('<h2>4. Recall test</h2>') && training.includes('<h2>5. Error review</h2>') && training.includes('7. Reflection'), 'training flow should show steps 4 and 5 before continuing to 6 and 7');
+assert(training.includes('id="recallStep"') && training.includes('id="errorReview"'), 'recall and error review should be separate visible training cards');
 assert(!training.includes('Never rely on memory alone'), 'training screen should avoid discouraging safety-warning copy in the casual learning flow');
 assert(index.includes('© 2026 Memory Mastery.') && !index.includes('not a substitute for secure records'), 'footer should stay clean and non-distracting');
 assert(storage.includes('firstSuccess:{completed:false}'), 'storage migration must include firstSuccess default');

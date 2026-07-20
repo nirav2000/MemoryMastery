@@ -49,7 +49,9 @@ export function trainingView(curriculum) {
   <p class="lead">Encode and retrieve ${session.material.length} items with deliberate, vivid associations.</p>
   <section class="card training-card" id="warm"><h2>${warmup.title}</h2><p>${warmup.text}</p><blockquote>${warmup.quote}</blockquote><div class="actions segmented" role="group" aria-label="Warm-up recall quality"><button data-warm="clear" aria-pressed="false">Clear</button><button data-warm="vague" class="secondary" aria-pressed="false">Vague</button><button data-warm="missing" class="secondary" aria-pressed="false">Missing</button></div><p id="warmStatus" class="muted" aria-live="polite">Choose the closest match, then repair only weak items.</p></section>
   <section class="card training-card"><h2>2. Technique drill</h2><p>Use <strong>${escapeHTML(session.technique)}</strong>. Make each image move, exaggerate and interact directly with its location.</p></section>
-  <section class="card training-card"><h2>3. Main challenge · ${session.timeLimitMinutes} min</h2><div id="source" class="material"><ol>${materialList(session.material)}</ol></div><div class="actions"><button id="startRecall">I’m ready — hide material</button></div><form id="recall" class="hidden"><h3>4. Recall test</h3><p><strong>Source hidden.</strong> Enter one answer per line, in order.</p><label for="answers">Your recalled answers</label><textarea id="answers" required autocomplete="off"></textarea><button>Score recall</button></form><div id="score"></div></section>
+  <section class="card training-card"><h2>3. Main challenge · ${session.timeLimitMinutes} min</h2><div id="source" class="material"><ol>${materialList(session.material)}</ol></div><div class="actions"><button id="startRecall">I’m ready — hide material</button></div></section>
+  <section class="card training-card" id="recallStep"><h2>4. Recall test</h2><p id="recallPrompt" class="muted">This opens as soon as you hide the material in step 3.</p><form id="recall" class="hidden"><p><strong>Source hidden.</strong> Enter one answer per line, in order.</p><label for="answers">Your recalled answers</label><textarea id="answers" required autocomplete="off"></textarea><button>Score recall</button></form></section>
+  <section class="card training-card" id="errorReview"><h2>5. Error review</h2><p class="muted">After you score recall, choose the one repair that will make the next review easier.</p><div id="score"></div></section>
   <section class="card training-card"><h2>6. Real-life mission</h2><p>${escapeHTML(session.mission)}</p></section>
   <section class="card training-card"><h2>7. Reflection</h2><p>${escapeHTML(session.reflection)}</p></section>`;
 }
@@ -68,6 +70,8 @@ export function bindTraining() {
     document.querySelector('#source').classList.add('hidden');
     document.querySelector('#startRecall').classList.add('hidden');
     document.querySelector('#recall').classList.remove('hidden');
+    const prompt = document.querySelector('#recallPrompt');
+    if (prompt) prompt.textContent = 'Source hidden. Write what you can remember before checking anything.';
     start = Date.now();
     document.querySelector('#answers').focus();
   });
@@ -82,7 +86,7 @@ export function bindTraining() {
       s.missions.push({ day: session.day, completed: false, text: session.mission });
     });
     schedule(session, result);
-    document.querySelector('#score').innerHTML = `<section class="card nested-result"><h2>4. Recall result</h2><h3>${accuracy}% accuracy</h3><p>${correct} correct · ${incorrect} incorrect · ${omitted} omitted · ${order} order errors</p><p>Recall time: ${result.recallSeconds}s. Your next review is ready in about 20 minutes.</p></section><section class="card nested-result"><h2>5. Error review</h2><label for="error">What should you strengthen next?</label><select id="error"><option>Weak or ordinary image</option><option>Missed the detail at the start</option><option>Images did not interact</option><option>Location was unclear</option><option>Too many images at one location</option><option>Similar images got confused</option><option>Review came too late</option><option>Recall was slow</option></select></section>`;
+    document.querySelector('#score').innerHTML = `<section class="nested-result"><h3>Recall result · ${accuracy}% accuracy</h3><p>${correct} correct · ${incorrect} incorrect · ${omitted} omitted · ${order} order errors</p><p>Recall time: ${result.recallSeconds}s. Your next review is ready in about 20 minutes.</p><label for="error">What should you strengthen next?</label><select id="error"><option>Weak or ordinary image</option><option>Missed the detail at the start</option><option>Images did not interact</option><option>Location was unclear</option><option>Too many images at one location</option><option>Similar images got confused</option><option>Review came too late</option><option>Recall was slow</option></select></section>`;
     document.querySelector('#recall').classList.add('hidden');
   });
 }
