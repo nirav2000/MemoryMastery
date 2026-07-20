@@ -97,6 +97,10 @@ const score = scoreOrderedRecall(['Mercury','Venus','Earth'], 'Mercury\nEarth\nV
 assert.equal(score.correct, 1);
 assert.equal(score.orderErrors, 2);
 assert.equal(score.accuracy, 33);
+const shifted = scoreOrderedRecall(['Apple','Lantern','Tiger','Piano'], '?\nLantern\nTiger\nPiano');
+assert.equal(shifted.correct, 3);
+assert.equal(shifted.omitted, 1);
+assert.equal(shifted.accuracy, 75);
 assert.equal(firstSuccessSession({title:'Planets', material:['A'], method:'link'}).title, 'First success: Planets');
 const merged = mergeBackups({version:1,profile:{currentDay:3},firstSuccess:{completed:false},results:[{day:1,date:1,accuracy:50}],reviews:[],palaces:[],majorSystem:[],pao:[],symbols:[],nameImages:[],missions:[],achievements:[]},{version:1,profile:{currentDay:6},firstSuccess:{completed:true,challengeTitle:'Planets'},results:[{day:2,date:2,accuracy:80}],reviews:[],palaces:[],majorSystem:[],pao:[],symbols:[],nameImages:[],missions:[],achievements:[]});
 assert.equal(merged.profile.currentDay, 6);

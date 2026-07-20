@@ -3,15 +3,16 @@ export function normalAnswer(value){
 }
 
 export function scoreOrderedRecall(expected, recalledText){
-  const entered=String(recalledText||'').split('\n').map(normalAnswer).filter(Boolean);
   const normalExpected=expected.map(normalAnswer);
-  let correct=0, orderErrors=0;
+  const entered=String(recalledText||'').split('\n').map(normalAnswer).slice(0,normalExpected.length);
+  while(entered.length<normalExpected.length) entered.push('');
+  let correct=0, orderErrors=0, omitted=0, incorrect=0;
   entered.forEach((value,index)=>{
+    if(!value){omitted++;return}
     if(value===normalExpected[index]) correct++;
     else if(normalExpected.includes(value)) orderErrors++;
+    else incorrect++;
   });
-  const incorrect=entered.filter(value=>!normalExpected.includes(value)).length;
-  const omitted=Math.max(0,normalExpected.length-entered.length);
   return {answers:entered, correct, incorrect, omitted, orderErrors, accuracy:Math.round(correct/normalExpected.length*100)};
 }
 
