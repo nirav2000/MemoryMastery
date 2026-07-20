@@ -13,22 +13,6 @@
   },
   "versions": [
     {
-      "label": "Training warm-up and footer layout details",
-      "date": "2026-07-20",
-      "commit": "116c987",
-      "status": "archived milestone",
-      "summary": "fixed the training warm-up flow and footer layout details before the card-navigation repair",
-      "keyChanges": [
-        "Fixed training warm-up and footer layout details",
-        "Full static build copy available for developer comparison",
-        "First page-load screenshot available in the archive"
-      ],
-      "archivePath": "archive/builds/116c987/",
-      "latestDataPath": "archive/builds/116c987/?useLatestData=1",
-      "screenshot": "archive/screenshots/116c987.png",
-      "compatibilityNote": "Archived developer snapshot; use bundled data for exact historical behaviour or try latest data when compatible."
-    },
-    {
       "label": "Object illustrations in tools",
       "date": "2026-07-19",
       "commit": "34afef6",

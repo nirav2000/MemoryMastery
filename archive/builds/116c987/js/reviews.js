@@ -1,0 +1,6 @@
+import {get,update} from './storage.js'; import {uid} from './utils.js';
+export const intervals=[20,1440,4320,10080,43200];
+export function schedule(session,result){const now=Date.now();update(s=>s.reviews.push({id:uid(),sessionDay:session.day,title:session.title,material:session.material,answers:result.answers,createdAt:now,immediateScore:result.accuracy,intervalIndex:0,nextReviewAt:now+20*60000,lastReviewAt:null,reviewScore:null,strength:result.accuracy>=80?'growing':'weak',status:'active'}))}
+export const due=()=>get().reviews.filter(r=>r.status==='active'&&r.nextReviewAt<=Date.now());
+export function scoreReview(id,score){update(s=>{const r=s.reviews.find(x=>x.id===id);if(!r)return;r.reviewScore=score;r.lastReviewAt=Date.now();r.intervalIndex=score<60?Math.max(0,r.intervalIndex-1):Math.min(intervals.length-1,r.intervalIndex+1);r.nextReviewAt=Date.now()+intervals[r.intervalIndex]*60000;r.strength=score>=80?'strong':score>=60?'growing':'weak'})}
+export function action(id,type){update(s=>{const r=s.reviews.find(x=>x.id===id);if(type==='snooze')r.nextReviewAt=Date.now()+86400000;if(type==='retire')r.status='retired';if(type==='restart'){r.status='active';r.intervalIndex=0;r.nextReviewAt=Date.now()}})}

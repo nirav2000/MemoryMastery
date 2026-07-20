@@ -17,10 +17,7 @@ assert(app.includes('version-archive') && app.includes('major-system-scenes'), '
 assert(app.includes('function versions()'), 'settings should expose a version archive route outside primary navigation');
 assert(app.includes('ARCHIVE_OWNER_EMAIL') && app.includes('myaeixa@gmail.com'), 'version archive should be gated to the owner email');
 assert(app.includes('memoryMasteryArchiveOwner'), 'owner sign-in should mark the same-origin developer archive session');
-assert(!index.includes('data-owner-only'), 'footer version switcher should stay visible so users can find the version archive');
-assert(app.includes('Full archived build snapshots remain gated'), 'version page should explain that full archived builds are owner-gated');
-assert(app.includes('linked-card') && app.includes('bindLinkedCards'), 'referenced archive cards should navigate when the whole card is clicked or focused');
-assert(app.includes('function cardDestination') && app.includes('clickable-card'), 'cards with one referenced destination should be keyboard and pointer navigable');
+assert(index.includes('data-owner-only'), 'footer version switcher should be hidden until owner sign-in');
 assert(fs.existsSync('archive/archive-access-gate.js') && fs.readFileSync('archive/index.html','utf8').includes('archive-access-gate.js'), 'standalone archive should require the owner session gate');
 assert(app.includes('archivePath') && app.includes('latestDataPath'), 'version archive should expose archived builds and latest-data options when available');
 assert(app.includes('function legalPage'), 'footer legal links should resolve inside the app');
