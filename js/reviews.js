@@ -1,4 +1,4 @@
-import {get,update} from './storage.js'; import {uid} from './utils.js';
+import {get,update} from './storage.js?v=20260720-main-merge'; import {uid} from './utils.js?v=20260720-main-merge';
 export const intervals=[20,1440,4320,10080,43200];
 export function reviewKey(r){return [r.sessionDay??'',r.title??'',...(r.material||[])].join('¦').toLowerCase()}
 function strongerReview(a,b){

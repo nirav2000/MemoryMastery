@@ -1,7 +1,7 @@
-import {escapeHTML} from './utils.js';
-import {get,update} from './storage.js';
-import {schedule} from './reviews.js';
-import {scoreOrderedRecall} from './learning.js';
+import {escapeHTML} from './utils.js?v=20260720-main-merge';
+import {get,update} from './storage.js?v=20260720-main-merge';
+import {schedule} from './reviews.js?v=20260720-main-merge';
+import {scoreOrderedRecall} from './learning.js?v=20260720-main-merge';
 
 let start = 0;
 let session;

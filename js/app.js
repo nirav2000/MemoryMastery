@@ -1,9 +1,9 @@
-import {$,$$,escapeHTML,mean,download,toast,formatDate} from './utils.js';
-import {load,get,save,update,replace,reset,mergeBackups} from './storage.js';
-import {trainingView,bindTraining} from './training.js';
-import {due,scoreReview,action,schedule,uniqueReviews} from './reviews.js';
-import {configured,watchAuthState,signInWithGoogle,signOutGoogle,loadCloudState,saveCloudState,currentFirebaseUser} from './firebase.js';
-import {scoreOrderedRecall,normalAnswer,firstSuccessSession} from './learning.js';
+import {$,$$,escapeHTML,mean,download,toast,formatDate} from './utils.js?v=20260720-main-merge';
+import {load,get,save,update,replace,reset,mergeBackups} from './storage.js?v=20260720-main-merge';
+import {trainingView,bindTraining} from './training.js?v=20260720-main-merge';
+import {due,scoreReview,action,schedule,uniqueReviews} from './reviews.js?v=20260720-main-merge';
+import {configured,watchAuthState,signInWithGoogle,signOutGoogle,loadCloudState,saveCloudState,currentFirebaseUser} from './firebase.js?v=20260720-main-merge';
+import {scoreOrderedRecall,normalAnswer,firstSuccessSession} from './learning.js?v=20260720-main-merge';
 
 const data = {};
 const challengeState = { step: 'choose', challenge: null, baseline: null, final: null };
