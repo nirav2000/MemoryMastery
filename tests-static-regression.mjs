@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {scoreOrderedRecall, firstSuccessSession} from './js/learning.js';
 import {mergeBackups} from './js/storage.js';
+import {uniqueReviews} from './js/reviews.js';
 
 const index = fs.readFileSync('index.html','utf8');
 const app = fs.readFileSync('js/app.js','utf8');
@@ -61,7 +62,7 @@ assert(fs.existsSync('scripts/validate-major-scenes.mjs'), 'Major scene validati
 assert(fs.existsSync('scripts/generate-major-scene-asset.mjs'), 'resumable asset-generation script should exist');
 assert(fs.existsSync('docs/major-system-asset-audit.md'), 'Major asset audit report should exist');
 
-assert(app.includes('review-form') && app.includes('data-review-answer'), 'reviews should require recall input before revealing answers');
+assert(app.includes('uniqueReviews(get().reviews.filter') && app.includes('review-form') && app.includes('data-review-answer'), 'reviews should deduplicate active cards and require recall input before revealing answers');
 assert(app.includes('Check recall') && app.includes('Source, now revealed'), 'reviews should reveal answers only after checking recall');
 assert(app.includes('words from your first image story'), 'review labels should say what is being reviewed, not generic memory set jargon');
 assert(!app.includes('Try to remember first. Looking again comes after the effort.'), 'today copy should avoid abstract retrieval jargon');
@@ -101,4 +102,8 @@ const merged = mergeBackups({version:1,profile:{currentDay:3},firstSuccess:{comp
 assert.equal(merged.profile.currentDay, 6);
 assert.equal(merged.results.length, 2);
 assert.equal(merged.firstSuccess.completed, true);
+
+const duplicateReviewBase = {sessionDay:0,title:'First success: Planets',material:['A','B'],status:'active',nextReviewAt:0,createdAt:1,intervalIndex:0,strength:'weak'};
+assert.equal(uniqueReviews([{...duplicateReviewBase,id:'a'},{...duplicateReviewBase,id:'b',createdAt:2,intervalIndex:1,strength:'growing'}]).length, 1, 'duplicate review cards should collapse to one logical review');
+
 console.log('static regression checks ok');
