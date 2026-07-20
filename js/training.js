@@ -32,8 +32,8 @@ function warmupCopy(curriculum) {
   }
   return {
     title: `1. Retrieval warm-up · ${escapeHTML(previous.title)}`,
-    text: `Before today’s lesson, recall the previous task: ${escapeHTML(previous.material.slice(0, 6).map(displayItem).join(', '))}${previous.material.length > 6 ? '…' : ''}`,
-    quote: 'Try first without looking. Then strengthen only the items that were vague or missing.'
+    text: `Before today’s lesson, recall the previous task from memory: ${escapeHTML(previous.title)}. Keep the source closed until after you have tried.`,
+    quote: 'First try to bring back the images yourself. Then check the source and strengthen only what felt vague or missing.'
   };
 }
 
@@ -47,11 +47,11 @@ export function trainingView(curriculum) {
   return `<p class="eyebrow">Week ${session.week} · ${session.belt} belt · phase ${session.phase}</p>
   <h1>${escapeHTML(session.title)}</h1>
   <p class="lead">Encode and retrieve ${session.material.length} items with deliberate, vivid associations.</p>
-  <section class="card" id="warm"><h2>${warmup.title}</h2><p>${warmup.text}</p><blockquote>${warmup.quote}</blockquote><div class="actions segmented" role="group" aria-label="Warm-up recall quality"><button data-warm="clear" aria-pressed="false">Clear</button><button data-warm="vague" class="secondary" aria-pressed="false">Vague</button><button data-warm="missing" class="secondary" aria-pressed="false">Missing</button></div><p id="warmStatus" class="muted" aria-live="polite">Choose the closest match, then repair only weak items.</p></section>
-  <section class="card"><h2>2. Technique drill</h2><p>Use <strong>${escapeHTML(session.technique)}</strong>. Make each image move, exaggerate and interact directly with its location.</p></section>
-  <section class="card"><h2>3. Main challenge · ${session.timeLimitMinutes} min</h2><div id="source" class="material"><ol>${materialList(session.material)}</ol></div><div class="actions"><button id="startRecall">I’m ready — hide material</button></div><form id="recall" class="hidden"><h3>4. Recall test</h3><p><strong>Source hidden.</strong> Enter one answer per line, in order.</p><label for="answers">Your recalled answers</label><textarea id="answers" required autocomplete="off"></textarea><button>Score recall</button></form><div id="score"></div></section>
-  <section class="card"><h2>6. Real-life mission</h2><p>${escapeHTML(session.mission)}</p></section>
-  <section class="card"><h2>7. Reflection</h2><p>${escapeHTML(session.reflection)}</p></section>`;
+  <section class="card training-card" id="warm"><h2>${warmup.title}</h2><p>${warmup.text}</p><blockquote>${warmup.quote}</blockquote><div class="actions segmented" role="group" aria-label="Warm-up recall quality"><button data-warm="clear" aria-pressed="false">Clear</button><button data-warm="vague" class="secondary" aria-pressed="false">Vague</button><button data-warm="missing" class="secondary" aria-pressed="false">Missing</button></div><p id="warmStatus" class="muted" aria-live="polite">Choose the closest match, then repair only weak items.</p></section>
+  <section class="card training-card"><h2>2. Technique drill</h2><p>Use <strong>${escapeHTML(session.technique)}</strong>. Make each image move, exaggerate and interact directly with its location.</p></section>
+  <section class="card training-card"><h2>3. Main challenge · ${session.timeLimitMinutes} min</h2><div id="source" class="material"><ol>${materialList(session.material)}</ol></div><div class="actions"><button id="startRecall">I’m ready — hide material</button></div><form id="recall" class="hidden"><h3>4. Recall test</h3><p><strong>Source hidden.</strong> Enter one answer per line, in order.</p><label for="answers">Your recalled answers</label><textarea id="answers" required autocomplete="off"></textarea><button>Score recall</button></form><div id="score"></div></section>
+  <section class="card training-card"><h2>6. Real-life mission</h2><p>${escapeHTML(session.mission)}</p></section>
+  <section class="card training-card"><h2>7. Reflection</h2><p>${escapeHTML(session.reflection)}</p></section>`;
 }
 
 export function bindTraining() {

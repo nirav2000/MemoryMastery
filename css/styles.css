@@ -247,3 +247,8 @@ body.dark .site-footer nav { background: transparent; }
 @keyframes major-impact { 0% { transform: scale(1) rotate(0); } 40% { transform: scale(1.025) rotate(-1deg); } 100% { transform: scale(1) rotate(0); } }
 @media (prefers-reduced-motion: reduce) { .major-cell.impact { animation: none; } }
 @media (max-width: 560px) { .scene-dl { grid-template-columns: 1fr; } .major-number-row { align-items: flex-start; flex-direction: column; } }
+.training-card > p, .training-card blockquote { max-width: none; }
+.site-footer { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3) var(--space-5); padding-block: var(--space-4); }
+.site-footer nav { align-items: center; padding: 0; }
+.site-footer small { min-height: 44px; display: inline-flex; align-items: center; }
+@media (max-width: 720px) { .site-footer { padding-bottom: calc(84px + env(safe-area-inset-bottom)); } }

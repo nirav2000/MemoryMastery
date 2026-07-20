@@ -30,6 +30,7 @@ assert(app.includes('Source hidden.'), 'final first-success recall must hide sou
 assert(app.includes('schedule(firstSuccessSession(c),result)'), 'first-success completion must schedule a review');
 assert(app.includes('data-recall-item'), 'first-success recall should use item-by-item inputs');
 assert(training.includes('1. Retrieval warm-up · ${escapeHTML(previous.title)}'), 'training warm-up should reference the previous task when available');
+assert(!training.includes('previous.material.slice'), 'warm-up must not reveal answers from the previous task');
 assert(training.includes('data-warm') && training.includes('aria-pressed'), 'warm-up clear/vague/missing controls should be interactive');
 assert(training.includes('4. Recall result') && training.includes('5. Error review') && training.includes('7. Reflection'), 'training flow should not jump from point 3 to point 6 after scoring');
 assert(!training.includes('Never rely on memory alone'), 'training screen should avoid discouraging safety-warning copy in the casual learning flow');
@@ -72,6 +73,8 @@ const css = fs.readFileSync('css/styles.css','utf8');
 assert(css.includes('#dueBadge') && /margin-left:\s*\.6rem/.test(css), 'due badge needs spacing from Progress text');
 assert(css.includes('.profile-link, #authButton { padding-inline: 1.15rem;'), 'header text buttons need internal padding');
 assert(css.includes('.recall-list') && css.includes('.review-form'), 'progress and review layouts need dedicated spacing');
+assert(css.includes('.training-card > p') && css.includes('max-width: none'), 'training cards should not force awkward short-line wrapping');
+assert(css.includes('.site-footer { display: flex') && css.includes('.site-footer small'), 'footer links and copyright should align on one row when space allows');
 assert(css.includes('.memory-thumb .thumb-line') && css.includes('grid-template-columns: auto auto minmax(0, 1fr) auto'), 'inline illustrations should have responsive layout support');
 assert(/\.card\s*\{[^}]*padding:[^}]*margin-block:/s.test(css), 'cards need internal padding and vertical separation to prevent edge text and panel collision');
 assert(/pre\s*\{[^}]*overflow-x:\s*auto[^}]*white-space:\s*pre-wrap/s.test(css), 'archive rebuild commands should wrap or scroll without page overflow');
