@@ -1,7 +1,7 @@
-import {escapeHTML} from './utils.js?v=20260720-main-merge';
-import {get,update} from './storage.js?v=20260720-main-merge';
-import {schedule} from './reviews.js?v=20260720-main-merge';
-import {scoreOrderedRecall} from './learning.js?v=20260720-main-merge';
+import {escapeHTML} from './utils.js?v=20260721-note-drawer';
+import {get,update} from './storage.js?v=20260721-note-drawer';
+import {schedule} from './reviews.js?v=20260721-note-drawer';
+import {scoreOrderedRecall} from './learning.js?v=20260721-note-drawer';
 
 let start = 0;
 let session;
@@ -41,8 +41,9 @@ function materialList(items) {
   return items.map(x => `<li>${escapeHTML(displayItem(x))}</li>`).join('');
 }
 
-function noteValue(key){return get().notes?.find(n=>n.key===key)?.text||''}
-function noteField(key,label,context){return `<label class="note-field">${label}<textarea data-note-key="${escapeHTML(key)}" data-note-context="${escapeHTML(context)}" autocomplete="off" placeholder="Example: I did not know the starting image.">${escapeHTML(noteValue(key))}</textarea></label><p class="muted">Saved automatically. You can edit this here or from Notes.</p>`}
+function setTrainingNoteContext(key, context) {
+  window.dispatchEvent(new CustomEvent('dojo:note-context', { detail: { key, context, href: '#train' } }));
+}
 
 export function trainingView(curriculum) {
   session = curriculum[Math.min(get().profile.currentDay - 1, curriculum.length - 1)];
@@ -50,16 +51,17 @@ export function trainingView(curriculum) {
   return `<p class="eyebrow">Week ${session.week} · ${session.belt} belt · phase ${session.phase}</p>
   <h1>${escapeHTML(session.title)}</h1>
   <p class="lead">Encode and retrieve ${session.material.length} items with deliberate, vivid associations.</p>
-  <section class="card training-card" id="warm"><h2>${warmup.title}</h2><p>${warmup.text}</p><blockquote>${warmup.quote}</blockquote><div class="actions segmented" role="group" aria-label="Warm-up recall quality"><button data-warm="clear" aria-pressed="false">Clear</button><button data-warm="vague" class="secondary" aria-pressed="false">Vague</button><button data-warm="missing" class="secondary" aria-pressed="false">Missing</button></div><p id="warmStatus" class="muted" aria-live="polite">Choose the closest match for the previous memory.</p>${noteField(`warmup:${session.day}`,'Warm-up note',`Day ${session.day} warm-up`)}</section>
+  <section class="card training-card" id="warm"><h2>${warmup.title}</h2><p>${warmup.text}</p><blockquote>${warmup.quote}</blockquote><div class="actions segmented" role="group" aria-label="Warm-up recall quality"><button data-warm="clear" aria-pressed="false">Clear</button><button data-warm="vague" class="secondary" aria-pressed="false">Vague</button><button data-warm="missing" class="secondary" aria-pressed="false">Missing</button></div><p id="warmStatus" class="muted" aria-live="polite">Choose the closest match for the previous memory.</p><p class="muted">Use the Notes tab for anything you want to remember about this warm-up.</p></section>
   <section class="card training-card"><h2>2. Technique drill</h2><p>Use <strong>${escapeHTML(session.technique)}</strong>. Make each image move, exaggerate and interact directly with its location.</p></section>
   <section class="card training-card" id="encodeStep"><h2>3. Main challenge · ${session.timeLimitMinutes} min</h2><div id="encodeStepBody"><div id="source" class="material"><ol>${materialList(session.material)}</ol></div><div class="actions"><button id="startRecall">I’m ready — hide material</button></div></div></section>
-  <section class="card training-card" id="recallStep"><h2><button class="step-toggle" id="openRecallStep" type="button" aria-expanded="false" aria-controls="recallStepBody">4. Recall test</button></h2><div id="recallStepBody" hidden><p id="recallPrompt" class="muted"><strong>Source hidden.</strong> Enter one answer per line, in order.</p><form id="recall"><label for="answers">Your recalled answers</label><textarea id="answers" required autocomplete="off" disabled></textarea>${noteField(`recall:${session.day}`,'Recall issue note',`Day ${session.day} recall test`)}<button id="scoreRecall" disabled>Score recall</button></form></div></section>
+  <section class="card training-card" id="recallStep"><h2><button class="step-toggle" id="openRecallStep" type="button" aria-expanded="false" aria-controls="recallStepBody">4. Recall test</button></h2><div id="recallStepBody" hidden><p id="recallPrompt" class="muted"><strong>Source hidden.</strong> Enter one answer per line, in order.</p><form id="recall"><label for="answers">Your recalled answers</label><textarea id="answers" required autocomplete="off" disabled></textarea><p class="muted">Use the Notes tab to record missing starts, weak links or anything that made recall hard.</p><button id="scoreRecall" disabled>Score recall</button></form></div></section>
   <section class="card training-card" id="errorReview"><h2>5. Error review</h2><p class="muted">After scoring, choose the one repair that will make the next review easier.</p><div id="score"><label for="error">What should you strengthen next?</label><select id="error" disabled><option>Score recall first</option></select></div></section>
   <section class="card training-card"><h2>6. Real-life mission</h2><p>${escapeHTML(session.mission)}</p></section>
   <section class="card training-card"><h2>7. Reflection</h2><p>${escapeHTML(session.reflection)}</p></section>`;
 }
 
 export function bindTraining() {
+  setTrainingNoteContext(`warmup:${session.day}`, `Day ${session.day} warm-up`);
   document.querySelectorAll('[data-warm]').forEach(button => button.addEventListener('click', () => {
     document.querySelectorAll('[data-warm]').forEach(b => {
       const active = b === button;
@@ -70,6 +72,7 @@ export function bindTraining() {
     if (status) {
       const messages={clear:'Clear: keep the route and begin today’s drill.',vague:'Vague: add one concrete sensory detail, then recall it once more.',missing:'Missing: rebuild the first image or location cue before starting today.'};
       status.textContent = messages[button.dataset.warm]||messages.vague;
+      setTrainingNoteContext(`warmup:${session.day}`, `Day ${session.day} warm-up · ${button.dataset.warm}`);
     }
   }));
   const openRecallStep = () => {
@@ -79,6 +82,7 @@ export function bindTraining() {
     document.querySelector('#answers').disabled = false;
     document.querySelector('#scoreRecall').disabled = false;
     start = Date.now();
+    setTrainingNoteContext(`recall:${session.day}`, `Day ${session.day} recall test`);
     document.querySelector('#answers').focus();
   };
   document.querySelector('#startRecall')?.addEventListener('click', openRecallStep);

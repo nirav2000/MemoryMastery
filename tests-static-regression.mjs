@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {scoreOrderedRecall, firstSuccessSession} from './js/learning.js';
 import {mergeBackups} from './js/storage.js';
-import {uniqueReviews} from './js/reviews.js';
+import {reviewKey, uniqueReviews} from './js/reviews.js';
 
 const index = fs.readFileSync('index.html','utf8');
 const app = fs.readFileSync('js/app.js','utf8');
@@ -37,7 +37,8 @@ assert(training.includes('1. Retrieval warm-up · ${escapeHTML(previous.title)}'
 assert(!training.includes('previous.material.slice'), 'warm-up must not reveal answers from the previous task');
 assert(training.includes('data-warm') && training.includes('aria-pressed'), 'warm-up clear/vague/missing controls should be interactive');
 assert(training.includes('Vague: add one concrete sensory detail') && training.includes('Missing: rebuild the first image'), 'warm-up clear/vague/missing should give distinct guidance');
-assert(training.includes('Warm-up note') && training.includes('Recall issue note') && training.includes('data-note-key'), 'training should include editable notes beside warm-up and recall');
+assert(index.includes('id="noteDrawer"') && index.includes('id="noteTab"'), 'app shell should include a floating notes drawer');
+assert(training.includes('dojo:note-context') && training.includes('Use the Notes tab'), 'training should send warm-up and recall context to the floating notes drawer');
 assert(training.includes('>4. Recall test</button>') && training.includes('<h2>5. Error review</h2>') && training.includes('7. Reflection'), 'training flow should show steps 4 and 5 before continuing to 6 and 7');
 assert(training.includes('id="recallStep"') && training.includes('id="errorReview"'), 'recall and error review should be separate visible training cards');
 assert(training.includes('id="openRecallStep"') && training.includes('aria-expanded="false"') && training.includes('id="recallStepBody" hidden'), 'step 4 should start collapsed to its heading and be expandable');
@@ -66,7 +67,9 @@ assert(fs.existsSync('scripts/generate-major-scene-asset.mjs'), 'resumable asset
 assert(fs.existsSync('docs/major-system-asset-audit.md'), 'Major asset audit report should exist');
 
 assert(app.includes('uniqueReviews(get().reviews.filter') && app.includes('review-form') && app.includes('data-review-answer'), 'reviews should deduplicate active cards and require recall input before revealing answers');
-assert(app.includes('Review note') && app.includes('function notesPage') && app.includes('href="#notes"'), 'review notes should be editable beside retrieval and collected on a Notes page');
+assert(app.includes('data-review-card') && app.includes('function notesPage') && app.includes('href="#notes"'), 'review notes should be captured through the floating notes drawer and collected on a Notes page');
+assert(app.includes('function bindNoteDrawer') && app.includes('function setNoteContext'), 'notes drawer should save context-aware notes from any route');
+assert(app.includes('cleanupReviews()'), 'app startup and cloud merge should clean existing duplicate active review rows');
 assert(app.includes('Check recall') && app.includes('Source, now revealed'), 'reviews should reveal answers only after checking recall');
 assert(app.includes('words from your first image story'), 'review labels should say what is being reviewed, not generic memory set jargon');
 assert(!app.includes('Try to remember first. Looking again comes after the effort.'), 'today copy should avoid abstract retrieval jargon');
@@ -113,5 +116,6 @@ assert.equal(merged.firstSuccess.completed, true);
 
 const duplicateReviewBase = {sessionDay:0,title:'First success: Planets',material:['A','B'],status:'active',nextReviewAt:0,createdAt:1,intervalIndex:0,strength:'weak'};
 assert.equal(uniqueReviews([{...duplicateReviewBase,id:'a'},{...duplicateReviewBase,id:'b',createdAt:2,intervalIndex:1,strength:'growing'}]).length, 1, 'duplicate review cards should collapse to one logical review');
+assert.equal(reviewKey({...duplicateReviewBase,sessionDay:1,title:'Older title'}), reviewKey({...duplicateReviewBase,sessionDay:9,title:'Newer title'}), 'review identity should be based on material so old duplicate rows are cleaned even when titles or days changed');
 
 console.log('static regression checks ok');
