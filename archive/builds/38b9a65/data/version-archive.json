@@ -13,22 +13,6 @@
   },
   "versions": [
     {
-      "commit": "38b9a65",
-      "date": "2026-07-21",
-      "label": "Review dedupe cleanup and floating notes drawer",
-      "status": "current",
-      "summary": "Retires duplicate active review rows, keys review identity by material, adds a context-aware notes drawer, and busts cached modules so GitHub Pages serves the fix.",
-      "keyChanges": [
-        "Existing duplicate review cards are compacted at startup and after cloud merge instead of only hidden in the current render.",
-        "The floating Notes tab follows the current route, warm-up, recall test, or retrieval card and stores an editable note with a reference link.",
-        "Inline note boxes were replaced with a single pull-out drawer to keep practice and retrieval screens focused."
-      ],
-      "screenshot": "archive/screenshots/38b9a65.png",
-      "archivePath": "archive/builds/38b9a65/",
-      "latestDataPath": "archive/builds/38b9a65/?data=latest",
-      "compatibilityNote": "Uses Memory Dojo v1 local storage and preserves existing notes and review history while retiring duplicate active rows."
-    },
-    {
       "label": "Work branch retrieval fixes",
       "date": "2026-07-20",
       "commit": "49d5809",
@@ -64,7 +48,7 @@
       "label": "Object illustrations in tools",
       "date": "2026-07-19",
       "commit": "34afef6",
-      "status": "archived",
+      "status": "current",
       "summary": "replaced letter thumbnails with object illustrations for palace and Major examples",
       "keyChanges": [
         "Replaced letter thumbnails with object illustrations for palace and Major examples",
