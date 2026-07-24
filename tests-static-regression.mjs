@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {scoreOrderedRecall, firstSuccessSession} from './js/learning.js';
 import {mergeBackups} from './js/storage.js';
-import {reviewKey, uniqueReviews} from './js/reviews.js';
+import {reviewKey, reviewFamilyKey, uniqueReviews} from './js/reviews.js';
 
 const index = fs.readFileSync('index.html','utf8');
 const app = fs.readFileSync('js/app.js','utf8');
@@ -70,9 +70,11 @@ assert(app.includes('uniqueReviews(get().reviews.filter') && app.includes('revie
 assert(app.includes('data-review-card') && app.includes('function notesPage') && app.includes('href="#notes"'), 'review notes should be captured through the floating notes drawer and collected on a Notes page');
 assert(app.includes('function bindNoteDrawer') && app.includes('function setNoteContext'), 'notes drawer should save context-aware notes from any route');
 assert(app.includes('startPhoneSignIn') && app.includes('finishPhoneSignIn') && app.includes('phoneAuthForm'), 'settings should expose Firebase phone authentication');
+assert(app.includes('Phone sign-in is not available for this region yet') && app.includes('Firebase Authentication SMS settings'), 'phone auth region errors should tell users what the developer must enable');
 assert(app.includes('cleanupReviews()'), 'app startup and cloud merge should clean existing duplicate active review rows');
 assert(app.includes('Check recall') && app.includes('Source, now revealed'), 'reviews should reveal answers only after checking recall');
 assert(app.includes('words from your first image story'), 'review labels should say what is being reviewed, not generic memory set jargon');
+assert(app.includes('function reviewCue') && app.includes('Review ${index+1} of ${total}'), 'review cards should provide a distinct cue when multiple cards are visible');
 assert(!app.includes('Try to remember first. Looking again comes after the effort.'), 'today copy should avoid abstract retrieval jargon');
 assert(app.includes('tool-illustration') && app.includes('assets/tool-palace.svg'), 'library should include useful tool illustrations');
 assert(app.includes('memoryThumb') && app.includes('major-scene-figure') && app.includes('palace-thumb') && app.includes('handbook-thumb'), 'tool pages and handbook should include inline memory thumbnails');
@@ -120,5 +122,6 @@ assert.equal(merged.firstSuccess.completed, true);
 const duplicateReviewBase = {sessionDay:0,title:'First success: Planets',material:['A','B'],status:'active',nextReviewAt:0,createdAt:1,intervalIndex:0,strength:'weak'};
 assert.equal(uniqueReviews([{...duplicateReviewBase,id:'a'},{...duplicateReviewBase,id:'b',createdAt:2,intervalIndex:1,strength:'growing'}]).length, 1, 'duplicate review cards should collapse to one logical review');
 assert.equal(reviewKey({...duplicateReviewBase,sessionDay:1,title:'Older title'}), reviewKey({...duplicateReviewBase,sessionDay:9,title:'Newer title'}), 'review identity should be based on material so old duplicate rows are cleaned even when titles or days changed');
+assert.equal(reviewFamilyKey({...duplicateReviewBase,id:'first-a',title:'First success: shopping',material:['Apple']}), reviewFamilyKey({...duplicateReviewBase,id:'first-b',title:'First success: errands',material:['Post letter']}), 'only one active first-success review should remain visible because the user completed only one first success');
 
 console.log('static regression checks ok');
