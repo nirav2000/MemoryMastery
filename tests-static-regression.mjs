@@ -37,7 +37,7 @@ assert(training.includes('1. Retrieval warm-up · ${escapeHTML(previous.title)}'
 assert(!training.includes('previous.material.slice'), 'warm-up must not reveal answers from the previous task');
 assert(training.includes('data-warm') && training.includes('aria-pressed'), 'warm-up clear/vague/missing controls should be interactive');
 assert(training.includes('Vague: add one concrete sensory detail') && training.includes('Missing: rebuild the first image'), 'warm-up clear/vague/missing should give distinct guidance');
-assert(index.includes('id="noteDrawer"') && index.includes('id="noteTab"'), 'app shell should include a floating notes drawer');
+assert(index.includes('id="noteDrawer"') && index.includes('id="noteTab"') && index.includes('id="noteNavButton"'), 'app shell should include desktop and mobile note drawer controls');
 assert(training.includes('dojo:note-context') && training.includes('Use the Notes tab'), 'training should send warm-up and recall context to the floating notes drawer');
 assert(training.includes('>4. Recall test</button>') && training.includes('<h2>5. Error review</h2>') && training.includes('7. Reflection'), 'training flow should show steps 4 and 5 before continuing to 6 and 7');
 assert(training.includes('id="recallStep"') && training.includes('id="errorReview"'), 'recall and error review should be separate visible training cards');
@@ -69,6 +69,7 @@ assert(fs.existsSync('docs/major-system-asset-audit.md'), 'Major asset audit rep
 assert(app.includes('uniqueReviews(get().reviews.filter') && app.includes('review-form') && app.includes('data-review-answer'), 'reviews should deduplicate active cards and require recall input before revealing answers');
 assert(app.includes('data-review-card') && app.includes('function notesPage') && app.includes('href="#notes"'), 'review notes should be captured through the floating notes drawer and collected on a Notes page');
 assert(app.includes('function bindNoteDrawer') && app.includes('function setNoteContext'), 'notes drawer should save context-aware notes from any route');
+assert(app.includes('startPhoneSignIn') && app.includes('finishPhoneSignIn') && app.includes('phoneAuthForm'), 'settings should expose Firebase phone authentication');
 assert(app.includes('cleanupReviews()'), 'app startup and cloud merge should clean existing duplicate active review rows');
 assert(app.includes('Check recall') && app.includes('Source, now revealed'), 'reviews should reveal answers only after checking recall');
 assert(app.includes('words from your first image story'), 'review labels should say what is being reviewed, not generic memory set jargon');
@@ -88,6 +89,8 @@ assert(app.includes('aria-label'), 'due badge needs an accessible label when vis
 const css = fs.readFileSync('css/styles.css','utf8');
 assert(css.includes('#dueBadge') && /margin-left:\s*\.6rem/.test(css), 'due badge needs spacing from Progress text');
 assert(css.includes('.profile-link, #authButton { padding-inline: 1.15rem;'), 'header text buttons need internal padding');
+assert(!index.includes('css/print.css') && !fs.existsSync('css/print.css') && css.includes('@media print'), 'print styles should live in the single app stylesheet');
+assert(css.includes('.note-nav-button') && css.includes('@media (max-width: 760px)') && css.includes('bottom: calc(64px + env(safe-area-inset-bottom))'), 'mobile notes should use a bottom-nav icon instead of a side tab');
 assert(css.includes('.recall-list') && css.includes('.review-form'), 'progress and review layouts need dedicated spacing');
 assert(css.includes('.training-card > p') && css.includes('max-width: none'), 'training cards should not force awkward short-line wrapping');
 assert(css.includes('.step-toggle') && css.includes('min-height: 44px'), 'step heading toggle should be visible and have a touch-sized target');
