@@ -51,6 +51,9 @@ assert(index.includes('© 2026 Memory Mastery.') && !index.includes('not a subst
 assert(storage.includes('firstSuccess:{completed:false}'), 'storage migration must include firstSuccess default');
 assert(storage.includes('notes:[]') && storage.includes('notes:mergeByKey'), 'storage must preserve editable retrieval notes locally and across cloud merge');
 assert(storage.includes('mergeBackups'), 'storage must merge cloud and device progress instead of overwriting one source');
+assert(storage.includes('designOverrides:{}') && storage.includes('designOverrides:{...(cloud.designOverrides||{}),...(local.designOverrides||{})}'), 'storage must default and merge design overrides');
+assert(app.includes('function applyDesignOverrides()') && app.includes("style.id='designOverrides'"), 'visual overrides should be applied through a dedicated style element');
+assert(app.includes('DESIGN_OVERRIDE_PROPERTIES') && app.includes('CSS.supports') && !app.includes('rawCss'), 'visual overrides must use an allowlist and validated CSS values rather than raw CSS');
 
 
 assert.equal(majorScenes.entries.length, 100, 'Major scene data should represent 00-99');
@@ -121,6 +124,8 @@ const merged = mergeBackups({version:1,profile:{currentDay:3},firstSuccess:{comp
 assert.equal(merged.profile.currentDay, 6);
 assert.equal(merged.results.length, 2);
 assert.equal(merged.firstSuccess.completed, true);
+const mergedOverrides = mergeBackups({...merged,designOverrides:{'--accent':'#123456','--space-4':'1rem'}},{...merged,designOverrides:{'--accent':'#abcdef','--paper':'#fff'}});
+assert.deepEqual(mergedOverrides.designOverrides,{'--accent':'#123456','--paper':'#fff','--space-4':'1rem'}, 'device overrides should win conflicts while unique cloud overrides are preserved');
 
 const duplicateReviewBase = {sessionDay:0,title:'First success: Planets',material:['A','B'],status:'active',nextReviewAt:0,createdAt:1,intervalIndex:0,strength:'weak'};
 assert.equal(uniqueReviews([{...duplicateReviewBase,id:'a'},{...duplicateReviewBase,id:'b',createdAt:2,intervalIndex:1,strength:'growing'}]).length, 1, 'duplicate review cards should collapse to one logical review');
