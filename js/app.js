@@ -145,6 +145,7 @@ function bindLinkedCards(){
 
 function route(){const hash=location.hash.slice(1)||'dashboard';const views={dashboard,learn,library,progress,train:()=>trainingView(data.curriculum),reviews:reviewView,palaces,major,pao:()=>genericBuilder('pao','Person–Action–Object',['Number or card','Person','Action','Object','Visual description','Familiarity','Distinctiveness'],'Choose instantly recognisable people, distinctive actions and concrete objects. Avoid duplicates.'),symbols:()=>genericBuilder('symbols','Symbol bank',['concept','image','meaning','exampleUse','category','strength']),names:()=>genericBuilder('nameImages','Name image builder',['Name','Sound-alike image','Meaning or origin','Distinctive image','Example association','Notes']),belts,guidance,notes:notesPage,contract,poster,settings,versions,design: designStudio,'major-scenes-review':majorScenesReview,terms:()=>legalPage('terms'),privacy:()=>legalPage('privacy'),cookies:()=>legalPage('cookies')};$('#main').innerHTML=(views[hash]||dashboard)();$$('nav a').forEach(a=>{const active=a.hash===`#${hash}`;a.classList.toggle('active',active);active?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current')});routeNoteContext(hash);bind(hash);bindLinkedCards();badges();scrollTo(0,0)}
 function bind(hash){
+  $('[data-action="start-design-selection"]')?.addEventListener('click',startDesignSelection);
   if(hash==='train') bindTraining();
   $$('[data-note-key]').forEach(el=>el.addEventListener('input',()=>saveNote(el.dataset.noteKey,el.dataset.noteContext,el.value,el.dataset.noteHref||'')));
   $$('[data-review-card]').forEach(card=>{const activate=()=>setNoteContext(card.dataset.noteKey,card.dataset.noteContext,'#reviews');card.addEventListener('focusin',activate);card.addEventListener('click',activate);$('details',card)?.addEventListener('toggle',e=>{if(e.target.open)activate()})});
@@ -206,6 +207,19 @@ const DESIGN_OVERRIDE_PROPERTIES={
   '--ink':'color',
   '--muted':'color'
 };
+const DESIGN_COMPONENT_GROUPS=[
+  {selector:'.page-hero',key:'hero',label:'Hero sections'},
+  {selector:'.card',key:'card',label:'Cards'},
+  {selector:'.path-card',key:'pathCard',label:'Navigation cards'},
+  {selector:'button, .button',key:'button',label:'Buttons'},
+  {selector:'.site-footer',key:'footer',label:'Footer'},
+  {selector:'main',key:'main',label:'Page content area'},
+  {selector:'header',key:'header',label:'Header'}
+];
+const DESIGN_COMPONENT_PROPERTIES={'padding':'padding','gap':'gap','border-radius':'border-radius'};
+const DESIGN_COMPONENT_SELECTOR=DESIGN_COMPONENT_GROUPS.map(group=>group.selector).join(',');
+let designSelectionActive=false;
+let designSelectionTarget=null;
 function validDesignOverride(token,value){
   if(!Object.hasOwn(DESIGN_OVERRIDE_PROPERTIES,token)||typeof value!=='string')return false;
   const clean=value.trim();
@@ -216,7 +230,58 @@ function applyDesignOverrides(){
   if(!style){style=document.createElement('style');style.id='designOverrides';document.head.append(style)}
   const overrides=get().designOverrides||{};
   const declarations=Object.entries(overrides).filter(([token,value])=>validDesignOverride(token,value)).map(([token,value])=>`${token}:${value.trim()}`).join(';');
-  style.textContent=declarations?`:root,body,body.dark,body[data-theme],body.dark[data-theme]{${declarations}}`:'';
+  const componentRules=DESIGN_COMPONENT_GROUPS.map(group=>{
+    const values=overrides.components?.[group.key];
+    if(!values||typeof values!=='object'||Array.isArray(values))return '';
+    const safe=Object.entries(values).filter(([property,value])=>validComponentOverride(property,value)).map(([property,value])=>`${property}:${value.trim()}`).join(';');
+    return safe?`${group.selector}{${safe}}`:'';
+  }).join('');
+  style.textContent=`${declarations?`:root,body,body.dark,body[data-theme],body.dark[data-theme]{${declarations}}`:''}${componentRules}`;
+}
+function validComponentOverride(property,value){
+  return Object.hasOwn(DESIGN_COMPONENT_PROPERTIES,property)&&typeof value==='string'&&value.trim().length>0&&value.trim().length<=40&&!/[;{}@\\]|\/\*/.test(value)&&CSS.supports(DESIGN_COMPONENT_PROPERTIES[property],value.trim());
+}
+function resolveDesignComponent(target){
+  const element=target instanceof Element?target.closest(DESIGN_COMPONENT_SELECTOR):null;
+  if(!element||element.closest('#designSelectionPanel'))return null;
+  const group=DESIGN_COMPONENT_GROUPS.find(item=>element.matches(item.selector));
+  return group?{element,group}:null;
+}
+function moveDesignSelection(event){
+  const resolved=resolveDesignComponent(event.target);
+  if(designSelectionTarget!==resolved?.element){designSelectionTarget?.classList.remove('design-selection-highlight');designSelectionTarget=resolved?.element||null;designSelectionTarget?.classList.add('design-selection-highlight')}
+}
+function chooseDesignComponent(event){
+  if(event.target.closest?.('#designSelectionPanel'))return;
+  const resolved=resolveDesignComponent(event.target);
+  if(!resolved)return;
+  event.preventDefault();event.stopPropagation();
+  openDesignEditor(resolved.group);
+}
+function designEditorMarkup(group){
+  const values=get().designOverrides?.components?.[group.key]||{};
+  const field=(property,label,placeholder)=>`<label>${label}<input name="${property}" value="${escapeHTML(values[property]||'')}" placeholder="${placeholder}" autocomplete="off"></label>`;
+  return `<div class="design-editor-heading"><div><p class="eyebrow">Selected group</p><h2 id="designEditorTitle">${escapeHTML(group.label)}</h2></div><button type="button" class="secondary" data-stop-design aria-label="Close design selection">Close</button></div><p class="muted">Changes apply safely to every ${escapeHTML(group.label.toLowerCase())} element.</p><form data-design-editor="${group.key}">${field('padding','Padding','1.5rem')}${field('gap','Gap','1rem')}${field('border-radius','Corner radius','20px')}<div class="actions"><button>Apply to group</button><button type="button" class="secondary" data-reset-design>Reset group</button></div></form>`;
+}
+function openDesignEditor(group){
+  let panel=$('#designSelectionPanel');
+  if(!panel){panel=document.createElement('aside');panel.id='designSelectionPanel';panel.className='design-selection-panel';panel.setAttribute('aria-labelledby','designEditorTitle');document.body.append(panel)}
+  panel.innerHTML=designEditorMarkup(group);
+  $('[data-stop-design]',panel).onclick=stopDesignSelection;
+  $('[data-reset-design]',panel).onclick=()=>{update(s=>{if(s.designOverrides?.components)delete s.designOverrides.components[group.key]});applyDesignOverrides();openDesignEditor(group);toast(`${group.label} reset`)};
+  $('form',panel).onsubmit=event=>{event.preventDefault();const values=Object.fromEntries(new FormData(event.target));const invalid=Object.entries(values).find(([property,value])=>value.trim()&&!validComponentOverride(property,value));if(invalid){toast(`Use a valid CSS ${invalid[0]} value`);return}update(s=>{s.designOverrides=s.designOverrides||{};s.designOverrides.components=s.designOverrides.components||{};s.designOverrides.components[group.key]=Object.fromEntries(Object.entries(values).filter(([,value])=>value.trim()).map(([property,value])=>[property,value.trim()]))});applyDesignOverrides();toast(`${group.label} updated`)};
+  panel.hidden=false;$('input',panel)?.focus();
+}
+function startDesignSelection(){
+  if(designSelectionActive)return;
+  designSelectionActive=true;document.body.classList.add('design-selection-active');
+  setTimeout(()=>{document.addEventListener('pointermove',moveDesignSelection,true);document.addEventListener('click',chooseDesignComponent,true)},0);
+  document.addEventListener('keydown',handleDesignSelectionKey);
+  toast('Move over an element and click to edit its component group. Press Escape to stop.');
+}
+function handleDesignSelectionKey(event){if(event.key==='Escape')stopDesignSelection()}
+function stopDesignSelection(){
+  designSelectionActive=false;document.removeEventListener('pointermove',moveDesignSelection,true);document.removeEventListener('click',chooseDesignComponent,true);document.removeEventListener('keydown',handleDesignSelectionKey);document.body.classList.remove('design-selection-active');designSelectionTarget?.classList.remove('design-selection-highlight');designSelectionTarget=null;$('#designSelectionPanel')?.remove();
 }
 function toggleTheme(){update(s=>s.profile.theme=s.profile.theme==='dark'?'light':'dark');applyTheme()}
 let cloudSaveTimer;async function queueCloudSave(){if(!configured())return;const user=await currentFirebaseUser();if(!user)return;clearTimeout(cloudSaveTimer);cloudSaveTimer=setTimeout(()=>saveCloudState(user.uid,get()).catch(e=>console.warn('Cloud autosave failed',e)),900)}
