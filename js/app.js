@@ -27,9 +27,10 @@ async function boot(){
   cleanupReviews();
   bindNoteDrawer();
   applyTheme();
+  applyDesignOverrides();
   route();
   window.addEventListener('hashchange',route);
-  window.addEventListener('dojo:data',()=>{badges();queueCloudSave()});
+  window.addEventListener('dojo:data',()=>{badges();applyDesignOverrides();queueCloudSave()});
 }
 
 function page(kicker,title,body,action=''){return `<section class="page-hero"><p class="eyebrow">${kicker}</p><h1>${title}</h1>${body}${action}</section>`}
@@ -178,7 +179,7 @@ function bind(hash){
   $('#contractForm')?.addEventListener('submit',e=>{e.preventDefault();save({contract:Object.fromEntries(new FormData(e.target))});toast('Contract saved')});
   $('#exportJson')?.addEventListener('click',()=>download(`memory-mastery-${new Date().toISOString().slice(0,10)}.json`,JSON.stringify(get(),null,2)));
   $('#resultsCsv')?.addEventListener('click',()=>download('daily-results.csv','day,date,type,technique,accuracy,correct,incorrect,omitted,orderErrors\n'+get().results.map(r=>[r.day,new Date(r.date).toISOString(),r.type,r.technique,r.accuracy,r.correct,r.incorrect,r.omitted,r.orderErrors].map(v=>`"${String(v).replaceAll('"','""')}"`).join(',')).join('\n'),'text/csv'));
-  $('#importJson')?.addEventListener('change',async e=>{try{const d=JSON.parse(await e.target.files[0].text());if(confirm('Import will replace current local data. Export a backup first. Continue?')){replace(d);route();toast('Backup imported')}}catch(err){alert(err.message)}});
+  $('#importJson')?.addEventListener('change',async e=>{try{const d=JSON.parse(await e.target.files[0].text());if(confirm('Import will replace current local data. Export a backup first. Continue?')){replace(d);applyDesignOverrides();route();toast('Backup imported')}}catch(err){alert(err.message)}});
   $('#reset')?.addEventListener('click',()=>{if(confirm('Permanently erase all local Memory Mastery data?')){reset();location.reload()}});
   $('#themeSetting')?.addEventListener('click',toggleTheme);
   $('#colorTheme')?.addEventListener('change',e=>{update(s=>s.profile.colorTheme=e.target.value);applyTheme();toast('Colour theme saved')});
@@ -191,9 +192,35 @@ function bind(hash){
 function speakText(text){if(!text)return; if('speechSynthesis' in window){speechSynthesis.cancel();speechSynthesis.speak(new SpeechSynthesisUtterance(text))}else toast(text)}
 function badges(){const badge=$('#dueBadge');if(!badge)return;const count=due().length;badge.textContent=count;badge.hidden=count===0;badge.setAttribute('aria-label',count===1?'1 review due':`${count} reviews due`)}
 function applyTheme(){const p=get().profile;document.body.classList.toggle('dark',p.theme==='dark');document.body.dataset.theme=p.colorTheme||'pastelPaper';document.body.dataset.ui=p.uiStyle||'smartpaper'}
+const DESIGN_OVERRIDE_PROPERTIES={
+  '--content':'max-width',
+  '--space-3':'margin',
+  '--space-4':'margin',
+  '--space-5':'margin',
+  '--radius-m':'border-radius',
+  '--radius-l':'border-radius',
+  '--accent':'color',
+  '--accent-strong':'color',
+  '--paper':'color',
+  '--surface':'color',
+  '--ink':'color',
+  '--muted':'color'
+};
+function validDesignOverride(token,value){
+  if(!Object.hasOwn(DESIGN_OVERRIDE_PROPERTIES,token)||typeof value!=='string')return false;
+  const clean=value.trim();
+  return clean.length>0&&clean.length<=80&&!/[;{}@\\]|\/\*/.test(clean)&&CSS.supports(DESIGN_OVERRIDE_PROPERTIES[token],clean);
+}
+function applyDesignOverrides(){
+  let style=document.querySelector('#designOverrides');
+  if(!style){style=document.createElement('style');style.id='designOverrides';document.head.append(style)}
+  const overrides=get().designOverrides||{};
+  const declarations=Object.entries(overrides).filter(([token,value])=>validDesignOverride(token,value)).map(([token,value])=>`${token}:${value.trim()}`).join(';');
+  style.textContent=declarations?`:root,body,body.dark,body[data-theme],body.dark[data-theme]{${declarations}}`:'';
+}
 function toggleTheme(){update(s=>s.profile.theme=s.profile.theme==='dark'?'light':'dark');applyTheme()}
 let cloudSaveTimer;async function queueCloudSave(){if(!configured())return;const user=await currentFirebaseUser();if(!user)return;clearTimeout(cloudSaveTimer);cloudSaveTimer=setTimeout(()=>saveCloudState(user.uid,get()).catch(e=>console.warn('Cloud autosave failed',e)),900)}
-async function initialiseAuth(){if(!configured())return;try{await watchAuthState(async user=>{signedInEmail=user?.email||'';const archiveOwner=signedInEmail.toLowerCase()===ARCHIVE_OWNER_EMAIL;document.body.classList.toggle('owner-archive', archiveOwner);archiveOwner?sessionStorage.setItem('memoryMasteryArchiveOwner','1'):sessionStorage.removeItem('memoryMasteryArchiveOwner');const button=$('#authButton');if(button)button.textContent=user?'Sign out':'Sign in';if(!user)return;const local=get(), cloud=await loadCloudState(user.uid);if(cloud){const merged=mergeBackups(local,cloud);replace(merged);cleanupReviews();await saveCloudState(user.uid,get());applyTheme();route();toast('Device and cloud progress combined.')}else{await saveCloudState(user.uid,local);toast('Guest progress saved to your account.')}})}catch(e){console.warn('Firebase auth unavailable',e)}}
+async function initialiseAuth(){if(!configured())return;try{await watchAuthState(async user=>{signedInEmail=user?.email||'';const archiveOwner=signedInEmail.toLowerCase()===ARCHIVE_OWNER_EMAIL;document.body.classList.toggle('owner-archive', archiveOwner);archiveOwner?sessionStorage.setItem('memoryMasteryArchiveOwner','1'):sessionStorage.removeItem('memoryMasteryArchiveOwner');const button=$('#authButton');if(button)button.textContent=user?'Sign out':'Sign in';if(!user)return;const local=get(), cloud=await loadCloudState(user.uid);if(cloud){const merged=mergeBackups(local,cloud);replace(merged);cleanupReviews();await saveCloudState(user.uid,get());applyTheme();applyDesignOverrides();route();toast('Device and cloud progress combined.')}else{await saveCloudState(user.uid,local);toast('Guest progress saved to your account.')}})}catch(e){console.warn('Firebase auth unavailable',e)}}
 async function handleAuth(){if(!configured())return alert('Add Firebase web configuration in js/firebase.js first. Guest mode is fully available.');location.hash='#settings';setTimeout(()=>$('#authPanel')?.scrollIntoView({behavior:'smooth',block:'start'}),0);toast('Choose Google or phone sign-in in Settings.')}
 async function startGoogleSignIn(){if(!configured())return alert('Add Firebase web configuration in js/firebase.js first.');try{const user=(await signInWithGoogle()).user;toast(`Signed in as ${user.displayName||user.email||'Google user'}. Sync is checking for existing progress.`)}catch(e){if(e.code==='auth/popup-closed-by-user')return;alert(`Google sign-in failed: ${e.message}`)}}
 function phoneAuthMessage(error){if(error?.code==='auth/operation-not-allowed'||/region|sms|country/i.test(error?.message||''))return 'Phone sign-in is not available for this region yet. Use Google sign-in for now, and ask the developer to enable your country/region in Firebase Authentication SMS settings.';return error?.message||'Phone sign-in failed.'}
