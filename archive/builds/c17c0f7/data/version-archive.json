@@ -13,26 +13,10 @@
   },
   "versions": [
     {
-      "commit": "c17c0f7",
-      "date": "2026-07-24",
-      "label": "Phone sign-in, mobile notes icon and single stylesheet",
-      "status": "current",
-      "summary": "Adds Firebase phone verification from Settings, moves notes to the bottom navigation on mobile, shrinks the desktop notes tab, and consolidates print CSS into the single app stylesheet.",
-      "keyChanges": [
-        "Firebase sync now offers Google and phone-number authentication paths from the same Settings panel.",
-        "The notes drawer uses a smaller side tab on desktop and a bottom-navigation icon on mobile so it no longer overlays reading flow.",
-        "Root app CSS is consolidated into css/styles.css, including print rules, so global fixes are managed in one stylesheet."
-      ],
-      "screenshot": "archive/screenshots/c17c0f7.png",
-      "archivePath": "archive/builds/c17c0f7/",
-      "latestDataPath": "archive/builds/c17c0f7/?data=latest",
-      "compatibilityNote": "Uses Memory Dojo v1 local storage and Firebase Auth v10 phone verification with invisible reCAPTCHA."
-    },
-    {
       "commit": "38b9a65",
       "date": "2026-07-21",
       "label": "Review dedupe cleanup and floating notes drawer",
-      "status": "archived",
+      "status": "current",
       "summary": "Retires duplicate active review rows, keys review identity by material, adds a context-aware notes drawer, and busts cached modules so GitHub Pages serves the fix.",
       "keyChanges": [
         "Existing duplicate review cards are compacted at startup and after cloud merge instead of only hidden in the current render.",
