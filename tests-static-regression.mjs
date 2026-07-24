@@ -16,6 +16,9 @@ assert(!index.includes('href="#palaces"'), 'advanced tools must not be primary n
 for (const link of ['#versions','#terms','#privacy','#cookies']) assert(index.includes(`href="${link}"`), `missing footer link ${link}`);
 assert(app.includes('version-archive') && app.includes('major-system-scenes'), 'app should load archive and Major scene data');
 assert(app.includes('function versions()'), 'settings should expose a version archive route outside primary navigation');
+assert(app.includes('function designStudio()') && app.includes('design: designStudio'), 'settings should expose the owner design studio route outside primary navigation');
+assert(app.includes('href="#design"') && app.includes('Start selecting elements'), 'owner settings should link to the design studio and give it one clear action');
+assert(!index.includes('href="#design"'), 'the design studio must not appear in the four primary navigation items');
 assert(app.includes('ARCHIVE_OWNER_EMAIL') && app.includes('myaeixa@gmail.com'), 'version archive should be gated to the owner email');
 assert(app.includes('memoryMasteryArchiveOwner'), 'owner sign-in should mark the same-origin developer archive session');
 assert(!index.includes('data-owner-only'), 'footer version switcher should stay visible so users can find the version archive');
