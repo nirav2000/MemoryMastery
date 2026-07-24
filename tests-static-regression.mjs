@@ -51,9 +51,14 @@ assert(index.includes('© 2026 Memory Mastery.') && !index.includes('not a subst
 assert(storage.includes('firstSuccess:{completed:false}'), 'storage migration must include firstSuccess default');
 assert(storage.includes('notes:[]') && storage.includes('notes:mergeByKey'), 'storage must preserve editable retrieval notes locally and across cloud merge');
 assert(storage.includes('mergeBackups'), 'storage must merge cloud and device progress instead of overwriting one source');
-assert(storage.includes('designOverrides:{}') && storage.includes('designOverrides:{...(cloud.designOverrides||{}),...(local.designOverrides||{})}'), 'storage must default and merge design overrides');
+assert(storage.includes('designOverrides:{}') && storage.includes('const designOverrides={...(cloud.designOverrides||{}),...(local.designOverrides||{})}'), 'storage must default and merge design overrides');
 assert(app.includes('function applyDesignOverrides()') && app.includes("style.id='designOverrides'"), 'visual overrides should be applied through a dedicated style element');
 assert(app.includes('DESIGN_OVERRIDE_PROPERTIES') && app.includes('CSS.supports') && !app.includes('rawCss'), 'visual overrides must use an allowlist and validated CSS values rather than raw CSS');
+assert(app.includes('function startDesignSelection()') && app.includes('function stopDesignSelection()'), 'design studio should start and cleanly stop selection mode');
+assert(app.includes("document.addEventListener('pointermove',moveDesignSelection,true)") && app.includes("document.addEventListener('click',chooseDesignComponent,true)"), 'selection mode should inspect pointer movement and intercept selection clicks');
+for(const label of ['Hero sections','Cards','Navigation cards','Buttons','Footer','Page content area','Header'])assert(app.includes(`label:'${label}'`), `missing safe design component group ${label}`);
+assert(app.includes("target.closest(DESIGN_COMPONENT_SELECTOR)") && app.includes('design-selection-highlight'), 'hover should resolve the nearest editable component and highlight it');
+assert(app.includes('designOverrides.components') && app.includes('validComponentOverride'), 'component changes should be stored by safe group and property');
 
 
 assert.equal(majorScenes.entries.length, 100, 'Major scene data should represent 00-99');
@@ -126,6 +131,8 @@ assert.equal(merged.results.length, 2);
 assert.equal(merged.firstSuccess.completed, true);
 const mergedOverrides = mergeBackups({...merged,designOverrides:{'--accent':'#123456','--space-4':'1rem'}},{...merged,designOverrides:{'--accent':'#abcdef','--paper':'#fff'}});
 assert.deepEqual(mergedOverrides.designOverrides,{'--accent':'#123456','--paper':'#fff','--space-4':'1rem'}, 'device overrides should win conflicts while unique cloud overrides are preserved');
+const mergedComponents = mergeBackups({...merged,designOverrides:{components:{card:{padding:'1.5rem'},button:{gap:'.5rem'}}}},{...merged,designOverrides:{components:{card:{padding:'1rem','border-radius':'12px'},hero:{gap:'2rem'}}}});
+assert.deepEqual(mergedComponents.designOverrides.components,{card:{padding:'1.5rem','border-radius':'12px'},hero:{gap:'2rem'},button:{gap:'.5rem'}}, 'component overrides should merge by group and property without losing device or cloud settings');
 
 const duplicateReviewBase = {sessionDay:0,title:'First success: Planets',material:['A','B'],status:'active',nextReviewAt:0,createdAt:1,intervalIndex:0,strength:'weak'};
 assert.equal(uniqueReviews([{...duplicateReviewBase,id:'a'},{...duplicateReviewBase,id:'b',createdAt:2,intervalIndex:1,strength:'growing'}]).length, 1, 'duplicate review cards should collapse to one logical review');
