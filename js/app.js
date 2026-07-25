@@ -143,7 +143,7 @@ function bindLinkedCards(){
   });
 }
 
-function route(){const hash=location.hash.slice(1)||'dashboard';const views={dashboard,learn,library,progress,train:()=>trainingView(data.curriculum),reviews:reviewView,palaces,major,pao:()=>genericBuilder('pao','Person–Action–Object',['Number or card','Person','Action','Object','Visual description','Familiarity','Distinctiveness'],'Choose instantly recognisable people, distinctive actions and concrete objects. Avoid duplicates.'),symbols:()=>genericBuilder('symbols','Symbol bank',['concept','image','meaning','exampleUse','category','strength']),names:()=>genericBuilder('nameImages','Name image builder',['Name','Sound-alike image','Meaning or origin','Distinctive image','Example association','Notes']),belts,guidance,notes:notesPage,contract,poster,settings,versions,design: designStudio,'major-scenes-review':majorScenesReview,terms:()=>legalPage('terms'),privacy:()=>legalPage('privacy'),cookies:()=>legalPage('cookies')};$('#main').innerHTML=(views[hash]||dashboard)();$$('nav a').forEach(a=>{const active=a.hash===`#${hash}`;a.classList.toggle('active',active);active?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current')});routeNoteContext(hash);bind(hash);bindLinkedCards();badges();scrollTo(0,0)}
+function route(){const hash=location.hash.slice(1)||'dashboard';document.body.dataset.designRoute=hash;const views={dashboard,learn,library,progress,train:()=>trainingView(data.curriculum),reviews:reviewView,palaces,major,pao:()=>genericBuilder('pao','Person–Action–Object',['Number or card','Person','Action','Object','Visual description','Familiarity','Distinctiveness'],'Choose instantly recognisable people, distinctive actions and concrete objects. Avoid duplicates.'),symbols:()=>genericBuilder('symbols','Symbol bank',['concept','image','meaning','exampleUse','category','strength']),names:()=>genericBuilder('nameImages','Name image builder',['Name','Sound-alike image','Meaning or origin','Distinctive image','Example association','Notes']),belts,guidance,notes:notesPage,contract,poster,settings,versions,design: designStudio,'major-scenes-review':majorScenesReview,terms:()=>legalPage('terms'),privacy:()=>legalPage('privacy'),cookies:()=>legalPage('cookies')};$('#main').innerHTML=(views[hash]||dashboard)();$$('nav a').forEach(a=>{const active=a.hash===`#${hash}`;a.classList.toggle('active',active);active?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current')});routeNoteContext(hash);bind(hash);bindLinkedCards();badges();scrollTo(0,0)}
 function bind(hash){
   $('[data-action="start-design-selection"]')?.addEventListener('click',startDesignSelection);
   if(hash==='train') bindTraining();
@@ -218,6 +218,7 @@ const DESIGN_COMPONENT_GROUPS=[
 ];
 const DESIGN_COMPONENT_PROPERTIES={'padding':'padding','gap':'gap','border-radius':'border-radius'};
 const DESIGN_COMPONENT_SELECTOR=DESIGN_COMPONENT_GROUPS.map(group=>group.selector).join(',');
+const DESIGN_SYSTEM_GROUPS=new Set(['card','pathCard','button']);
 let designSelectionActive=false;
 let designSelectionTarget=null;
 function validDesignOverride(token,value){
@@ -225,27 +226,42 @@ function validDesignOverride(token,value){
   const clean=value.trim();
   return clean.length>0&&clean.length<=80&&!/[;{}@\\]|\/\*/.test(clean)&&CSS.supports(DESIGN_OVERRIDE_PROPERTIES[token],clean);
 }
+function validComponentOverride(property,value){
+  return Object.hasOwn(DESIGN_COMPONENT_PROPERTIES,property)&&typeof value==='string'&&value.trim().length>0&&value.trim().length<=40&&!/[;{}@\\]|\/\*/.test(value)&&CSS.supports(DESIGN_COMPONENT_PROPERTIES[property],value.trim());
+}
+function componentDeclarations(values){
+  if(!values||typeof values!=='object'||Array.isArray(values))return '';
+  return Object.entries(values).filter(([property,value])=>validComponentOverride(property,value)).map(([property,value])=>`${property}:${value.trim()}`).join(';');
+}
+function safeInstanceKey(element){
+  const key=element?.dataset.designKey||element?.id||'';
+  return /^[A-Za-z][A-Za-z0-9_-]{0,79}$/.test(key)?key:'';
+}
 function applyDesignOverrides(){
   let style=document.querySelector('#designOverrides');
   if(!style){style=document.createElement('style');style.id='designOverrides';document.head.append(style)}
   const overrides=get().designOverrides||{};
   const declarations=Object.entries(overrides).filter(([token,value])=>validDesignOverride(token,value)).map(([token,value])=>`${token}:${value.trim()}`).join(';');
-  const componentRules=DESIGN_COMPONENT_GROUPS.map(group=>{
-    const values=overrides.components?.[group.key];
-    if(!values||typeof values!=='object'||Array.isArray(values))return '';
-    const safe=Object.entries(values).filter(([property,value])=>validComponentOverride(property,value)).map(([property,value])=>`${property}:${value.trim()}`).join(';');
-    return safe?`${group.selector}{${safe}}`:'';
-  }).join('');
-  style.textContent=`${declarations?`:root,body,body.dark,body[data-theme],body.dark[data-theme]{${declarations}}`:''}${componentRules}`;
-}
-function validComponentOverride(property,value){
-  return Object.hasOwn(DESIGN_COMPONENT_PROPERTIES,property)&&typeof value==='string'&&value.trim().length>0&&value.trim().length<=40&&!/[;{}@\\]|\/\*/.test(value)&&CSS.supports(DESIGN_COMPONENT_PROPERTIES[property],value.trim());
+  const rules=[];
+  for(const group of DESIGN_COMPONENT_GROUPS){
+    const globalValues=overrides.global?.[group.key]||overrides.components?.[group.key];
+    const globalSafe=componentDeclarations(globalValues);if(globalSafe)rules.push(`${group.selector}{${globalSafe}}`);
+  }
+  for(const [routeKey,groups] of Object.entries(overrides.route||{})){
+    if(!/^[a-z0-9-]{1,50}$/.test(routeKey)||!groups||typeof groups!=='object')continue;
+    for(const group of DESIGN_COMPONENT_GROUPS){const safe=componentDeclarations(groups[group.key]);if(safe)rules.push(`body[data-design-route="${routeKey}"] ${group.selector}{${safe}}`)}
+  }
+  for(const [instanceKey,entry] of Object.entries(overrides.instance||{})){
+    if(!/^[A-Za-z][A-Za-z0-9_-]{0,79}$/.test(instanceKey)||!entry||typeof entry!=='object')continue;
+    const safe=componentDeclarations(entry.values);if(safe)rules.push(`#${CSS.escape(instanceKey)}{${safe}}`);
+  }
+  style.textContent=`${declarations?`:root,body,body.dark,body[data-theme],body.dark[data-theme]{${declarations}}`:''}${rules.join('')}`;
 }
 function resolveDesignComponent(target){
   const element=target instanceof Element?target.closest(DESIGN_COMPONENT_SELECTOR):null;
   if(!element||element.closest('#designSelectionPanel'))return null;
   const group=DESIGN_COMPONENT_GROUPS.find(item=>element.matches(item.selector));
-  return group?{element,group}:null;
+  return group?{element,group,instanceKey:safeInstanceKey(element)}:null;
 }
 function moveDesignSelection(event){
   const resolved=resolveDesignComponent(event.target);
@@ -256,28 +272,47 @@ function chooseDesignComponent(event){
   const resolved=resolveDesignComponent(event.target);
   if(!resolved)return;
   event.preventDefault();event.stopPropagation();
-  openDesignEditor(resolved.group);
+  openDesignEditor(resolved);
 }
-function designEditorMarkup(group){
-  const values=get().designOverrides?.components?.[group.key]||{};
+function currentDesignValues(scope,routeKey,groupKey,instanceKey){
+  const overrides=get().designOverrides||{};
+  if(scope==='instance')return overrides.instance?.[instanceKey]?.values||{};
+  if(scope==='route')return overrides.route?.[routeKey]?.[groupKey]||{};
+  return overrides.global?.[groupKey]||overrides.components?.[groupKey]||{};
+}
+function designScopeSummary(scope,group,routeKey){
+  const routeLabel=routeKey==='reviews'?'review':routeKey.replaceAll('-',' ');
+  const noun=group.key==='card'&&routeKey==='reviews'?'review cards':group.label.toLowerCase();
+  if(scope==='instance')return `This will change only this ${group.label.toLowerCase().replace(/s$/,'')}.`;
+  if(scope==='route')return `This will change all ${noun} on the ${routeLabel} page.`;
+  return `This will change all ${noun} across the app.`;
+}
+function designEditorMarkup(selection,scope){
+  const {group,instanceKey}=selection,routeKey=document.body.dataset.designRoute||'dashboard';
+  const values=currentDesignValues(scope,routeKey,group.key,instanceKey);
   const field=(property,label,placeholder)=>`<label>${label}<input name="${property}" value="${escapeHTML(values[property]||'')}" placeholder="${placeholder}" autocomplete="off"></label>`;
-  return `<div class="design-editor-heading"><div><p class="eyebrow">Selected group</p><h2 id="designEditorTitle">${escapeHTML(group.label)}</h2></div><button type="button" class="secondary" data-stop-design aria-label="Close design selection">Close</button></div><p class="muted">Changes apply safely to every ${escapeHTML(group.label.toLowerCase())} element.</p><form data-design-editor="${group.key}">${field('padding','Padding','1.5rem')}${field('gap','Gap','1rem')}${field('border-radius','Corner radius','20px')}<div class="actions"><button>Apply to group</button><button type="button" class="secondary" data-reset-design>Reset group</button></div></form>`;
+  const choice=(value,label,disabled=false)=>`<label class="design-scope-choice"><input type="radio" name="scope" value="${value}" ${scope===value?'checked':''} ${disabled?'disabled':''} required><span>${label}</span></label>`;
+  return `<div class="design-editor-heading"><div><p class="eyebrow">Selected element</p><h2 id="designEditorTitle">${escapeHTML(group.label)}</h2></div><button type="button" class="secondary" data-stop-design aria-label="Close design selection">Close</button></div><form data-design-editor="${group.key}"><fieldset class="design-scope"><legend>Where should this change apply? <span aria-hidden="true">*</span></legend>${choice('instance','This element only',!instanceKey)}${!instanceKey?'<small>Available only when the element has a stable key.</small>':''}${choice('route','All similar elements on this page')}${choice('global','All similar elements across the app')}</fieldset>${field('padding','Padding','1.5rem')}${field('gap','Gap','1rem')}${field('border-radius','Corner radius','20px')}<p class="design-scope-summary" data-scope-summary>${escapeHTML(designScopeSummary(scope,group,routeKey))}</p><div class="actions"><button>Save change</button><button type="button" class="secondary" data-reset-design>Reset this scope</button></div></form>`;
 }
-function openDesignEditor(group){
+function openDesignEditor(selection,requestedScope){
+  const routeKey=document.body.dataset.designRoute||'dashboard';
+  const preferred=DESIGN_SYSTEM_GROUPS.has(selection.group.key)?'global':'route';
+  const scope=requestedScope||(DESIGN_SYSTEM_GROUPS.has(selection.group.key)?preferred:(selection.instanceKey?'instance':'route'));
   let panel=$('#designSelectionPanel');
   if(!panel){panel=document.createElement('aside');panel.id='designSelectionPanel';panel.className='design-selection-panel';panel.setAttribute('aria-labelledby','designEditorTitle');document.body.append(panel)}
-  panel.innerHTML=designEditorMarkup(group);
+  panel.innerHTML=designEditorMarkup(selection,scope);
   $('[data-stop-design]',panel).onclick=stopDesignSelection;
-  $('[data-reset-design]',panel).onclick=()=>{update(s=>{if(s.designOverrides?.components)delete s.designOverrides.components[group.key]});applyDesignOverrides();openDesignEditor(group);toast(`${group.label} reset`)};
-  $('form',panel).onsubmit=event=>{event.preventDefault();const values=Object.fromEntries(new FormData(event.target));const invalid=Object.entries(values).find(([property,value])=>value.trim()&&!validComponentOverride(property,value));if(invalid){toast(`Use a valid CSS ${invalid[0]} value`);return}update(s=>{s.designOverrides=s.designOverrides||{};s.designOverrides.components=s.designOverrides.components||{};s.designOverrides.components[group.key]=Object.fromEntries(Object.entries(values).filter(([,value])=>value.trim()).map(([property,value])=>[property,value.trim()]))});applyDesignOverrides();toast(`${group.label} updated`)};
-  panel.hidden=false;$('input',panel)?.focus();
+  $$('input[name="scope"]',panel).forEach(input=>input.onchange=()=>openDesignEditor(selection,input.value));
+  $('[data-reset-design]',panel).onclick=()=>{update(s=>{const d=s.designOverrides||{};if(scope==='instance')delete d.instance?.[selection.instanceKey];else if(scope==='route')delete d.route?.[routeKey]?.[selection.group.key];else{delete d.global?.[selection.group.key];delete d.components?.[selection.group.key]}});applyDesignOverrides();openDesignEditor(selection,scope);toast(`${selection.group.label} scope reset`)};
+  $('form',panel).onsubmit=event=>{event.preventDefault();const formData=new FormData(event.target),chosenScope=formData.get('scope');const values=Object.fromEntries([...formData].filter(([key])=>key!=='scope'));const invalid=Object.entries(values).find(([property,value])=>value.trim()&&!validComponentOverride(property,value));if(invalid){toast(`Use a valid CSS ${invalid[0]} value`);return}const clean=Object.fromEntries(Object.entries(values).filter(([,value])=>value.trim()).map(([property,value])=>[property,value.trim()]));update(s=>{s.designOverrides=s.designOverrides||{};if(chosenScope==='instance'){s.designOverrides.instance=s.designOverrides.instance||{};s.designOverrides.instance[selection.instanceKey]={group:selection.group.key,values:clean}}else if(chosenScope==='route'){s.designOverrides.route=s.designOverrides.route||{};s.designOverrides.route[routeKey]=s.designOverrides.route[routeKey]||{};s.designOverrides.route[routeKey][selection.group.key]=clean}else{s.designOverrides.global=s.designOverrides.global||{};s.designOverrides.global[selection.group.key]=clean}});applyDesignOverrides();toast(designScopeSummary(chosenScope,selection.group,routeKey))};
+  panel.hidden=false;$('input:not([type="radio"])',panel)?.focus();
 }
 function startDesignSelection(){
   if(designSelectionActive)return;
   designSelectionActive=true;document.body.classList.add('design-selection-active');
   setTimeout(()=>{document.addEventListener('pointermove',moveDesignSelection,true);document.addEventListener('click',chooseDesignComponent,true)},0);
   document.addEventListener('keydown',handleDesignSelectionKey);
-  toast('Move over an element and click to edit its component group. Press Escape to stop.');
+  toast('Move over an element and click to edit its scope. Press Escape to stop.');
 }
 function handleDesignSelectionKey(event){if(event.key==='Escape')stopDesignSelection()}
 function stopDesignSelection(){

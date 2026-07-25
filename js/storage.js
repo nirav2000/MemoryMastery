@@ -9,8 +9,11 @@ export function replace(data){if(!data||data.version!==1||!data.profile||!Array.
 function mergeByKey(a=[],b=[],keyFn=x=>x.id||`${x.day||''}:${x.date||''}:${x.title||x.text||x.name||x.concept||''}`){const map=new Map();[...a,...b].filter(Boolean).forEach(item=>map.set(keyFn(item),{...map.get(keyFn(item)),...item}));return [...map.values()]}
 export function mergeBackups(localData, cloudData){
   const local=localData&&localData.version===1?localData:structuredClone(defaults), cloud=cloudData&&cloudData.version===1?cloudData:structuredClone(defaults);
-  const components={...(cloud.designOverrides?.components||{})};for(const [key,value] of Object.entries(local.designOverrides?.components||{}))components[key]={...(components[key]||{}),...value};
-  const designOverrides={...(cloud.designOverrides||{}),...(local.designOverrides||{})};if(Object.keys(components).length)designOverrides.components=components;else delete designOverrides.components;
+  const mergeOverrideMap=(cloudMap={},localMap={})=>{const merged=structuredClone(cloudMap);for(const [key,value] of Object.entries(localMap||{}))merged[key]=value&&typeof value==='object'&&!Array.isArray(value)?mergeOverrideMap(merged[key]||{},value):value;return merged};
+  const components=mergeOverrideMap(cloud.designOverrides?.components,local.designOverrides?.components);
+  const designOverrides={...(cloud.designOverrides||{}),...(local.designOverrides||{})};
+  for(const scope of ['global','route','instance']){const merged=mergeOverrideMap(cloud.designOverrides?.[scope],local.designOverrides?.[scope]);if(Object.keys(merged).length)designOverrides[scope]=merged;else delete designOverrides[scope]}
+  if(Object.keys(components).length)designOverrides.components=components;else delete designOverrides.components;
   return {...structuredClone(defaults),...cloud,...local,profile:{...cloud.profile,...local.profile,currentDay:Math.max(cloud.profile?.currentDay||1,local.profile?.currentDay||1)},firstSuccess:(local.firstSuccess?.completed?local.firstSuccess:cloud.firstSuccess)||{completed:false},designOverrides,palaces:mergeByKey(cloud.palaces,local.palaces,x=>x.id||x.name),majorSystem:local.majorSystem?.length?local.majorSystem:cloud.majorSystem||[],pao:mergeByKey(cloud.pao,local.pao),symbols:mergeByKey(cloud.symbols,local.symbols,x=>x.id||x.concept||x.image),nameImages:mergeByKey(cloud.nameImages,local.nameImages,x=>x.id||x.Name||x.name),results:mergeByKey(cloud.results,local.results),reviews:mergeByKey(cloud.reviews,local.reviews),notes:mergeByKey(cloud.notes,local.notes,x=>x.key),missions:mergeByKey(cloud.missions,local.missions),achievements:mergeByKey(cloud.achievements,local.achievements)}
 }
 export function reset(){localStorage.removeItem(KEY);state=structuredClone(defaults);return state}
