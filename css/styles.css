@@ -176,6 +176,8 @@ dialog::backdrop { background: rgba(0,0,0,.55); }
 #toast { position: fixed; right: var(--space-4); bottom: var(--space-4); z-index: 40; display: none; max-width: min(92vw, 380px); padding: var(--space-4); border-radius: var(--radius-s); background: #101723; color: #fff; }
 .design-selection-active { cursor: crosshair; }
 .design-selection-highlight { outline: 3px solid #b54708 !important; outline-offset: 4px; }
+.design-package-panel { margin-top: var(--space-5); }
+.design-package-preview { display: block; width: 100%; min-height: 360px; margin-top: var(--space-4); border: 1px solid var(--line); border-radius: var(--radius-m); background: var(--paper); }
 .design-selection-panel { position: fixed; z-index: 60; right: var(--space-4); bottom: var(--space-4); width: min(360px, calc(100vw - 2rem)); max-height: calc(100vh - 2rem); overflow-y: auto; padding: var(--space-5); border: 1px solid var(--line); border-radius: var(--radius-m); background: var(--surface); color: var(--ink); box-shadow: 0 20px 60px rgba(10,20,35,.3); }
 .design-editor-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-4); }
 .design-editor-heading .eyebrow { margin: 0 0 var(--space-2); }

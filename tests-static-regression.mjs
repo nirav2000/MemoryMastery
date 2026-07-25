@@ -11,6 +11,7 @@ const training = fs.readFileSync('js/training.js','utf8');
 const archive = JSON.parse(fs.readFileSync('data/version-archive.json','utf8'));
 const majorScenes = JSON.parse(fs.readFileSync('data/major-system-scenes.json','utf8'));
 const designSelectorContract = fs.readFileSync('docs/design-studio-selector-contract.md','utf8');
+const designPackageWorkflow = fs.readFileSync('docs/design-package-workflow.md','utf8');
 
 for (const label of ['Today','Learn','Library','Progress']) assert(index.includes(`>${label}`), `missing primary nav ${label}`);
 assert(!index.includes('href="#palaces"'), 'advanced tools must not be primary navigation');
@@ -57,6 +58,11 @@ assert(app.includes('function applyDesignOverrides()') && app.includes("style.id
 assert(app.includes('DESIGN_OVERRIDE_PROPERTIES') && app.includes('CSS.supports') && !app.includes('rawCss'), 'visual overrides must use an allowlist and validated CSS values rather than raw CSS');
 assert(app.includes('function startDesignSelection()') && app.includes('function stopDesignSelection()'), 'design studio should start and cleanly stop selection mode');
 assert(app.includes('docs/design-studio-selector-contract.md'), 'design studio help should link to its selector contract');
+assert(app.includes('Download design package') && app.includes('Preview imported package'), 'owner Design Studio should offer package export and isolated import preview');
+assert(app.includes("download('memory-mastery-design-overrides.json'") && app.includes("download('design-overrides.generated.css'"), 'design package export should download reviewable JSON and generated CSS files');
+for(const field of ['appVersion','editedRoute','editedComponentGroups','overrideValues','createdDate','authorUserId'])assert(app.includes(field),`design package should include ${field}`);
+assert(app.includes('function validDesignPackage') && app.includes('design-package-preview'), 'admins should validate and visually preview imported packages');
+assert(designPackageWorkflow.includes('GitHub commit') && designPackageWorkflow.includes('does not replace local storage'), 'design package workflow should document review, non-destructive preview, and permanent adoption');
 for(const [group,selector] of Object.entries({pageHero:'.page-hero',card:'.card',pathCard:'.path-card',primaryButton:'button:not(.secondary), .button:not(.secondary)',secondaryButton:'.secondary',footer:'.site-footer',mainContent:'main'}))assert(designSelectorContract.includes(`\`${group}\``)&&designSelectorContract.includes(`\`${selector}\``),`selector contract should define ${group}`);
 for(const protectedTerm of ['auth forms','hidden recall','Notes drawer state','aria-current'])assert(designSelectorContract.toLowerCase().includes(protectedTerm.toLowerCase()),`selector contract should protect ${protectedTerm}`);
 assert(app.includes("document.addEventListener('pointermove',moveDesignSelection,true)") && app.includes("document.addEventListener('click',chooseDesignComponent,true)"), 'selection mode should inspect pointer movement and intercept selection clicks');
