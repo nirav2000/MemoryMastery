@@ -7,6 +7,8 @@ import {reviewKey, reviewFamilyKey, uniqueReviews} from './js/reviews.js';
 const index = fs.readFileSync('index.html','utf8');
 const app = fs.readFileSync('js/app.js','utf8');
 const storage = fs.readFileSync('js/storage.js','utf8');
+const firebase = fs.readFileSync('js/firebase.js','utf8');
+const firestoreRules = fs.readFileSync('firestore.rules','utf8');
 const training = fs.readFileSync('js/training.js','utf8');
 const archive = JSON.parse(fs.readFileSync('data/version-archive.json','utf8'));
 const majorScenes = JSON.parse(fs.readFileSync('data/major-system-scenes.json','utf8'));
@@ -55,6 +57,10 @@ assert(storage.includes('mergeBackups'), 'storage must merge cloud and device pr
 assert(storage.includes('designOverrides:{}') && storage.includes("for(const scope of ['global','route','instance'])"), 'storage must default and merge scoped design overrides');
 assert(app.includes('function applyDesignOverrides()') && app.includes("style.id='designOverrides'"), 'visual overrides should be applied through a dedicated style element');
 assert(app.includes('DESIGN_OVERRIDE_PROPERTIES') && app.includes('CSS.supports') && !app.includes('rawCss'), 'visual overrides must use an allowlist and validated CSS values rather than raw CSS');
+assert(firebase.includes("['appConfig', 'designOverrides']") && firebase.includes('designOverrides: backup.designOverrides || {}'), 'Firebase should persist per-user overrides with app state and global overrides in separate app config');
+assert(firestoreRules.includes('allow read: if true') && firestoreRules.includes('allow write: if isOwner()'), 'global design overrides should be publicly readable and owner-writable');
+assert(app.includes('designOverrideCss(publishedDesignOverrides)') && app.includes('saveGlobalDesignOverrides(next)'), 'the app should validate, apply, and owner-publish global override data at runtime');
+assert(designSelectorContract.includes('GitHub remains the permanent source of truth'), 'the design contract should preserve repository review as the permanent change path');
 assert(app.includes('function startDesignSelection()') && app.includes('function stopDesignSelection()'), 'design studio should start and cleanly stop selection mode');
 assert(app.includes('docs/design-studio-selector-contract.md'), 'design studio help should link to its selector contract');
 for(const [group,selector] of Object.entries({pageHero:'.page-hero',card:'.card',pathCard:'.path-card',primaryButton:'button:not(.secondary), .button:not(.secondary)',secondaryButton:'.secondary',footer:'.site-footer',mainContent:'main'}))assert(designSelectorContract.includes(`\`${group}\``)&&designSelectorContract.includes(`\`${selector}\``),`selector contract should define ${group}`);
@@ -62,7 +68,7 @@ for(const protectedTerm of ['auth forms','hidden recall','Notes drawer state','a
 assert(app.includes("document.addEventListener('pointermove',moveDesignSelection,true)") && app.includes("document.addEventListener('click',chooseDesignComponent,true)"), 'selection mode should inspect pointer movement and intercept selection clicks');
 for(const label of ['Hero sections','Cards','Navigation cards','Buttons','Footer','Page content area','Header'])assert(app.includes(`label:'${label}'`), `missing safe design component group ${label}`);
 assert(app.includes("target.closest(DESIGN_COMPONENT_SELECTOR)") && app.includes('design-selection-highlight'), 'hover should resolve the nearest editable component and highlight it');
-assert(app.includes('designOverrides.global') && app.includes('designOverrides.route') && app.includes('designOverrides.instance'), 'component changes should be stored under explicit global, route, and instance scopes');
+assert(app.includes('publishedDesignOverrides.global') && app.includes('designOverrides.route') && app.includes('designOverrides.instance'), 'component changes should use published global and personal route/instance scopes');
 for(const label of ['This element only','All similar elements on this page','All similar elements across the app'])assert(app.includes(label), `missing required design scope choice ${label}`);
 assert(app.includes('designScopeSummary') && app.includes('This will change all ${noun} across the app.'), 'the editor should preview the impact in plain language before saving');
 assert(app.includes("new Set(['card','pathCard','button'])") && app.includes("?'global'"), 'design-system components should prefer the global scope');

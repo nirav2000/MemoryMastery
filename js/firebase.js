@@ -72,7 +72,9 @@ export async function loadCloudState(uid) {
   const fb = await connectFirebase();
   const ref = fb.firestoreModule.doc(fb.db, 'users', uid, 'app', 'state');
   const snap = await fb.firestoreModule.getDoc(ref);
-  return snap.exists() ? snap.data().backup : null;
+  if (!snap.exists()) return null;
+  const data = snap.data();
+  return data.backup ? { ...data.backup, designOverrides: data.designOverrides || data.backup.designOverrides || {} } : null;
 }
 
 export async function saveCloudState(uid, backup) {
@@ -80,7 +82,34 @@ export async function saveCloudState(uid, backup) {
   const ref = fb.firestoreModule.doc(fb.db, 'users', uid, 'app', 'state');
   await fb.firestoreModule.setDoc(ref, {
     backup,
+    // Keep overrides addressable in the existing per-user state document while
+    // retaining them in the backup for backwards-compatible exports/restores.
+    designOverrides: backup.designOverrides || {},
     updatedAt: fb.firestoreModule.serverTimestamp(),
     version: backup.version || 1
   }, { merge: true });
+}
+
+const GLOBAL_DESIGN_OVERRIDES_PATH = ['appConfig', 'designOverrides'];
+
+export async function loadGlobalDesignOverrides() {
+  const fb = await connectFirebase();
+  if (!fb) return {};
+  const ref = fb.firestoreModule.doc(fb.db, ...GLOBAL_DESIGN_OVERRIDES_PATH);
+  const snap = await fb.firestoreModule.getDoc(ref);
+  return snap.exists() && snap.data().overrides && typeof snap.data().overrides === 'object'
+    ? snap.data().overrides
+    : {};
+}
+
+export async function saveGlobalDesignOverrides(overrides) {
+  const fb = await connectFirebase();
+  const user = fb?.auth.currentUser;
+  if (!user) throw Error('Sign in as the owner before publishing global design changes.');
+  const ref = fb.firestoreModule.doc(fb.db, ...GLOBAL_DESIGN_OVERRIDES_PATH);
+  await fb.firestoreModule.setDoc(ref, {
+    overrides,
+    updatedAt: fb.firestoreModule.serverTimestamp(),
+    updatedBy: user.email || user.uid
+  });
 }

@@ -2,13 +2,14 @@ import {$,$$,escapeHTML,mean,download,toast,formatDate} from './utils.js?v=20260
 import {load,get,save,update,replace,reset,mergeBackups} from './storage.js?v=20260724-phone-notes-css';
 import {trainingView,bindTraining} from './training.js?v=20260724-phone-notes-css';
 import {due,scoreReview,action,schedule,uniqueReviews,cleanupReviews} from './reviews.js?v=20260724-phone-notes-css';
-import {configured,watchAuthState,signInWithGoogle,signInWithPhone,confirmPhoneCode,signOutGoogle,loadCloudState,saveCloudState,currentFirebaseUser} from './firebase.js?v=20260724-phone-notes-css';
+import {configured,watchAuthState,signInWithGoogle,signInWithPhone,confirmPhoneCode,signOutGoogle,loadCloudState,saveCloudState,loadGlobalDesignOverrides,saveGlobalDesignOverrides,currentFirebaseUser} from './firebase.js?v=20260725-firebase-design-overrides';
 import {scoreOrderedRecall,normalAnswer,firstSuccessSession} from './learning.js?v=20260724-phone-notes-css';
 
 const data = {};
 const challengeState = { step: 'choose', challenge: null, baseline: null, final: null };
 let signedInEmail = '';
 let phoneConfirmation = null;
+let publishedDesignOverrides = {};
 const ARCHIVE_OWNER_EMAIL = 'myaeixa@gmail.com';
 const beginnerChallenges = [
   {id:'shopping', tag:'Everyday', title:'A practical shopping list', time:'7 minutes', method:'link method', material:['Bread','Milk','Bananas','Eggs','Tomatoes','Pasta','Soap','Tea'], prompt:'Make bread explode milk over bananas, bananas juggle eggs, eggs smash tomatoes, tomatoes dye pasta red, pasta ties up soap, soap slides into tea.'},
@@ -22,6 +23,7 @@ const handbookChapters = ['Observation and attention','Visualisation','Associati
 async function boot(){
   for (const n of ['belts','curriculum','starter-major-system','starter-symbols','example-palace','programme','version-archive','major-system-scenes']) data[n]=await fetch(`data/${n}.json`).then(r=>r.json());
   load();
+  try{publishedDesignOverrides=await loadGlobalDesignOverrides()}catch(error){console.warn('Global design overrides unavailable',error)}
   await initialiseAuth();
   if(!get().majorSystem.length) update(s=>{s.majorSystem=data['starter-major-system'];s.symbols=data['starter-symbols'];s.palaces=[data['example-palace']]});
   cleanupReviews();
@@ -237,10 +239,8 @@ function safeInstanceKey(element){
   const key=element?.dataset.designKey||element?.id||'';
   return /^[A-Za-z][A-Za-z0-9_-]{0,79}$/.test(key)?key:'';
 }
-function applyDesignOverrides(){
-  let style=document.querySelector('#designOverrides');
-  if(!style){style=document.createElement('style');style.id='designOverrides';document.head.append(style)}
-  const overrides=get().designOverrides||{};
+function designOverrideCss(overrides={}){
+  if(!overrides||typeof overrides!=='object'||Array.isArray(overrides))return '';
   const declarations=Object.entries(overrides).filter(([token,value])=>validDesignOverride(token,value)).map(([token,value])=>`${token}:${value.trim()}`).join(';');
   const rules=[];
   for(const group of DESIGN_COMPONENT_GROUPS){
@@ -255,7 +255,14 @@ function applyDesignOverrides(){
     if(!/^[A-Za-z][A-Za-z0-9_-]{0,79}$/.test(instanceKey)||!entry||typeof entry!=='object')continue;
     const safe=componentDeclarations(entry.values);if(safe)rules.push(`#${CSS.escape(instanceKey)}{${safe}}`);
   }
-  style.textContent=`${declarations?`:root,body,body.dark,body[data-theme],body.dark[data-theme]{${declarations}}`:''}${rules.join('')}`;
+  return `${declarations?`:root,body,body.dark,body[data-theme],body.dark[data-theme]{${declarations}}`:''}${rules.join('')}`;
+}
+function applyDesignOverrides(){
+  let style=document.querySelector('#designOverrides');
+  if(!style){style=document.createElement('style');style.id='designOverrides';document.head.append(style)}
+  // Reviewed repository CSS remains the base; published overrides then personal
+  // overrides form two validated, runtime-only cascade layers.
+  style.textContent=`${designOverrideCss(publishedDesignOverrides)}${designOverrideCss(get().designOverrides||{})}`;
 }
 function resolveDesignComponent(target){
   const element=target instanceof Element?target.closest(DESIGN_COMPONENT_SELECTOR):null;
@@ -278,7 +285,7 @@ function currentDesignValues(scope,routeKey,groupKey,instanceKey){
   const overrides=get().designOverrides||{};
   if(scope==='instance')return overrides.instance?.[instanceKey]?.values||{};
   if(scope==='route')return overrides.route?.[routeKey]?.[groupKey]||{};
-  return overrides.global?.[groupKey]||overrides.components?.[groupKey]||{};
+  return publishedDesignOverrides.global?.[groupKey]||publishedDesignOverrides.components?.[groupKey]||{};
 }
 function designScopeSummary(scope,group,routeKey){
   const routeLabel=routeKey==='reviews'?'review':routeKey.replaceAll('-',' ');
@@ -303,8 +310,8 @@ function openDesignEditor(selection,requestedScope){
   panel.innerHTML=designEditorMarkup(selection,scope);
   $('[data-stop-design]',panel).onclick=stopDesignSelection;
   $$('input[name="scope"]',panel).forEach(input=>input.onchange=()=>openDesignEditor(selection,input.value));
-  $('[data-reset-design]',panel).onclick=()=>{update(s=>{const d=s.designOverrides||{};if(scope==='instance')delete d.instance?.[selection.instanceKey];else if(scope==='route')delete d.route?.[routeKey]?.[selection.group.key];else{delete d.global?.[selection.group.key];delete d.components?.[selection.group.key]}});applyDesignOverrides();openDesignEditor(selection,scope);toast(`${selection.group.label} scope reset`)};
-  $('form',panel).onsubmit=event=>{event.preventDefault();const formData=new FormData(event.target),chosenScope=formData.get('scope');const values=Object.fromEntries([...formData].filter(([key])=>key!=='scope'));const invalid=Object.entries(values).find(([property,value])=>value.trim()&&!validComponentOverride(property,value));if(invalid){toast(`Use a valid CSS ${invalid[0]} value`);return}const clean=Object.fromEntries(Object.entries(values).filter(([,value])=>value.trim()).map(([property,value])=>[property,value.trim()]));update(s=>{s.designOverrides=s.designOverrides||{};if(chosenScope==='instance'){s.designOverrides.instance=s.designOverrides.instance||{};s.designOverrides.instance[selection.instanceKey]={group:selection.group.key,values:clean}}else if(chosenScope==='route'){s.designOverrides.route=s.designOverrides.route||{};s.designOverrides.route[routeKey]=s.designOverrides.route[routeKey]||{};s.designOverrides.route[routeKey][selection.group.key]=clean}else{s.designOverrides.global=s.designOverrides.global||{};s.designOverrides.global[selection.group.key]=clean}});applyDesignOverrides();toast(designScopeSummary(chosenScope,selection.group,routeKey))};
+  $('[data-reset-design]',panel).onclick=async()=>{try{if(scope==='global'){const next=structuredClone(publishedDesignOverrides);delete next.global?.[selection.group.key];delete next.components?.[selection.group.key];await saveGlobalDesignOverrides(next);publishedDesignOverrides=next}else update(s=>{const d=s.designOverrides||{};if(scope==='instance')delete d.instance?.[selection.instanceKey];else delete d.route?.[routeKey]?.[selection.group.key]});applyDesignOverrides();openDesignEditor(selection,scope);toast(`${selection.group.label} scope reset`)}catch(error){toast(error.message)}};
+  $('form',panel).onsubmit=async event=>{event.preventDefault();const formData=new FormData(event.target),chosenScope=formData.get('scope');const values=Object.fromEntries([...formData].filter(([key])=>key!=='scope'));const invalid=Object.entries(values).find(([property,value])=>value.trim()&&!validComponentOverride(property,value));if(invalid){toast(`Use a valid CSS ${invalid[0]} value`);return}const clean=Object.fromEntries(Object.entries(values).filter(([,value])=>value.trim()).map(([property,value])=>[property,value.trim()]));try{if(chosenScope==='global'){const next=structuredClone(publishedDesignOverrides);next.global=next.global||{};next.global[selection.group.key]=clean;await saveGlobalDesignOverrides(next);publishedDesignOverrides=next}else update(s=>{s.designOverrides=s.designOverrides||{};if(chosenScope==='instance'){s.designOverrides.instance=s.designOverrides.instance||{};s.designOverrides.instance[selection.instanceKey]={group:selection.group.key,values:clean}}else{s.designOverrides.route=s.designOverrides.route||{};s.designOverrides.route[routeKey]=s.designOverrides.route[routeKey]||{};s.designOverrides.route[routeKey][selection.group.key]=clean}});applyDesignOverrides();toast(chosenScope==='global'?'Owner-approved change published to all learners.':designScopeSummary(chosenScope,selection.group,routeKey))}catch(error){toast(error.message)}};
   panel.hidden=false;$('input:not([type="radio"])',panel)?.focus();
 }
 function startDesignSelection(){
