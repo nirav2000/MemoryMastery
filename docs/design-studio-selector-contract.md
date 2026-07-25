@@ -2,6 +2,12 @@
 
 This document is the stable boundary between Memory Mastery's interface and Design Studio. The visual tool may offer controls only for the groups and properties below. A selector change is a contract change and must be reviewed alongside the affected routes.
 
+## Persistence and review boundary
+
+Design Studio writes declarative override data, never repository files. Personal route and instance choices are stored with the signed-in learner's existing Firebase state document. A global choice can be published only by the authenticated owner and is stored in `appConfig/designOverrides`; all clients read that document and validate every property again before adding it to the runtime stylesheet.
+
+These overrides are a preview and deployment layer, not a replacement for version control. GitHub remains the permanent source of truth for reviewed HTML, CSS, and JavaScript. A design that should become permanent must still be implemented, reviewed, and committed in the repository; browser-generated override data must not edit source files.
+
 ## Editable groups
 
 | Group | Canonical selector | Allowed editable properties |
