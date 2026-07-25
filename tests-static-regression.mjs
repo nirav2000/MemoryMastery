@@ -112,6 +112,10 @@ assert(css.includes('.recall-list') && css.includes('.review-form'), 'progress a
 assert(css.includes('.training-card > p') && css.includes('max-width: none'), 'training cards should not force awkward short-line wrapping');
 assert(css.includes('.step-toggle') && css.includes('min-height: 44px'), 'step heading toggle should be visible and have a touch-sized target');
 assert(css.includes('.site-footer { display: flex') && css.includes('.site-footer small'), 'footer links and copyright should align on one row when space allows');
+assert(/@media \(max-width: 760px\)[\s\S]*?main\s*\{\s*padding:\s*var\(--space-5\) var\(--space-4\);/s.test(css), 'mobile main spacing should not duplicate the fixed-navigation clearance already provided by the footer');
+assert(/@media \(max-width: 720px\)\s*\{\s*\.site-footer\s*\{\s*padding-bottom:\s*calc\(84px \+ env\(safe-area-inset-bottom\)\);\s*\}\s*\}/s.test(css), 'mobile footer should retain fixed-navigation and safe-area clearance for its links');
+assert(css.includes('* { box-sizing: border-box; }') && css.includes('html { min-width: 0;') && css.includes('body { margin: 0; min-width: 0;'), 'the app shell should retain narrow-viewport overflow safeguards');
+assert(/\.note-drawer\s*\{[^}]*width:\s*min\(100vw - 1rem, 22rem\)/s.test(css) && /pre\s*\{[^}]*overflow-x:\s*auto/s.test(css), 'wide notes and preformatted content should stay contained instead of creating horizontal page overflow');
 assert(css.includes('.memory-thumb .thumb-line') && css.includes('grid-template-columns: auto auto minmax(0, 1fr) auto'), 'inline illustrations should have responsive layout support');
 assert(/\.card\s*\{[^}]*padding:[^}]*margin-block:/s.test(css), 'cards need internal padding and vertical separation to prevent edge text and panel collision');
 assert(/pre\s*\{[^}]*overflow-x:\s*auto[^}]*white-space:\s*pre-wrap/s.test(css), 'archive rebuild commands should wrap or scroll without page overflow');

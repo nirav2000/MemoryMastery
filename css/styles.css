@@ -211,8 +211,7 @@ body.dark .site-footer nav { background: transparent; }
   nav { position: fixed; top: auto; left: 0; right: 0; bottom: 0; justify-content: space-around; gap: .2rem; padding: .5rem max(.4rem, env(safe-area-inset-left)) max(.5rem, env(safe-area-inset-bottom)); border-top: 1px solid var(--line); border-bottom: 0; }
   nav a { flex: 1; padding: .42rem .35rem; font-size: .9rem; }
   #dueBadge { display: none !important; }
-  main { padding: var(--space-5) var(--space-4) calc(120px + env(safe-area-inset-bottom)); }
-  .site-footer { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
+  main { padding: var(--space-5) var(--space-4); }
   .page-hero { padding: var(--space-6) 0; }
   .page-hero::after { width: 86px; opacity: .45; }
   h1 { max-width: 12ch; }
