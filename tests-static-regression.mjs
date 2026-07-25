@@ -59,6 +59,12 @@ assert(app.includes("document.addEventListener('pointermove',moveDesignSelection
 for(const label of ['Hero sections','Cards','Navigation cards','Buttons','Footer','Page content area','Header'])assert(app.includes(`label:'${label}'`), `missing safe design component group ${label}`);
 assert(app.includes("target.closest(DESIGN_COMPONENT_SELECTOR)") && app.includes('design-selection-highlight'), 'hover should resolve the nearest editable component and highlight it');
 assert(app.includes('designOverrides.components') && app.includes('validComponentOverride'), 'component changes should be stored by safe group and property');
+assert(app.includes('function validateDesignOverride(group,property,value)') && app.includes('DESIGN_PROTECTED_GROUPS') && app.includes('DESIGN_FIXED_POSITION_GROUPS'), 'design changes should pass through a group-aware safety allowlist before persistence');
+for(const unsafeRule of ["clean.toLowerCase()==='fixed'","property.startsWith('margin')","property==='font-size'","property==='min-width'||property==='min-height'","clean.toLowerCase()==='none'"])assert(app.includes(unsafeRule), `design validation should reject unsafe ${unsafeRule} values`);
+for(const protectedGroup of ['navigation','recallForm','authControls','footerLegal'])assert(app.includes(`'${protectedGroup}'`), `design validation should protect ${protectedGroup} from being hidden`);
+assert(app.includes('parsedColour(clean)') && app.includes('colourContrast(...colours)>=4.5') && app.includes('DESIGN_CONTRAST_PAIRS'), 'editable colour token pairs should require valid colours with WCAG AA contrast');
+assert(app.includes('Reset this group') && app.includes('Reset all design changes') && app.includes('function resetAllDesignChanges()'), 'design overrides should support group and global reset actions');
+assert(app.indexOf('validateDesignOverride(group.key,property,value)') < app.indexOf("update(s=>{s.designOverrides=s.designOverrides||{}"), 'component overrides must be validated before saving to persistent state');
 
 
 assert.equal(majorScenes.entries.length, 100, 'Major scene data should represent 00-99');
