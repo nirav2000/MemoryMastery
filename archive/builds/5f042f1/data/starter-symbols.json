@@ -1,0 +1,227 @@
+[
+  {
+    "id": 1,
+    "concept": "Freedom",
+    "image": "broken chains",
+    "meaning": "Freedom",
+    "exampleUse": "Make the image act on its palace location",
+    "category": "starter",
+    "strength": 3
+  },
+  {
+    "id": 2,
+    "concept": "Justice",
+    "image": "scales",
+    "meaning": "Justice",
+    "exampleUse": "Make the image act on its palace location",
+    "category": "starter",
+    "strength": 3
+  },
+  {
+    "id": 3,
+    "concept": "Time",
+    "image": "giant clock",
+    "meaning": "Time",
+    "exampleUse": "Make the image act on its palace location",
+    "category": "starter",
+    "strength": 3
+  },
+  {
+    "id": 4,
+    "concept": "Growth",
+    "image": "sprouting tree",
+    "meaning": "Growth",
+    "exampleUse": "Make the image act on its palace location",
+    "category": "starter",
+    "strength": 3
+  },
+  {
+    "id": 5,
+    "concept": "Danger",
+    "image": "flashing red alarm",
+    "meaning": "Danger",
+    "exampleUse": "Make the image act on its palace location",
+    "category": "starter",
+    "strength": 3
+  },
+  {
+    "id": 6,
+    "concept": "Energy",
+    "image": "lightning bolt",
+    "meaning": "Energy",
+    "exampleUse": "Make the image act on its palace location",
+    "category": "starter",
+    "strength": 3
+  },
+  {
+    "id": 7,
+    "concept": "Government",
+    "image": "parliament building",
+    "meaning": "Government",
+    "exampleUse": "Make the image act on its palace location",
+    "category": "starter",
+    "strength": 3
+  },
+  {
+    "id": 8,
+    "concept": "Money",
+    "image": "overflowing gold coins",
+    "meaning": "Money",
+    "exampleUse": "Make the image act on its palace location",
+    "category": "starter",
+    "strength": 3
+  },
+  {
+    "id": 9,
+    "concept": "Agreement",
+    "image": "handshake",
+    "meaning": "Agreement",
+    "exampleUse": "Make the image act on its palace location",
+    "category": "starter",
+    "strength": 3
+  },
+  {
+    "id": 10,
+    "concept": "Conflict",
+    "image": "crossed swords",
+    "meaning": "Conflict",
+    "exampleUse": "Make the image act on its palace location",
+    "category": "starter",
+    "strength": 3
+  },
+  {
+    "id": 11,
+    "concept": "Knowledge",
+    "image": "open glowing book",
+    "meaning": "Knowledge",
+    "exampleUse": "Make the image act on its palace location",
+    "category": "starter",
+    "strength": 3
+  },
+  {
+    "id": 12,
+    "concept": "Peace",
+    "image": "white dove",
+    "meaning": "Peace",
+    "exampleUse": "Make the image act on its palace location",
+    "category": "starter",
+    "strength": 3
+  },
+  {
+    "id": 13,
+    "concept": "Change",
+    "image": "butterfly",
+    "meaning": "Change",
+    "exampleUse": "Make the image act on its palace location",
+    "category": "starter",
+    "strength": 3
+  },
+  {
+    "id": 14,
+    "concept": "Strength",
+    "image": "iron bar",
+    "meaning": "Strength",
+    "exampleUse": "Make the image act on its palace location",
+    "category": "starter",
+    "strength": 3
+  },
+  {
+    "id": 15,
+    "concept": "Health",
+    "image": "beating heart",
+    "meaning": "Health",
+    "exampleUse": "Make the image act on its palace location",
+    "category": "starter",
+    "strength": 3
+  },
+  {
+    "id": 16,
+    "concept": "Idea",
+    "image": "light bulb",
+    "meaning": "Idea",
+    "exampleUse": "Make the image act on its palace location",
+    "category": "starter",
+    "strength": 3
+  },
+  {
+    "id": 17,
+    "concept": "Communication",
+    "image": "megaphone",
+    "meaning": "Communication",
+    "exampleUse": "Make the image act on its palace location",
+    "category": "starter",
+    "strength": 3
+  },
+  {
+    "id": 18,
+    "concept": "Travel",
+    "image": "flying suitcase",
+    "meaning": "Travel",
+    "exampleUse": "Make the image act on its palace location",
+    "category": "starter",
+    "strength": 3
+  },
+  {
+    "id": 19,
+    "concept": "Success",
+    "image": "gold trophy",
+    "meaning": "Success",
+    "exampleUse": "Make the image act on its palace location",
+    "category": "starter",
+    "strength": 3
+  },
+  {
+    "id": 20,
+    "concept": "Failure",
+    "image": "cracked trophy",
+    "meaning": "Failure",
+    "exampleUse": "Make the image act on its palace location",
+    "category": "starter",
+    "strength": 3
+  },
+  {
+    "id": 21,
+    "concept": "Work",
+    "image": "hammer",
+    "meaning": "Work",
+    "exampleUse": "Make the image act on its palace location",
+    "category": "starter",
+    "strength": 3
+  },
+  {
+    "id": 22,
+    "concept": "Education",
+    "image": "graduation cap",
+    "meaning": "Education",
+    "exampleUse": "Make the image act on its palace location",
+    "category": "starter",
+    "strength": 3
+  },
+  {
+    "id": 23,
+    "concept": "Nature",
+    "image": "oak tree",
+    "meaning": "Nature",
+    "exampleUse": "Make the image act on its palace location",
+    "category": "starter",
+    "strength": 3
+  },
+  {
+    "id": 24,
+    "concept": "Technology",
+    "image": "robot",
+    "meaning": "Technology",
+    "exampleUse": "Make the image act on its palace location",
+    "category": "starter",
+    "strength": 3
+  },
+  {
+    "id": 25,
+    "concept": "Community",
+    "image": "circle of hands",
+    "meaning": "Community",
+    "exampleUse": "Make the image act on its palace location",
+    "category": "starter",
+    "strength": 3
+  }
+]
