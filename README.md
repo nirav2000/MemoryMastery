@@ -50,7 +50,7 @@ Open <http://localhost:8000>. Any simple static server works.
 6. Save the success, choose a personal memory project, and complete the quick reminder when it appears.
 7. Later, use **Library** for palaces, Major System, PAO and other advanced tools.
 
-Progress is preserved in `localStorage` after refresh. Export a JSON backup before clearing browser data or changing devices.
+Progress is preserved in `localStorage` after refresh. The Progress dashboard derives its analytics on-device from scored recall and review records; it does not send a separate tracking stream or make scientific retention claims. Export a JSON backup before clearing browser data or changing devices.
 
 ## Firebase setup
 
@@ -83,8 +83,8 @@ The default experience is now organised around a user-first learning journey. Ne
 
 Open **Profile → Settings and data → Appearance** to choose:
 
-- **Colour theme**: Pastel paper, Pastel mint, Pastel lavender, Pastel sunset, Classic dojo, Ocean focus, Forest calm, Plum study, or High-contrast mono.
-- **Layout and look**: SmartPaper inspired, Classic sidebar cards, Top navigation workspace, Focus mode, Soft rounded panels, Compact study dashboard, or Minimal notebook.
+- **Colour theme**: Pastel paper, Pastel mint, Pastel lavender, Pastel sunset, or High-contrast mono.
+- **Layout and look**: Calm learning app, Focus mode, Compact, or Minimal notebook.
 - **Light / dark** mode with the header button or the Profile settings button.
 
 The main app now uses four primary navigation items. Account, export, theme and training-contract options live behind Profile/Settings so the first screen stays focused on the next learning action. These preferences are stored in the same guest backup and sync to Firestore after Google sign-in.
@@ -95,7 +95,7 @@ The main app now uses four primary navigation items. Account, export, theme and 
 - **Today**: one recommended next action, why it matters, expected time and what happens next.
 - **Learn**: guided first-success journey, daily curriculum, review queue and Memory Handbook.
 - **Library**: personal projects and advanced tools including palaces, Major System, PAO, symbols and name images.
-- **Progress**: retention history, review queue and belt/exam progression.
+- **Progress**: an actionable analytics view of immediate and delayed recall, recent trends, technique performance, error patterns, review health, and belt/exam progression.
 
 Advanced tools are preserved, but they are progressively disclosed after the learner has a reason to use them.
 
@@ -148,8 +148,7 @@ Memory Mastery includes a lightweight version archive in `data/version-archive.j
 ├── index.html                 # application shell
 ├── app.html / 404.html        # friendly entry and Pages fallback
 ├── css/
-│   ├── styles.css             # responsive dojo design and dark mode
-│   └── print.css              # A4/poster and report rules
+│   └── styles.css             # responsive design, dark mode and print rules
 ├── js/
 │   ├── app.js                 # router, screens, builders and events
 │   ├── training.js            # source-hidden recall and scoring
