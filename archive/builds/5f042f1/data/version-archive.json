@@ -13,26 +13,10 @@
   },
   "versions": [
     {
-      "commit": "5f042f1",
-      "date": "2026-07-26",
-      "label": "Firebase-backed Design Studio",
-      "status": "current",
-      "summary": "Adds an owner-only visual editor with safe global, route and element scopes, persists reviewed overrides in Firebase, and tightens footer whitespace across responsive layouts.",
-      "keyChanges": [
-        "Design Studio can select approved interface groups and preview validated CSS properties without exposing editor controls in learner flows.",
-        "Personal overrides travel with the signed-in account while owner-published global overrides are read from Firebase app configuration.",
-        "Footer spacing uses one responsive clearance path so mobile navigation remains reachable without dead whitespace."
-      ],
-      "screenshot": "archive/screenshots/5f042f1.png",
-      "archivePath": "archive/builds/5f042f1/",
-      "latestDataPath": "archive/builds/5f042f1/?useLatestData=1",
-      "compatibilityNote": "Uses Memory Dojo v1 storage, Firebase appConfig/designOverrides, and the documented safe Design Studio selector contract."
-    },
-    {
       "commit": "c17c0f7",
       "date": "2026-07-24",
       "label": "Phone sign-in, mobile notes icon and single stylesheet",
-      "status": "archived",
+      "status": "current",
       "summary": "Adds Firebase phone verification from Settings, moves notes to the bottom navigation on mobile, shrinks the desktop notes tab, and consolidates print CSS into the single app stylesheet.",
       "keyChanges": [
         "Firebase sync now offers Google and phone-number authentication paths from the same Settings panel.",

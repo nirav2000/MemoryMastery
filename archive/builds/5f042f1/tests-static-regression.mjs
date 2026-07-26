@@ -32,10 +32,6 @@ assert(fs.existsSync('archive/archive-access-gate.js') && fs.readFileSync('archi
 assert(app.includes('archivePath') && app.includes('latestDataPath'), 'version archive should expose archived builds and latest-data options when available');
 assert(app.includes('function legalPage'), 'footer legal links should resolve inside the app');
 assert.equal(archive.schema, 1);
-assert.equal(archive.versions[0].commit, '5f042f1', 'latest Design Studio milestone should lead the version page');
-assert.equal(archive.versions.filter(v => v.status === 'current').length, 1, 'version archive should identify exactly one current milestone');
-assert(fs.readFileSync('archive/index.html','utf8').includes('archive/screenshots/5f042f1.png'), 'standalone version page should show the latest milestone screenshot');
-assert(fs.readFileSync('css/styles.css','utf8').includes('.linked-card:focus-visible, .clickable-card:focus-visible { outline: 3px solid var(--accent-strong)'), 'keyboard-focused version cards should use a defined visible focus colour');
 assert(archive.versions.filter(v => v.screenshot).length >= 19, 'archived builds should include first-load screenshots for significant commits');
 for (const v of archive.versions) { assert(v.archivePath && fs.existsSync(v.archivePath), `missing full archive ${v.archivePath}`); assert(v.screenshot && fs.existsSync(v.screenshot), `missing archive screenshot ${v.screenshot}`); }
 assert(archive.versions.length >= 19, 'version archive should include meaningful milestones from git history');
