@@ -111,9 +111,9 @@ assert(app.includes("sauce:'sauce'") && app.includes("seed:'seed'") && app.inclu
 assert(!app.includes('illustrationInitials'), 'memory thumbnails must be object illustrations rather than letter initials');
 assert(index.includes('rel="preload" as="image" href="assets/tool-palace.svg"'), 'tool illustrations should be preloaded to avoid slow first display');
 assert(app.includes('recentRecallList') && !app.includes('aria-label="Recent accuracy chart"'), 'progress should use a clearer recent-recall list instead of the old chart');
-assert(app.includes("from './analytics.js") && app.includes('nextProgressAction(results,reviews)'), 'Progress should derive its dashboard and dominant action from the analytics module');
+assert(app.includes("import {progressSummary} from './analytics.js") && app.includes('progressSummary(state.results,state.reviews)'), 'Progress should derive one consistent dashboard model from the analytics module');
 for (const section of ['Recommended next action','Methods that work for you','What to repair','Review health']) assert(app.includes(section), `Progress should include ${section}`);
-assert(app.includes("results.length?`${mean(results.map(x=>x.accuracy))}%`:'—'"), 'empty Progress metrics should use an honest dash instead of a misleading zero percentage');
+assert(app.includes("summary.immediateAccuracy===null?'—'") && app.includes("health.delayedAccuracy===null?'—'"), 'empty Progress metrics should use an honest dash instead of a misleading zero percentage');
 assert(app.includes('Open current lesson') && app.includes('Open progress details') && app.includes('href="#train"') && app.includes('href="#progress"'), 'Today support cards should be explicit navigable links');
 
 for (const file of ['assets/tool-palace.svg','assets/tool-major.svg','assets/tool-pao.svg','assets/tool-symbols.svg','assets/tool-names.svg','assets/tool-contract.svg']) assert(fs.existsSync(file), `missing tool illustration ${file}`);

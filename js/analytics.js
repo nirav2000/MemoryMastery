@@ -1,8 +1,16 @@
-const score = value => Number.isFinite(Number(value)) ? Number(value) : 0;
-const average = values => values.length ? Math.round(values.reduce((total, value) => total + score(value), 0) / values.length) : 0;
+const finiteNumber = value => value !== null && value !== '' && Number.isFinite(Number(value)) ? Number(value) : null;
+const percentage = value => {
+  const number = finiteNumber(value);
+  return number === null ? null : Math.max(0, Math.min(100, number));
+};
+const count = value => Math.max(0, finiteNumber(value) || 0);
+const average = values => {
+  const valid = values.map(percentage).filter(value => value !== null);
+  return valid.length ? Math.round(valid.reduce((total, value) => total + value, 0) / valid.length) : null;
+};
 
 export function progressTrend(results, windowSize = 3) {
-  const scores = results.map(result => score(result.accuracy));
+  const scores = results.map(result => percentage(result?.accuracy)).filter(value => value !== null);
   if (scores.length < 2) return { direction: 'starting', change: 0, label: 'Building your baseline' };
   const recent = scores.slice(-windowSize);
   const previous = scores.slice(-windowSize * 2, -windowSize);
@@ -18,7 +26,9 @@ export function techniquePerformance(results) {
   for (const result of results) {
     const technique = String(result.technique || 'General practice').trim();
     const entry = grouped.get(technique) || { technique, total: 0, sessions: 0 };
-    entry.total += score(result.accuracy);
+    const accuracy = percentage(result?.accuracy);
+    if (accuracy === null) continue;
+    entry.total += accuracy;
     entry.sessions += 1;
     grouped.set(technique, entry);
   }
@@ -29,9 +39,9 @@ export function techniquePerformance(results) {
 
 export function errorProfile(results) {
   const errors = results.reduce((totals, result) => ({
-    omitted: totals.omitted + score(result.omitted),
-    orderErrors: totals.orderErrors + score(result.orderErrors),
-    incorrect: totals.incorrect + score(result.incorrect)
+    omitted: totals.omitted + count(result?.omitted),
+    orderErrors: totals.orderErrors + count(result?.orderErrors),
+    incorrect: totals.incorrect + count(result?.incorrect)
   }), { omitted: 0, orderErrors: 0, incorrect: 0 });
   const ranked = [
     { key: 'omitted', label: 'Missing items', value: errors.omitted, advice: 'Rebuild the first image and make every link move.' },
@@ -42,13 +52,26 @@ export function errorProfile(results) {
 }
 
 export function reviewHealth(reviews, now = Date.now()) {
-  const active = reviews.filter(review => review.status === 'active');
-  const scored = reviews.filter(review => review.reviewScore != null);
+  const active = reviews.filter(review => review?.status === 'active');
+  const scored = reviews.map(review => percentage(review?.reviewScore)).filter(value => value !== null);
   return {
     active: active.length,
-    due: active.filter(review => score(review.nextReviewAt) <= now).length,
+    due: active.filter(review => finiteNumber(review.nextReviewAt) !== null && Number(review.nextReviewAt) <= now).length,
     completed: scored.length,
-    delayedAccuracy: average(scored.map(review => review.reviewScore))
+    delayedAccuracy: average(scored)
+  };
+}
+
+export function progressSummary(results, reviews, now = Date.now()) {
+  const validResults = results.filter(result => percentage(result?.accuracy) !== null);
+  return {
+    immediateAccuracy: average(validResults.map(result => result.accuracy)),
+    practiceCount: validResults.length,
+    trend: progressTrend(validResults),
+    techniques: techniquePerformance(validResults),
+    errors: errorProfile(validResults),
+    reviews: reviewHealth(reviews, now),
+    nextAction: nextProgressAction(validResults, reviews, now)
   };
 }
 
