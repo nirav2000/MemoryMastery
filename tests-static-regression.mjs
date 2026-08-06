@@ -11,6 +11,7 @@ const firebase = fs.readFileSync('js/firebase.js','utf8');
 const firestoreRules = fs.readFileSync('firestore.rules','utf8');
 const training = fs.readFileSync('js/training.js','utf8');
 const archive = JSON.parse(fs.readFileSync('data/version-archive.json','utf8'));
+const appVersion = fs.readFileSync('VERSION','utf8').trim();
 const majorScenes = JSON.parse(fs.readFileSync('data/major-system-scenes.json','utf8'));
 const designSelectorContract = fs.readFileSync('docs/design-studio-selector-contract.md','utf8');
 
@@ -55,6 +56,8 @@ assert(training.includes('id="openRecallStep"') && training.includes('aria-expan
 assert(training.includes('const openRecallStep') && training.includes("document.querySelector('#encodeStepBody').hidden = true"), 'opening step 4 should collapse step 3 to its heading');
 assert(!training.includes('Never rely on memory alone'), 'training screen should avoid discouraging safety-warning copy in the casual learning flow');
 assert(index.includes('© 2026 Memory Mastery.') && !index.includes('not a substitute for secure records'), 'footer should stay clean and non-distracting');
+assert.match(appVersion, /^\d+\.\d+\.\d+$/, 'app version should use semantic versioning');
+assert(index.includes(`<span class="app-version">Version ${appVersion}</span>`), 'footer should display the canonical VERSION value');
 assert(storage.includes('firstSuccess:{completed:false}'), 'storage migration must include firstSuccess default');
 assert(storage.includes('notes:[]') && storage.includes('notes:mergeByKey'), 'storage must preserve editable retrieval notes locally and across cloud merge');
 assert(storage.includes('mergeBackups'), 'storage must merge cloud and device progress instead of overwriting one source');
@@ -134,7 +137,8 @@ assert(css.includes('.training-card > p') && css.includes('max-width: none'), 't
 assert(css.includes('.step-toggle') && css.includes('min-height: 44px'), 'step heading toggle should be visible and have a touch-sized target');
 assert(css.includes('.site-footer { display: flex') && css.includes('.site-footer small'), 'footer links and copyright should align on one row when space allows');
 assert(/@media \(max-width: 760px\)[\s\S]*?main\s*\{\s*padding:\s*var\(--space-5\) var\(--space-4\);/s.test(css), 'mobile main spacing should not duplicate the fixed-navigation clearance already provided by the footer');
-assert(/@media \(max-width: 720px\)\s*\{\s*\.site-footer\s*\{\s*padding-bottom:\s*calc\(84px \+ env\(safe-area-inset-bottom\)\);\s*\}\s*\}/s.test(css), 'mobile footer should retain fixed-navigation and safe-area clearance for its links');
+assert(css.includes('@media (max-width: 720px) { .site-footer { padding-bottom: calc(84px + env(safe-area-inset-bottom)); }'), 'mobile footer should retain fixed-navigation and safe-area clearance for its links');
+assert(css.includes('.site-footer small { display: grid; align-items: start;') && css.includes('.app-version { margin-left: 0; }'), 'mobile footer should keep the version clear of the floating Notes control');
 assert(css.includes('* { box-sizing: border-box; }') && css.includes('html { min-width: 0;') && css.includes('body { margin: 0; min-width: 0;'), 'the app shell should retain narrow-viewport overflow safeguards');
 assert(/\.note-drawer\s*\{[^}]*width:\s*min\(100vw - 1rem, 22rem\)/s.test(css) && /pre\s*\{[^}]*overflow-x:\s*auto/s.test(css), 'wide notes and preformatted content should stay contained instead of creating horizontal page overflow');
 assert(css.includes('.memory-thumb .thumb-line') && css.includes('grid-template-columns: auto auto minmax(0, 1fr) auto'), 'inline illustrations should have responsive layout support');

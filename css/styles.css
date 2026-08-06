@@ -296,7 +296,8 @@ body.dark .site-footer nav { background: transparent; }
 .site-footer { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3) var(--space-5); padding-block: var(--space-4); }
 .site-footer nav { align-items: center; padding: 0; }
 .site-footer small { min-height: 44px; display: inline-flex; align-items: center; }
-@media (max-width: 720px) { .site-footer { padding-bottom: calc(84px + env(safe-area-inset-bottom)); } }
+.app-version { margin-left: var(--space-2); white-space: nowrap; font-weight: 800; color: var(--ink); }
+@media (max-width: 720px) { .site-footer { padding-bottom: calc(84px + env(safe-area-inset-bottom)); } .site-footer small { display: grid; align-items: start; gap: var(--space-1); } .app-version { margin-left: 0; } }
 
 .note-nav-button { display: none; }
 .note-drawer { position: fixed; top: clamp(5.5rem, 12vh, 8rem); right: 0; z-index: 40; display: grid; grid-template-columns: 38px minmax(0, 19rem); width: min(calc(100vw - 12px), 21.5rem); max-height: calc(100vh - 7rem); transform: translateX(calc(100% - 38px)); transition: transform .22s ease; }
