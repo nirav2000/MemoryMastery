@@ -143,6 +143,10 @@ Imports intentionally never merge or overwrite without a warning. Keep dated exp
 
 Memory Mastery includes a lightweight version archive in `data/version-archive.json` and a maintainer note in `docs/version-archive.md`. The archive records meaningful milestones from git history, links to commits, and includes selected static build copies under `archive/builds/` for visual comparison. Use the Version archive screen from Settings or open `archive/index.html`. Archived builds show a banner and can optionally try the latest compatible `data/*.json` files, but old schemas may need their bundled data.
 
+### Release version
+
+The current public application version lives in `VERSION` and is displayed in the site footer. **Increment the semantic version for every push to GitHub**, update the matching footer text in `index.html`, and run `node scripts/check-version.mjs` before pushing. Use a patch increment for fixes, a minor increment for backwards-compatible features, and a major increment for incompatible data or workflow changes.
+
 ## File structure
 
 ```text
