@@ -311,6 +311,9 @@ body.dark .site-footer nav { background: transparent; }
 
 .auth-options, .auth-form { display: grid; gap: var(--space-3); }
 .auth-options { margin-top: var(--space-4); }
+.auth-persistence-note { margin-block: var(--space-5); padding: var(--space-4); border-left: 4px solid var(--accent); background: var(--surface-soft); }
+.auth-persistence-note h3, .auth-persistence-note p { margin-top: 0; }
+.auth-persistence-note p:last-child { margin-bottom: 0; }
 #phoneRecaptcha { min-height: 1px; }
 
 

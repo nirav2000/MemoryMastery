@@ -100,6 +100,8 @@ assert(app.includes('data-review-card') && app.includes('function notesPage') &&
 assert(app.includes('function bindNoteDrawer') && app.includes('function setNoteContext'), 'notes drawer should save context-aware notes from any route');
 assert(app.includes('startPhoneSignIn') && app.includes('finishPhoneSignIn') && app.includes('phoneAuthForm'), 'settings should expose Firebase phone authentication');
 assert(app.includes('Phone sign-in is not available for this region yet') && app.includes('Firebase Authentication SMS settings'), 'phone auth region errors should tell users what the developer must enable');
+assert(firebase.includes('browserLocalPersistence') && firebase.includes('browserSessionPersistence'), 'Firebase auth should request durable browser persistence with a session fallback');
+assert(app.includes('Want to stay signed in?') && app.includes('cannot access your device MAC address'), 'Settings should explain private-window limits without proposing device fingerprinting');
 assert(app.includes('cleanupReviews()'), 'app startup and cloud merge should clean existing duplicate active review rows');
 assert(app.includes('Check recall') && app.includes('Source, now revealed'), 'reviews should reveal answers only after checking recall');
 assert(app.includes('words from your first image story'), 'review labels should say what is being reviewed, not generic memory set jargon');

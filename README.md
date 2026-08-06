@@ -74,6 +74,8 @@ The Firebase web configuration is **public by design**, not a secret. Do not put
 
 The **Sign in** button uses Firebase Authentication with the Google provider. On first sign-in the app asks before saving guest data to `users/{uid}/app/state`; if a cloud backup already exists it asks before loading it onto the device. The included frontend remains fully functional if Firebase is not configured or temporarily unavailable.
 
+Memory Mastery explicitly requests Firebase's longest browser-local authentication persistence. In a normal browser profile this allows the login to survive tabs and browser restarts. Private/incognito windows intentionally remove authentication and local app data when their private session ends, so no web app can keep that login across separate incognito sessions. Browsers also do not expose device MAC addresses to websites; Memory Mastery does not use device fingerprinting as a substitute for secure authentication.
+
 
 ### SmartPaper-inspired redesign
 

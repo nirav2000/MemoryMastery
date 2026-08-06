@@ -13,6 +13,17 @@ export const firebaseConfig = {
 let firebase;
 export const configured = () => !firebaseConfig.apiKey.startsWith('YOUR_');
 
+async function useLongestAvailableAuthPersistence(auth, authModule) {
+  try {
+    await authModule.setPersistence(auth, authModule.browserLocalPersistence);
+    return 'local';
+  } catch (localError) {
+    console.warn('Persistent sign-in storage is unavailable; using this browser session only.', localError);
+    await authModule.setPersistence(auth, authModule.browserSessionPersistence);
+    return 'session';
+  }
+}
+
 export async function connectFirebase() {
   if (!configured()) return null;
   if (firebase) return firebase;
@@ -25,9 +36,15 @@ export async function connectFirebase() {
 
   const app = initializeApp(firebaseConfig);
   const auth = authModule.getAuth(app);
+  const authPersistence = await useLongestAvailableAuthPersistence(auth, authModule);
   const db = firestoreModule.getFirestore(app);
-  firebase = { app, auth, db, authModule, firestoreModule };
+  firebase = { app, auth, db, authModule, firestoreModule, authPersistence };
   return firebase;
+}
+
+export async function authPersistenceMode() {
+  const fb = await connectFirebase();
+  return fb?.authPersistence || 'unavailable';
 }
 
 export async function watchAuthState(callback) {
