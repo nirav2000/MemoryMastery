@@ -100,6 +100,8 @@ assert(app.includes('data-review-card') && app.includes('function notesPage') &&
 assert(app.includes('function bindNoteDrawer') && app.includes('function setNoteContext'), 'notes drawer should save context-aware notes from any route');
 assert(app.includes('startPhoneSignIn') && app.includes('finishPhoneSignIn') && app.includes('phoneAuthForm'), 'settings should expose Firebase phone authentication');
 assert(app.includes('Phone sign-in is not available for this region yet') && app.includes('Firebase Authentication SMS settings'), 'phone auth region errors should tell users what the developer must enable');
+assert(firebase.includes('browserLocalPersistence') && firebase.includes('browserSessionPersistence'), 'Firebase auth should request durable browser persistence with a session fallback');
+assert(app.includes('Want to stay signed in?') && app.includes('cannot access your device MAC address'), 'Settings should explain private-window limits without proposing device fingerprinting');
 assert(app.includes('cleanupReviews()'), 'app startup and cloud merge should clean existing duplicate active review rows');
 assert(app.includes('Check recall') && app.includes('Source, now revealed'), 'reviews should reveal answers only after checking recall');
 assert(app.includes('words from your first image story'), 'review labels should say what is being reviewed, not generic memory set jargon');
@@ -111,6 +113,9 @@ assert(app.includes("sauce:'sauce'") && app.includes("seed:'seed'") && app.inclu
 assert(!app.includes('illustrationInitials'), 'memory thumbnails must be object illustrations rather than letter initials');
 assert(index.includes('rel="preload" as="image" href="assets/tool-palace.svg"'), 'tool illustrations should be preloaded to avoid slow first display');
 assert(app.includes('recentRecallList') && !app.includes('aria-label="Recent accuracy chart"'), 'progress should use a clearer recent-recall list instead of the old chart');
+assert(app.includes("import {progressSummary} from './analytics.js") && app.includes('progressSummary(state.results,state.reviews)'), 'Progress should derive one consistent dashboard model from the analytics module');
+for (const section of ['Recommended next action','Methods that work for you','What to repair','Review health']) assert(app.includes(section), `Progress should include ${section}`);
+assert(app.includes("summary.immediateAccuracy===null?'—'") && app.includes("health.delayedAccuracy===null?'—'"), 'empty Progress metrics should use an honest dash instead of a misleading zero percentage');
 assert(app.includes('Open current lesson') && app.includes('Open progress details') && app.includes('href="#train"') && app.includes('href="#progress"'), 'Today support cards should be explicit navigable links');
 
 for (const file of ['assets/tool-palace.svg','assets/tool-major.svg','assets/tool-pao.svg','assets/tool-symbols.svg','assets/tool-names.svg','assets/tool-contract.svg']) assert(fs.existsSync(file), `missing tool illustration ${file}`);
@@ -123,6 +128,8 @@ assert(css.includes('.profile-link, #authButton { padding-inline: 1.15rem;'), 'h
 assert(!index.includes('css/print.css') && !fs.existsSync('css/print.css') && css.includes('@media print'), 'print styles should live in the single app stylesheet');
 assert(css.includes('.note-nav-button') && css.includes('@media (max-width: 760px)') && css.includes('bottom: calc(64px + env(safe-area-inset-bottom))'), 'mobile notes should use a bottom-nav icon instead of a side tab');
 assert(css.includes('.recall-list') && css.includes('.review-form'), 'progress and review layouts need dedicated spacing');
+assert(css.includes('.metrics-grid') && css.includes('.analytics-grid') && css.includes('.progress-next'), 'the analytics dashboard needs responsive, named layout components');
+assert(css.includes('--on-accent') && css.includes('color: var(--on-accent)'), 'accent controls should use a theme-aware contrasting foreground');
 assert(css.includes('.training-card > p') && css.includes('max-width: none'), 'training cards should not force awkward short-line wrapping');
 assert(css.includes('.step-toggle') && css.includes('min-height: 44px'), 'step heading toggle should be visible and have a touch-sized target');
 assert(css.includes('.site-footer { display: flex') && css.includes('.site-footer small'), 'footer links and copyright should align on one row when space allows');
