@@ -45,88 +45,6 @@ The release is intended to produce these observable learner and product outcomes
 
 Dependencies below name task IDs only. “Previous work,” “foundation,” or another unstated prerequisite is not a dependency.
 
-## T01 — Secure repository access and rotate the exposed PAT
-
-**Objective**
-
-Restore least-privilege repository access and invalidate the exposed personal access token (PAT) before any release work is pushed.
-
-**Scope**
-
-- Revoke the exposed PAT at its provider, create a minimally scoped replacement only if automation requires one, and store it in the approved secret manager.
-- Remove the token from remotes, local configuration, workflow text, logs, documentation, and reachable Git history; record an incident timeline without recording the secret.
-- Audit repository collaborators, deploy keys, webhooks, environments, branch protection, and recent authentication activity.
-- Verify protected `main` access with a non-secret-bearing remote URL and document token ownership and expiry.
-
-**Non-goals**
-
-- Changing application behavior or learner data.
-- Copying the replacement PAT into a file, command transcript, issue, or pull-request description.
-- Broadening repository or cloud permissions to make setup easier.
-
-**Dependencies**
-
-None
-
-**Acceptance criteria**
-
-- The provider reports the exposed PAT as revoked.
-- Secret scanning of the working tree and reachable history reports no live PAT value.
-- `git remote -v` contains no embedded credential.
-- A least-privilege identity can fetch and open a pull request, while an unapproved identity cannot push directly to protected `main`.
-- The access register identifies each collaborator, key, webhook, automation owner, granted scope, and review/expiry date.
-
-**Required tests**
-
-- Run the repository host’s secret scan against the full reachable history and save the passing result without secret values.
-- Fetch from the credential-free remote and exercise the pull-request path with the replacement identity.
-- Confirm protected-branch rejection of a direct push using a safe test branch/ref procedure.
-- Review provider audit events from the earliest known exposure through revocation for unrecognised use.
-
-**Likely affected components**
-
-- Repository-host access settings, secret manager, CI environment secrets, Git remote configuration, branch protection, incident record.
-
-## T02 — Establish release baselines and reconcile version metadata
-
-**Objective**
-
-Create a reproducible “before” record and make all release/version sources agree before structural changes begin.
-
-**Scope**
-
-- Record the current commit, working-tree state, deploy target, runtime/tool versions, static-check results, known defects, critical routes, and storage schema/key.
-- Reconcile `VERSION`, `data/version-archive.json`, footer loading, release notes, deployment labels, and tags under the documented semantic-version policy.
-- Capture representative baseline data fixtures without real personal or password data.
-
-**Non-goals**
-
-- Fixing baseline defects.
-- Redesigning entry points, navigation, or release automation.
-- Introducing a new storage schema or version service.
-
-**Dependencies**
-
-T01
-
-**Acceptance criteria**
-
-- A baseline record names one commit and one deployment artifact that can be reproduced from it.
-- `VERSION`, `data/version-archive.json.currentVersion`, the rendered footer, release notes, and release tag resolve to the same semantic version.
-- The release policy classifies the next change as patch, minor, or major with a recorded rationale.
-- Sanitised fixtures cover a new learner and a returning learner with existing `memoryDojo.v1` data.
-- Every known baseline failure is recorded with a reproducible command or route; no failure is silently accepted.
-
-**Required tests**
-
-- Run `node scripts/check-version.mjs`.
-- Run the existing static regression suite and record pass/fail output against the baseline commit.
-- Serve the baseline and verify that the footer-displayed version equals `VERSION` with cache disabled.
-- Export and re-import both sanitised fixtures and compare preserved learner records.
-
-**Likely affected components**
-
-- `VERSION`, `data/version-archive.json`, release documentation, tags, baseline fixtures and evidence records.
 
 ## T03 — Consolidate `index.html`, `app.html`, and `404.html`
 
@@ -147,8 +65,6 @@ Make one canonical application shell serve direct, fallback, and not-found entry
 - Removing a route or changing the `memoryDojo.v1` key/schema.
 
 **Dependencies**
-
-T02
 
 **Acceptance criteria**
 
@@ -172,46 +88,6 @@ T02
 
 - `index.html`, `app.html`, `404.html`, hosting fallback configuration, shell boot code, navigation, footer/version loader, CSS loaded by the shell.
 
-## T04 — Add CI and static validation
-
-**Objective**
-
-Make deterministic repository and release checks mandatory for every pull request and protected-branch update.
-
-**Scope**
-
-- Add pinned CI jobs for HTML, CSS, JavaScript/module syntax, JSON/schema checks, internal links, secrets, version consistency, and the existing static regression suite.
-- Cache dependencies safely, use least-privilege workflow permissions, cancel superseded runs, and retain useful failure artifacts.
-- Document local equivalents and make required checks enforceable in branch protection.
-
-**Non-goals**
-
-- Browser screenshots or full critical journeys (T05–T06).
-- Automatic production deployment.
-- A framework, build pipeline, or architecture migration unrelated to validation.
-
-**Dependencies**
-
-T03
-
-**Acceptance criteria**
-
-- A clean pull request runs every documented static job from a fresh checkout and all jobs pass.
-- A seeded invalid HTML file, JavaScript syntax error, malformed JSON file, internal broken link, version mismatch, and test secret each fail the relevant job.
-- Workflow tokens have read-only contents permission unless a documented step requires more.
-- Required checks block merging to `main` when any validation fails.
-- The contributor documentation lists commands that reproduce every CI validation locally.
-
-**Required tests**
-
-- Run every documented CI command locally from a clean checkout.
-- Exercise each seeded failure in an isolated branch or fixture and verify a non-zero exit code.
-- Inspect workflow permissions and dependency pins with the repository host’s workflow security tooling.
-- Run `node scripts/check-version.mjs` and the static regression suite in CI and locally.
-
-**Likely affected components**
-
-- CI workflow files, validation scripts/configuration, contributor/release documentation, branch-protection required checks.
 
 ## T05 — Add browser-level critical-journey tests
 
@@ -232,8 +108,6 @@ Protect the shell and highest-value learning flows with deterministic browser te
 - Changing the storage key/schema or adopting new application architecture.
 
 **Dependencies**
-
-T04
 
 **Acceptance criteria**
 
@@ -655,7 +529,7 @@ Prove the release candidate is usable, accessible, reliable, safe, and valuable 
 
 **Dependencies**
 
-T14
+T999
 
 **Acceptance criteria**
 
