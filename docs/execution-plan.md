@@ -130,6 +130,10 @@ None
 
 ## T05 — Add browser-level critical-journey tests
 
+**Status**
+
+READY
+
 **Objective**
 
 Protect the shell and highest-value learning flows with deterministic browser tests before expanding the product.
