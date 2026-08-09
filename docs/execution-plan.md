@@ -48,6 +48,10 @@ Dependencies below name task IDs only. “Previous work,” “foundation,” or
 
 ## T03 — Consolidate `index.html`, `app.html`, and `404.html`
 
+**Status**
+
+DONE — 2026-08-09
+
 **Objective**
 
 Make one canonical application shell serve direct, fallback, and not-found entry paths without markup or behavior drift.
@@ -65,6 +69,8 @@ Make one canonical application shell serve direct, fallback, and not-found entry
 - Removing a route or changing the `memoryDojo.v1` key/schema.
 
 **Dependencies**
+
+None
 
 **Acceptance criteria**
 
@@ -87,6 +93,39 @@ Make one canonical application shell serve direct, fallback, and not-found entry
 **Likely affected components**
 
 - `index.html`, `app.html`, `404.html`, hosting fallback configuration, shell boot code, navigation, footer/version loader, CSS loaded by the shell.
+
+**Implementation summary**
+
+- Retained `index.html` as the only application-shell source and replaced the stale duplicate in `app.html` with a query/hash-preserving canonical redirect.
+- Replaced the fixed-dashboard `404.html` redirect with a canonical redirect that preserves query/hash state on both root hosting and the `/MemoryMastery/` GitHub Pages project path.
+- Added browser regression coverage for root, canonical, legacy and missing-path entry, deep-link reload, browser history, duplicate theme handlers, keyboard/focus behavior, responsive overflow, reduced motion, navigation semantics and storage preservation.
+- Corrected the confirmed light-theme muted-text contrast failure found during the required WCAG AA scan.
+
+**Files changed**
+
+- `app.html`
+- `404.html`
+- `css/styles.css`
+- `tests/entry-points.spec.py`
+- `docs/execution-plan.md`
+- `VERSION`
+- `data/version-archive.json`
+
+**Tests performed**
+
+- `python3 tests/entry-points.spec.py` — passed canonical/legacy/fallback entry, deep-link, reload, history, keyboard/focus, navigation, reduced-motion, storage and responsive checks at 320, 375, 768, 1024 and 1440 pixels.
+- Axe 4.13.0 WCAG 2 AA/2.1 AA/2.2 AA scans — passed the Today shell in light and dark themes at 320, 375, 768, 1024 and 1440 pixels.
+- Playwright screenshot review — inspected light and dark Today states at every required width with reduced motion.
+- `node tests-static-regression.mjs` — passed.
+- `node scripts/check-version.mjs` — passed for 4.1.7.
+- `git diff --check` — passed.
+
+**Problems discovered**
+
+- The previous `app.html` was an independently maintained stale shell, including obsolete asset versions and missing canonical footer behavior.
+- The previous `404.html` always discarded the requested query/hash and forced `#dashboard`.
+- Axe initially found three muted description elements at a 4.31:1 contrast ratio in the light theme; changing the base muted token resolved all serious/critical WCAG AA findings in the tested matrix.
+- Root and GitHub Pages project hosting need different fallback roots; the redirect now handles `/MemoryMastery/` explicitly and otherwise uses `/`.
 
 
 ## T05 — Add browser-level critical-journey tests

@@ -1,1 +1,19 @@
-<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=index.html#dashboard"><title>Memory Mastery</title><a href="index.html#dashboard">Open Memory Mastery</a>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Opening Memory Mastery…</title>
+  <script>
+    const projectRoot = location.pathname.startsWith('/MemoryMastery/') ? '/MemoryMastery/' : '/';
+    const target = new URL(`${projectRoot}index.html`, location.origin);
+    target.search = location.search;
+    target.hash = location.hash;
+    location.replace(target);
+  </script>
+</head>
+<body>
+  <p>Opening <a href="/MemoryMastery/index.html">Memory Mastery</a>…</p>
+</body>
+</html>
