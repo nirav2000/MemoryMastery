@@ -148,6 +148,8 @@ Protect the shell and highest-value learning flows with deterministic browser te
 
 **Dependencies**
 
+None
+
 **Acceptance criteria**
 
 - The critical-journey suite passes twice consecutively from clean browser profiles with no retry-only successes.
