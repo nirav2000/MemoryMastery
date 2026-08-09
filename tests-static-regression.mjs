@@ -14,6 +14,7 @@ const archive = JSON.parse(fs.readFileSync('data/version-archive.json','utf8'));
 const appVersion = fs.readFileSync('VERSION','utf8').trim();
 const majorScenes = JSON.parse(fs.readFileSync('data/major-system-scenes.json','utf8'));
 const designSelectorContract = fs.readFileSync('docs/design-studio-selector-contract.md','utf8');
+const legal = fs.readFileSync('js/legal.js','utf8');
 
 for (const label of ['Today','Learn','Library','Progress']) assert(index.includes(`>${label}`), `missing primary nav ${label}`);
 assert(!index.includes('href="#palaces"'), 'advanced tools must not be primary navigation');
@@ -32,6 +33,11 @@ assert(app.includes('function cardDestination') && app.includes('clickable-card'
 assert(fs.existsSync('archive/archive-access-gate.js') && fs.readFileSync('archive/index.html','utf8').includes('archive-access-gate.js'), 'standalone archive should require the owner session gate');
 assert(app.includes('archivePath') && app.includes('latestDataPath'), 'version archive should expose archived builds and latest-data options when available');
 assert(app.includes('function legalPage'), 'footer legal links should resolve inside the app');
+assert(!app.includes('should be reviewed before public commercial use'), 'pre-release legal caveats must not appear in the public app');
+for(const heading of ['Terms of use','Privacy notice','Cookie and storage notice'])assert(legal.includes(`title: '${heading}'`),`missing complete ${heading}`);
+for(const topic of ['Acceptable use','Liability','Controller and contact','Retention and deletion','Your rights','Authentication storage'])assert(legal.includes(`['${topic}'`),`legal notices should cover ${topic}`);
+assert(fs.existsSync('docs/prerelease-legal-checklist.md'), 'commercial legal follow-up should live in the private maintainer checklist, not public notices');
+assert(fs.readFileSync('css/styles.css','utf8').includes('body[data-design-route="terms"] .note-nav-button') && fs.readFileSync('css/styles.css','utf8').includes('body[data-design-route="privacy"] .note-nav-button'), 'floating Notes control should not cover legal text');
 assert.equal(archive.schema, 1);
 assert.equal(archive.versions[0].commit, '9e7045c', 'latest archived release should lead the version page');
 assert.equal(archive.currentVersion, appVersion, 'archive release line should match the live VERSION');
