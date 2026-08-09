@@ -1,0 +1,32 @@
+{
+  "phases": [
+    {
+      "id": 1,
+      "name": "Build the Toolkit",
+      "weeks": "1\u20134"
+    },
+    {
+      "id": 2,
+      "name": "Train the Core Skills",
+      "weeks": "5\u201312"
+    },
+    {
+      "id": 3,
+      "name": "Apply Memory to Real Life",
+      "weeks": "13\u201324"
+    },
+    {
+      "id": 4,
+      "name": "Mastery and Maintenance",
+      "weeks": "Ongoing"
+    }
+  ],
+  "projects": [
+    "All countries and capitals",
+    "Historical timeline",
+    "Piano technical requirements",
+    "French vocabulary syllabus",
+    "Important book summaries",
+    "Complete card system"
+  ]
+}

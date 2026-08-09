@@ -8,6 +8,8 @@ The archive now has three layers:
 2. `archive/index.html`, `archive/screenshots/*.png` and `archive/builds/<commit>/` folders — full static copies plus first-load screenshots for visual comparison of important versions.
 3. Git history/tags — the canonical way to reconstruct any unarchived patch when needed.
 
+The historical generation tags establish the release line: v0 initial app, v1 first-success journey, v2 clean design system and v3 detail-quality milestone. The Firebase-backed Design Studio begins v4.0.0; subsequent analytics, authentication and archive pushes increment from that line. `VERSION` is canonical for the live footer, while `data/version-archive.json.currentVersion` must match it.
+
 ## Recommended workflow
 
 Tag important milestones:
@@ -28,10 +30,12 @@ python3 -m http.server 8000 --directory ../MemoryMastery-2ea5e55
 
 When a commit significantly changes the learner journey, storage, Firebase sync, navigation, visual direction, or developer-analysis value, create a full `archive/builds/<commit>/` copy, capture `archive/screenshots/<commit>.png`, and document why it matters in `data/version-archive.json`. Archived builds include a banner warning that the flow may be obsolete and a `?useLatestData=1` option that redirects compatible `data/*.json` requests to the current data files.
 
+Before every pushed commit, increment `VERSION` and run `node scripts/check-version.mjs`. The footer fetches `VERSION` with `cache: no-store`, so a new release value appears without editing HTML or relying on a cached app bundle.
+
 ## Inclusion criteria
 
 Archive a version when it changes the learner journey, storage format, navigation model, Firebase sync behaviour, major visual direction, or is useful for developer comparison. Every archived version should have both a full static copy and a first-load screenshot. Truly trivial commits can remain available through Git history only.
 
 ## Current decision
 
-The app exposes the Version archive screen only after sign-in as the developer account `myaeixa@gmail.com`. It explains key changes, links each milestone to its GitHub commit, shows first-load screenshots, and opens full static builds. The footer link is hidden from ordinary learner sessions.
+The footer exposes the Version archive ledger to every learner so the current release can be identified. Commit links and release summaries are public; full historical snapshots and latest-data rebuilds remain gated to the developer account `myaeixa@gmail.com`.
