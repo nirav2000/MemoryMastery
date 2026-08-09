@@ -1,7 +1,7 @@
 import {$,$$,escapeHTML,mean,download,toast,formatDate} from './utils.js?v=20260724-phone-notes-css';
-import {load,get,save,update,replace,reset,mergeBackups} from './storage.js?v=20260724-phone-notes-css';
-import {trainingView,bindTraining} from './training.js?v=20260724-phone-notes-css';
-import {due,scoreReview,action,schedule,uniqueReviews,cleanupReviews} from './reviews.js?v=20260724-phone-notes-css';
+import {load,get,save,update,replace,reset,mergeBackups} from './storage.js?v=4.1.8';
+import {trainingView,bindTraining} from './training.js?v=4.1.8';
+import {due,scoreReview,action,schedule,uniqueReviews,cleanupReviews} from './reviews.js?v=4.1.8';
 import {configured,watchAuthState,signInWithGoogle,signInWithPhone,confirmPhoneCode,signOutGoogle,loadCloudState,saveCloudState,loadGlobalDesignOverrides,saveGlobalDesignOverrides,currentFirebaseUser} from './firebase.js?v=20260806-auth-persistence';
 import {scoreOrderedRecall,normalAnswer,firstSuccessSession} from './learning.js?v=20260724-phone-notes-css';
 import {progressSummary} from './analytics.js?v=20260802-progress-dashboard';
@@ -159,7 +159,7 @@ function bind(hash){
   $$('[data-note-key]').forEach(el=>el.addEventListener('input',()=>saveNote(el.dataset.noteKey,el.dataset.noteContext,el.value,el.dataset.noteHref||'')));
   $$('[data-review-card]').forEach(card=>{const activate=()=>setNoteContext(card.dataset.noteKey,card.dataset.noteContext,'#reviews');card.addEventListener('focusin',activate);card.addEventListener('click',activate);$('details',card)?.addEventListener('toggle',e=>{if(e.target.open)activate()})});
   $$('[data-challenge]').forEach(b=>b.onclick=()=>{challengeState.challenge=beginnerChallenges.find(c=>c.id===b.dataset.challenge);challengeState.step='baseline';route()});
-  $$('[data-hide-source]').forEach(b=>b.onclick=()=>{const source=b.previousElementSibling;source.hidden=true;const form=$('.recall-form',b.parentElement);if(form)form.hidden=false;b.remove();const firstInput=$('[data-recall-item]',b.parentElement);if(firstInput)firstInput.focus()});
+  $$('[data-hide-source]').forEach(b=>b.onclick=()=>{const panel=b.parentElement,source=b.previousElementSibling;source.hidden=true;const form=$('.recall-form',panel);if(form)form.hidden=false;b.remove();const firstInput=$('[data-recall-item]',panel);if(firstInput)firstInput.focus()});
   $('[data-action="focus-challenges"]')?.addEventListener('click',()=>{$('#first-success')?.scrollIntoView({behavior:'smooth',block:'start'});$('.challenge-card')?.focus()});
   $$('[data-journey]').forEach(b=>b.onclick=()=>{challengeState.step=b.dataset.journey;route()});
   $$('.recall-form').forEach(f=>f.onsubmit=e=>{e.preventDefault();const mode=f.dataset.recall,score=scoreOrderedRecall(challengeState.challenge.material,$$('[data-recall-item]',f).map(i=>i.value).join('\n'));challengeState[mode]=score;challengeState.step=mode==='baseline'?'teach':'success';route()});

@@ -1,6 +1,6 @@
 import {escapeHTML} from './utils.js?v=20260721-note-drawer';
-import {get,update} from './storage.js?v=20260721-note-drawer';
-import {schedule} from './reviews.js?v=20260721-note-drawer';
+import {get,update} from './storage.js?v=4.1.8';
+import {schedule} from './reviews.js?v=4.1.8';
 import {scoreOrderedRecall} from './learning.js?v=20260721-note-drawer';
 
 let start = 0;

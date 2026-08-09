@@ -1,4 +1,4 @@
-import {get,update} from './storage.js?v=20260721-note-drawer'; import {uid} from './utils.js?v=20260721-note-drawer';
+import {get,update} from './storage.js?v=4.1.8'; import {uid} from './utils.js?v=20260721-note-drawer';
 export const intervals=[20,1440,4320,10080,43200];
 function normalisePart(value){return String(value||'').trim().replace(/\s+/g,' ').toLowerCase()}
 export function reviewKey(r){const material=(r.material||[]).map(normalisePart).filter(Boolean).join('¦');return material||normalisePart(r.title)||String(r.id||'')}

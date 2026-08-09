@@ -1,0 +1,43 @@
+name: Browser journeys
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: browser-journeys-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  critical-journeys:
+    strategy:
+      fail-fast: false
+      matrix:
+        repeat: [1, 2]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+          cache: pip
+      - run: npm ci
+      - run: python -m pip install -r requirements-dev.txt
+      - run: python -m playwright install --with-deps chromium firefox
+      - run: npm run test:browser
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: browser-failure-artifacts-${{ matrix.repeat }}
+          path: test-results/
+          if-no-files-found: ignore
+          retention-days: 14

@@ -1,0 +1,13 @@
+{
+  "name": "memory-mastery-quality-checks",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:entry": "python3 tests/entry-points.spec.py",
+    "test:journeys": "python3 tests/critical-journeys.spec.py",
+    "test:browser": "npm run test:entry && npm run test:journeys"
+  },
+  "devDependencies": {
+    "axe-core": "4.13.0"
+  }
+}

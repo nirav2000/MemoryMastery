@@ -132,7 +132,7 @@ None
 
 **Status**
 
-READY
+DONE — 2026-08-09
 
 **Objective**
 
@@ -174,6 +174,50 @@ None
 **Likely affected components**
 
 - Browser-test configuration and specs, test fixtures/helpers, stable element selectors, CI browser job, critical learning and review routes.
+
+**Implementation summary**
+
+- Added pinned Python Playwright and Axe dependencies, repeatable npm commands, and a least-privilege browser CI job that runs the suite twice in clean automation.
+- Added Chromium and Firefox critical-journey coverage for first success, source hiding, scoring, reminder scheduling/persistence, due-review scoring, settings import/export, the guest authentication boundary, navigation/history, storage, reduced motion and light/dark WCAG AA scans.
+- Added trace, screenshot and sanitised storage artifacts for failed journeys.
+- Unified storage/review/training module URLs so every flow shares one state instance, preserving first-success completion when its quick reminder is scheduled.
+- Corrected the source-hiding focus handoff exposed by keyboard verification.
+
+**Files changed**
+
+- `.github/workflows/browser-tests.yml`
+- `.gitignore`
+- `package.json`
+- `package-lock.json`
+- `requirements-dev.txt`
+- `tests/critical-journeys.spec.py`
+- `index.html`
+- `js/app.js`
+- `js/reviews.js`
+- `js/training.js`
+- `docs/execution-plan.md`
+- `VERSION`
+- `data/version-archive.json`
+
+**Tests performed**
+
+- `npm ci` — passed with no reported vulnerabilities.
+- `python3 tests/entry-points.spec.py` — passed.
+- `python3 tests/critical-journeys.spec.py` — passed first success, source hiding, persistence/reload, due review, import/export, guest authentication boundary, navigation/history, reduced motion and Axe WCAG AA checks in Chromium and Firefox.
+- The critical-journey suite passed in two successive clean executions; CI models this as a two-run matrix so each verification starts on a clean runner.
+- Manual browser reproduction after the module URL correction confirmed the completed-success state and scheduled reminder survive reload.
+- `python3 -m py_compile tests/critical-journeys.spec.py tests/entry-points.spec.py` — passed.
+- `node tests-static-regression.mjs` — passed.
+- `node scripts/check-version.mjs` — passed for 4.1.8.
+- `npm audit --omit=optional` — passed with zero reported vulnerabilities.
+- `git diff --check` — passed.
+
+**Problems discovered**
+
+- Different cache-busting query strings created independent JavaScript module instances for storage; the shared `v=4.1.8` module URLs remove the stale-state overwrite without changing the storage key or schema.
+- The source-hiding handler removed its button before reading `parentElement`; retaining the panel reference before removal restores the intended focus handoff.
+- Configured Firebase CDN imports can be unavailable in isolated test networking. The app catches this optional-sync failure; the suite excludes only that known third-party import message while continuing to fail all application page errors.
+- Running two complete multi-browser suites in one constrained local shell can exhaust the container after the first clean run. CI uses two isolated matrix runs, and two individual clean local executions passed without retries.
 
 ## T06 — Establish the visual QA matrix and screenshot baselines
 
