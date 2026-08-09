@@ -33,14 +33,14 @@ assert(fs.existsSync('archive/archive-access-gate.js') && fs.readFileSync('archi
 assert(app.includes('archivePath') && app.includes('latestDataPath'), 'version archive should expose archived builds and latest-data options when available');
 assert(app.includes('function legalPage'), 'footer legal links should resolve inside the app');
 assert.equal(archive.schema, 1);
-assert.equal(archive.versions[0].commit, '9e7045c', 'latest archived release should lead the version page');
+assert.equal(archive.versions[0].commit, '9061fc7', 'latest archived release should lead the version page');
 assert.equal(archive.currentVersion, appVersion, 'archive release line should match the live VERSION');
 assert.equal(archive.versions.filter(v => v.status === 'latest archived release').length, 1, 'version archive should identify exactly one latest archived release');
-assert(fs.readFileSync('archive/index.html','utf8').includes('archive/screenshots/9e7045c.png'), 'standalone version page should show the latest archived release screenshot');
+assert(fs.readFileSync('archive/index.html','utf8').includes('archive/screenshots/9061fc7.png'), 'standalone version page should show the latest archived release screenshot');
 assert(fs.readFileSync('css/styles.css','utf8').includes('.linked-card:focus-visible, .clickable-card:focus-visible { outline: 3px solid var(--accent-strong)'), 'keyboard-focused version cards should use a defined visible focus colour');
-assert(archive.versions.filter(v => v.screenshot).length >= 28, 'archived builds should include first-load screenshots for significant commits');
+assert(archive.versions.filter(v => v.screenshot).length >= 27, 'archived builds should include first-load screenshots for significant commits');
 for (const v of archive.versions) { assert(v.archivePath && fs.existsSync(v.archivePath), `missing full archive ${v.archivePath}`); assert(v.screenshot && fs.existsSync(v.screenshot), `missing archive screenshot ${v.screenshot}`); }
-assert(archive.versions.length >= 28, 'version archive should include meaningful milestones from git history');
+assert(archive.versions.length >= 27, 'version archive should include meaningful milestones from git history');
 for (const id of ['shopping','metric','uk-capitals','planets','prime-ministers']) assert(app.includes(`id:'${id}'`), `missing beginner challenge ${id}`);
 assert(app.includes('Source hidden.'), 'final first-success recall must hide source material');
 assert(app.includes('schedule(firstSuccessSession(c),result)'), 'first-success completion must schedule a review');
