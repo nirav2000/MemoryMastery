@@ -1,0 +1,1310 @@
+Build a complete mobile-first web app called **Memory Dojo** that trains a user to master practical memory techniques through a structured martial-arts belt system.
+
+The app must not merely explain memory techniques. It must guide the user through daily deliberate practice until the techniques become automatic and useful in everyday life.
+
+## 1. Technical requirements
+
+Use:
+
+* Plain HTML
+* Plain CSS
+* Vanilla JavaScript
+* Firebase Authentication
+* Firebase Firestore
+* GitHub Pages-compatible frontend
+* No React, Vue, TypeScript, Node build process or bundler
+* No npm requirement
+* No server required beyond Firebase
+* Modular JavaScript files using ES modules where practical
+* Responsive design optimised for iPhone and iPad
+* Local storage fallback for users who are not signed in
+* A clear README with setup and deployment instructions
+* All configuration data stored in editable JSON files where possible
+
+The project must be simple enough to edit from an iPad using GitHub.
+
+Create a complete working repository, not mock-ups or pseudocode.
+
+## 2. Core product idea
+
+The app should feel like a combination of:
+
+* A martial-arts training programme
+* A daily memory gym
+* A structured course
+* A habit tracker
+* A testing and progression system
+* A personal library of memory palaces and mnemonic images
+
+The user progresses through belts by completing:
+
+* Lessons
+* Daily drills
+* Real-life memory tasks
+* Delayed-recall tests
+* Belt examinations
+
+The app should reward actual recall performance and practical use, not simply clicking “complete”.
+
+## 3. Main training philosophy
+
+Build the programme around these five stages:
+
+### Stage 1: Understand
+
+The user learns the basic principles:
+
+* Attention
+* Visualisation
+* Association
+* Exaggeration
+* Movement
+* Emotion
+* Location
+* Retrieval practice
+* Spaced review
+
+The user should receive only the minimum theory required before practising.
+
+### Stage 2: Build
+
+The user creates their personal memory toolkit:
+
+* Memory palaces
+* Palace locations
+* Major System images
+* A 00–99 number-image system
+* A Person–Action–Object system
+* A reusable symbol bank
+* Images for abstract words
+* Images for dates
+* Images for names
+* Images for common subjects
+
+### Stage 3: Daily Use
+
+The user deliberately uses memory methods every day for:
+
+* Words
+* Numbers
+* Names and faces
+* Vocabulary
+* Historical facts
+* Dates
+* Cards
+* Speeches
+* Book summaries
+* Lists
+* Real-life information
+
+### Stage 4: Automatic Thinking
+
+The user practises until information automatically triggers mnemonic conversion.
+
+Examples:
+
+* A number automatically produces a Major System image
+* A name automatically triggers a visual association
+* A list automatically suggests a memory palace
+* A date automatically becomes an image
+* A chapter automatically becomes a structured route
+
+### Stage 5: Identity
+
+The user becomes someone who habitually memorises rather than someone who occasionally studies memory techniques.
+
+The app should reinforce the identity:
+
+> I notice, encode, place, retrieve and review.
+
+## 4. Belt system
+
+Create the following belts.
+
+Each belt must contain:
+
+* Purpose
+* Required lessons
+* Daily drills
+* Practical assignments
+* Accuracy targets
+* Delayed-recall requirements
+* Belt examination
+* Graduation badge
+* Unlock rules
+
+### White Belt — Foundations
+
+Goal:
+
+Learn to create memorable images and use one simple memory palace.
+
+Skills:
+
+* Focused observation
+* Turning words into images
+* Linking two images
+* Exaggeration
+* Movement
+* Sensory detail
+* One 10-location memory palace
+* Memorising short lists
+
+Required achievements:
+
+* Build one 10-location palace
+* Memorise 10 concrete words
+* Recall at least 8 immediately
+* Recall at least 7 after 24 hours
+* Complete one real-life shopping-list task without looking at the list
+
+White Belt examination:
+
+* Memorise 12 words using a palace
+* Immediate recall target: 10/12
+* Delayed recall target after 20 minutes: 9/12
+* Explain which images were strongest and weakest
+
+### Yellow Belt — Association and Linking
+
+Goal:
+
+Develop reliable image-making and chaining.
+
+Skills:
+
+* Link method
+* Story method
+* Concrete and abstract words
+* Strong interaction between images
+* Image repair
+* Reusing familiar mnemonic symbols
+
+Required achievements:
+
+* Memorise 20 random words
+* Recall at least 85% immediately
+* Recall at least 75% after 24 hours
+* Build a reusable symbol bank of at least 25 symbols
+* Memorise one useful real-life sequence
+
+Yellow Belt examination:
+
+* Memorise 20 mixed concrete and abstract words
+* Recall in order
+* Identify and repair weak associations
+
+### Orange Belt — Memory Palaces
+
+Goal:
+
+Use memory palaces confidently and systematically.
+
+Skills:
+
+* Selecting palaces
+* Choosing stable loci
+* Fixing route order
+* Avoiding vague locations
+* Preventing image overlap
+* Reusing versus reserving palaces
+* Forward and reverse recall
+
+Required achievements:
+
+* Build five palaces
+* Each palace must contain at least 10 locations
+* Create a palace register
+* Memorise 25 items
+* Recall forwards and backwards
+* Use one palace for a speech or presentation
+
+Orange Belt examination:
+
+* Memorise 25 items in a new or prepared palace
+* Immediate recall target: 90%
+* Reverse recall target: 80%
+* Delayed recall target after 24 hours: 80%
+
+### Green Belt — Numbers and the Major System
+
+Goal:
+
+Convert numbers into images quickly.
+
+Skills:
+
+Use this standard Major System:
+
+* 0 = s or z
+* 1 = t or d
+* 2 = n
+* 3 = m
+* 4 = r
+* 5 = l
+* 6 = j, sh or soft ch
+* 7 = k, hard c or hard g
+* 8 = f or v
+* 9 = p or b
+
+Vowels and the letters h, w and y carry no numerical value.
+
+Training must include:
+
+* Single-digit sound recognition
+* Two-digit decoding
+* Building a personal 00–99 image list
+* Encoding number pairs
+* Remembering dates
+* Remembering phone numbers
+* Remembering room numbers
+* Remembering scores and measurements
+* Speed drills
+
+Required achievements:
+
+* Complete a full 00–99 image system
+* Reach at least 90% image-to-number accuracy
+* Reach at least 90% number-to-image accuracy
+* Memorise 40 digits
+* Recall at least 36 immediately
+* Recall at least 32 after 24 hours
+* Memorise three useful real-life numbers
+
+Green Belt examination:
+
+* 50 digits
+* Five minutes encoding time
+* Immediate target: 90%
+* Twenty-minute delayed target: 80%
+
+Include an editable default 00–99 starter list in JSON, but allow the user to replace every image.
+
+### Blue Belt — Names, Faces and Vocabulary
+
+Goal:
+
+Remember people and new words reliably.
+
+Skills:
+
+For names:
+
+* Observe a distinctive facial feature
+* Convert the name into a visual image
+* Connect the name image to the facial feature
+* Recall during conversation
+* Review after meeting
+
+For vocabulary:
+
+* Sound-alike image
+* Meaning image
+* Interaction between sound and meaning
+* Placement in a palace where useful
+* Active recall in both directions
+
+Required achievements:
+
+* Memorise 20 names and faces
+* Reach 80% immediate recall
+* Reach 70% after 24 hours
+* Memorise 30 foreign-language vocabulary items
+* Recall word-to-meaning and meaning-to-word
+* Use the method with at least three real people
+
+Blue Belt examination:
+
+* Mixed names-and-faces test
+* Mixed vocabulary test
+* Practical reflection on a real social encounter
+
+### Purple Belt — Knowledge and Study
+
+Goal:
+
+Use memory techniques to retain meaningful knowledge.
+
+Skills:
+
+* Historical dates
+* Timelines
+* Scientific facts
+* Geography
+* Countries and capitals
+* Periodic-table information
+* Mathematical facts
+* Definitions
+* Book structures
+* Chapter headings
+* Key arguments
+* Piano theory and technical requirements
+* French vocabulary
+
+Required achievements:
+
+* Memorise one timeline with 15 events
+* Memorise 25 countries and capitals
+* Memorise a structured summary of one book chapter
+* Recall the material after one week
+* Create at least two subject-specific palaces
+
+Purple Belt examination:
+
+The user chooses one meaningful subject and memorises:
+
+* 20 ordered facts
+* 10 definitions
+* 10 dates or numbers
+* One high-level structure
+
+Required recall:
+
+* 90% immediately
+* 80% after 24 hours
+* 70% after seven days
+
+### Brown Belt — Speeches, Cards and Advanced Systems
+
+Goal:
+
+Handle longer and more complex information.
+
+Skills:
+
+* Speech structure
+* Presentation points
+* Quotations
+* Playing cards
+* Person–Action–Object system
+* Multiple-item encoding per location
+* Long-form recall
+* Speed versus retention
+* Error diagnosis
+
+Required achievements:
+
+* Build a PAO system
+* Memorise a five-minute speech without a script
+* Memorise at least 26 cards
+* Memorise 100 digits
+* Complete one 30-minute endurance session
+* Retain a major exercise after seven days
+
+Brown Belt examination:
+
+Choose two of the following:
+
+* Full deck of cards
+* 150 digits
+* Ten-minute speech
+* 50 names
+* 50 foreign-language words
+* 50 historical facts
+
+Require at least 85% immediate recall and 75% delayed recall.
+
+### Black Belt — Integration, Teaching and Automatic Use
+
+Goal:
+
+Adapt the techniques instinctively to any type of information.
+
+Skills:
+
+* Choosing the correct mnemonic system
+* Rapid encoding
+* Long-term palace management
+* Teaching another person
+* Designing custom systems
+* Combining palaces, Major System, PAO and spaced review
+* Using memory techniques in ordinary daily life
+* Maintaining knowledge over months
+
+Required achievements:
+
+* Complete 30 consecutive days of real-life use
+* Teach a beginner lesson
+* Design one original mnemonic system
+* Complete a personal mastery project
+* Maintain at least 80% recall after 30 days
+* Demonstrate competence across words, numbers, names, knowledge and speeches
+
+Black Belt examination:
+
+A multi-part final test containing:
+
+* 50 random words
+* 100 digits
+* 20 names and faces
+* A five-minute speech
+* 25 meaningful facts
+* Delayed recall after 24 hours and seven days
+* Written reflection explaining method choice and errors
+
+## 5. Programme phases
+
+Organise the app into four formal phases.
+
+### Phase 1: Build the Toolkit
+
+Suggested length: four weeks.
+
+The user builds:
+
+* First memory palace
+* Five-palace starter set
+* Palace register
+* Visualisation skills
+* Link method
+* Symbol bank
+* Major System understanding
+* 00–99 image list
+* PAO starter system
+
+The user should begin practising immediately and should not be forced to finish all setup before using the app.
+
+### Phase 2: Train the Core Skills
+
+Suggested length: eight weeks.
+
+Weekly cycle:
+
+* Monday: numbers
+* Tuesday: names and faces
+* Wednesday: vocabulary
+* Thursday: history and knowledge
+* Friday: cards or ordered information
+* Saturday: real-life memory
+* Sunday: review and test
+
+Daily training duration:
+
+* Beginner mode: 10 minutes
+* Standard mode: 20–25 minutes
+* Intensive mode: 40 minutes
+
+### Phase 3: Apply Memory to Real Life
+
+Suggested length: three months.
+
+The app assigns practical tasks such as:
+
+* Remember a shopping list
+* Remember a parking location
+* Remember a person’s name
+* Remember three points from a conversation
+* Remember a phone number
+* Remember a book’s chapter structure
+* Remember piano scales or arpeggio patterns
+* Remember French vocabulary
+* Remember historical dates
+* Remember instructions without immediately writing them down
+
+Do not encourage unsafe memorisation of passwords or critical medical information. Sensitive or safety-critical information should still be stored securely.
+
+### Phase 4: Mastery and Maintenance
+
+The user creates long-term personal projects such as:
+
+* All countries and capitals
+* UK prime ministers
+* US presidents
+* Periodic table
+* Historical timeline
+* Piano technical requirements
+* French vocabulary syllabus
+* Important book summaries
+* A full 00–99 or 000–999 system
+* A complete card system
+
+The app should generate ongoing review schedules and maintenance drills.
+
+## 6. Daily Memory Gym
+
+Create a guided daily session with these sections.
+
+### 1. Warm-up
+
+Duration: about three minutes.
+
+Instructions:
+
+1. Do not study first.
+2. Attempt to recall yesterday’s images or information from memory.
+3. Walk mentally through yesterday’s palace.
+4. Mark each item as:
+
+   * Clear
+   * Vague
+   * Missing
+5. Revisit only the vague and missing items.
+6. Strengthen weak images with movement, exaggeration, sound, emotion or interaction.
+
+Display this explanation:
+
+> Retrieval is the exercise. Looking again is not the warm-up. Trying to recall strengthens access to the memory and reveals exactly which images need repair.
+
+### 2. Technique drill
+
+Duration: five to ten minutes.
+
+Examples:
+
+* Image creation
+* Association
+* Palace navigation
+* Number conversion
+* Name encoding
+* Vocabulary encoding
+* Card conversion
+
+### 3. Main challenge
+
+Duration: ten to twenty minutes.
+
+The app supplies the exact material to memorise.
+
+### 4. Immediate recall test
+
+The source material must be hidden.
+
+The user enters or selects recalled answers.
+
+Calculate:
+
+* Correct
+* Incorrect
+* Omitted
+* Order errors
+* Accuracy percentage
+* Encoding time
+* Recall time
+
+### 5. Error review
+
+For each error, ask:
+
+* Did I fail to notice the information?
+* Did I fail to create an image?
+* Was the image ordinary or weak?
+* Did the images fail to interact?
+* Was the palace location unclear?
+* Did I place too many images at one location?
+* Did I confuse similar images?
+* Did I fail to review?
+* Did I know the answer but retrieve it too slowly?
+
+Store the error category.
+
+### 6. Real-life mission
+
+Give one small practical task.
+
+### 7. Delayed recall
+
+Schedule tests at configurable intervals:
+
+* 20 minutes
+* One day
+* Three days
+* Seven days
+* Thirty days
+
+Use a simple spaced-review queue.
+
+## 7. Pre-written daily curriculum
+
+Include at least 12 weeks of pre-written daily exercises.
+
+Every day must contain:
+
+* Title
+* Belt
+* Phase
+* Goal
+* Exact material to memorise
+* Technique to use
+* Time limit
+* Immediate-recall target
+* Delayed-recall target
+* Real-life mission
+* Reflection question
+
+Store these exercises in editable JSON.
+
+Do not make the user search for practice material.
+
+Include varied material such as:
+
+* Concrete nouns
+* Abstract nouns
+* Ordered lists
+* Random digits
+* Dates
+* Names
+* Vocabulary
+* Countries and capitals
+* Historical facts
+* Scientific information
+* Speech points
+* Book structures
+* Playing cards
+* Everyday instructions
+
+Start very easily and increase difficulty gradually.
+
+## 8. Builder tools
+
+Create the following interactive builders.
+
+### Memory Palace Builder
+
+Fields:
+
+* Palace name
+* Category
+* Familiarity rating
+* Intended use
+* Reusable or permanent
+* Route description
+* Location number
+* Location name
+* Location description
+* Distinctive feature
+* Photograph optional
+* Notes
+* Last used
+* Interference warning
+
+Functions:
+
+* Add, edit, delete and reorder locations
+* Practise walking forwards
+* Practise walking backwards
+* Hide location names for testing
+* Show a palace route as cards
+* Duplicate a palace
+* Archive a palace
+* Export palace data
+
+Include example palace:
+
+Home entrance route:
+
+1. Front gate
+2. Path
+3. Front door
+4. Doormat
+5. Hall table
+6. Mirror
+7. Stairs
+8. Living-room door
+9. Sofa
+10. Fireplace
+
+Explain that a good location should be:
+
+* Fixed
+* Distinct
+* Easy to visualise
+* Naturally ordered
+* Large enough for an exaggerated image
+
+### Major System Builder
+
+Create a 00–99 grid.
+
+Each number should contain:
+
+* Number
+* Consonant sounds
+* Default image
+* User image
+* Image strength rating
+* Automaticity status
+* Notes
+* Last tested
+* Accuracy
+* Average response time
+
+Modes:
+
+* Number to image
+* Image to number
+* Sound to number
+* Timed mixed test
+* Weak-item review
+
+Allow CSV and JSON export.
+
+### PAO Builder
+
+Fields for every entry:
+
+* Number or card
+* Person
+* Action
+* Object
+* Visual description
+* Familiarity
+* Distinctiveness
+* Test status
+
+Include guidance:
+
+* The person should be instantly recognisable
+* The action should be distinctive
+* The object should be concrete
+* Avoid duplicate actions
+* Avoid duplicate objects
+* Prefer emotionally vivid or familiar people
+
+### Symbol Bank
+
+Fields:
+
+* Concept
+* Image
+* Meaning
+* Example use
+* Category
+* Strength rating
+
+Include starter examples:
+
+* Freedom: broken chains
+* Justice: scales
+* Time: giant clock
+* Growth: sprouting tree
+* Danger: flashing red alarm
+* Energy: lightning bolt
+* Government: parliament building
+* Money: overflowing gold coins
+* Agreement: handshake
+* Conflict: crossed swords
+
+All starter items must be editable.
+
+### Name Image Builder
+
+Fields:
+
+* Name
+* Sound-alike image
+* Meaning or origin
+* Distinctive image
+* Example association
+* Notes
+
+### Subject Palace Builder
+
+Allow users to create structured palaces for:
+
+* History
+* Geography
+* Science
+* Music
+* Mathematics
+* Languages
+* Books
+* Speeches
+* Personal projects
+
+## 9. Dashboard
+
+The home dashboard should show:
+
+* Current belt
+* Current phase
+* Today’s session
+* Warm-up due
+* Delayed reviews due
+* Current streak
+* Weekly consistency
+* Recall accuracy
+* Delayed-recall accuracy
+* Average encoding time
+* Weakest skill
+* Strongest skill
+* Belt-exam progress
+* Real-life missions completed
+* Continue button
+
+Do not make streaks the main measure of success. Prioritise:
+
+* Recall quality
+* Delayed retention
+* Practical use
+* Technique improvement
+
+## 10. Progress and analytics
+
+Create charts and summaries for:
+
+* Immediate recall
+* 24-hour recall
+* Seven-day recall
+* Accuracy by material type
+* Accuracy by technique
+* Response speed
+* Error categories
+* Belt progress
+* Training consistency
+* Number-system automaticity
+* Palace usage
+* Real-life missions
+
+Use lightweight charts created with CSS, SVG or a small CDN chart library that works without a build process.
+
+Show useful interpretations such as:
+
+* “Your images are memorable immediately but weaken after 24 hours.”
+* “Order errors are more common than missing-item errors.”
+* “Numbers 30–39 need more automaticity work.”
+* “Your strongest technique is the memory palace.”
+* “You are training consistently but not completing delayed reviews.”
+
+Do not use fake AI. Base insights on simple transparent rules.
+
+## 11. Review scheduler
+
+Create a review queue.
+
+Each memorised set should store:
+
+* Created date
+* Immediate score
+* Review intervals
+* Next review date
+* Last review date
+* Review score
+* Strength
+* Status
+
+Suggested review logic:
+
+* Immediate
+* 20 minutes
+* One day
+* Three days
+* Seven days
+* Thirty days
+
+If recall is poor, shorten the interval.
+
+If recall is strong, keep or extend the interval.
+
+Users should be able to:
+
+* Review due items
+* Snooze a review
+* Retire mastered material
+* Restart weak material
+* See overdue reviews
+
+## 12. Belt examinations
+
+Each belt exam should have:
+
+* Eligibility requirements
+* Pre-exam checklist
+* Timed test
+* Hidden source material during recall
+* Automatic scoring where possible
+* Manual scoring where necessary
+* Delayed test scheduling
+* Pass or retry result
+* Feedback
+* Weakness diagnosis
+* Certificate-style completion screen
+
+A failed exam should produce a targeted remedial plan rather than simply saying “failed”.
+
+Example:
+
+* Weak palace route
+* Slow number conversion
+* Poor delayed retention
+* Weak abstract imagery
+* Too many order errors
+
+## 13. Poster and reminder screen
+
+Create a printable and on-screen poster called:
+
+# Daily Memory Warm-up
+
+Display:
+
+## Recall before review
+
+1. Close yesterday’s material.
+2. Walk through yesterday’s palace.
+3. Retrieve each image.
+4. Mark it clear, vague or missing.
+5. Repair only weak memories.
+6. Then begin today’s training.
+
+## Why?
+
+* Retrieval strengthens the route back to a memory.
+* Effortful recall is more valuable than rereading.
+* Errors show which images need improvement.
+* Daily retrieval prevents rapid forgetting.
+* The warm-up trains memory as a skill, not a trick.
+
+Footer:
+
+> Notice. Encode. Place. Retrieve. Review.
+
+Make this poster printer-friendly in A4 portrait format using CSS print styles.
+
+## 14. Guidance screens
+
+Include concise guidance for each technique.
+
+### Creating a strong image
+
+A strong mnemonic image should ideally contain several of these:
+
+* Size
+* Movement
+* Exaggeration
+* Sound
+* Texture
+* Emotion
+* Absurdity
+* Colour
+* Personal meaning
+* Direct interaction
+
+Example:
+
+Weak:
+
+“A loaf of bread is beside the front door.”
+
+Strong:
+
+“A gigantic hot loaf explodes through the front door, spraying butter over the walls while shouting.”
+
+### Linking images
+
+Do not merely place two objects next to each other.
+
+Make one:
+
+* Hit
+* Swallow
+* Crush
+* Wear
+* Chase
+* Burn
+* Paint
+* Throw
+* Transform into
+* Dance with
+
+the other.
+
+### Using a palace
+
+* Use a fixed route
+* Place one main image at each location
+* Make the image interact with the location
+* Do not float images in empty space
+* Test the route without the information first
+* Avoid locations that look too similar
+
+### Repairing a weak memory
+
+Ask:
+
+* Can I see it clearly?
+* Is it moving?
+* Is it interacting?
+* Is it unusual?
+* Does it connect directly to the meaning?
+* Is the location distinct?
+* Can I make it funnier, louder, larger or more emotional?
+
+## 15. Identity and habit system
+
+Create an editable personal training contract.
+
+Fields:
+
+* Why I want a trained memory
+* What I want to remember
+* Daily minimum
+* Normal training time
+* Training location
+* What I will do after missing a day
+* My first mastery project
+* Start date
+* Signature or name
+
+Show the identity statement:
+
+> I am not collecting memory techniques. I am training the skill of remembering.
+
+Provide three commitment modes:
+
+### Minimum Day
+
+Five minutes:
+
+* Recall yesterday
+* Complete one tiny drill
+* Record the score
+
+### Standard Day
+
+Twenty minutes:
+
+* Warm-up
+* Main drill
+* Recall test
+* Real-life mission
+
+### Deep Practice Day
+
+Forty minutes or more:
+
+* Warm-up
+* Technique drill
+* Main challenge
+* Error analysis
+* Delayed review
+* Mastery project
+
+## 16. Data model
+
+Create sensible Firestore collections such as:
+
+* users
+* profiles
+* dailySessions
+* curriculum
+* belts
+* beltExams
+* palaces
+* palaceLocations
+* majorSystem
+* paoSystem
+* symbolBank
+* nameImages
+* memorySets
+* reviews
+* results
+* realLifeMissions
+* masteryProjects
+* achievements
+* settings
+
+Use the authenticated user ID to isolate user data.
+
+Provide secure example Firestore rules.
+
+Do not store Firebase configuration secrets as though they were private. Explain correctly that the web config is public and security depends on Authentication and Firestore rules.
+
+## 17. Offline and guest mode
+
+The app must work in guest mode using localStorage.
+
+Guest users should be able to:
+
+* Complete training
+* Create palaces
+* Build Major System images
+* Record scores
+* Export their data
+
+When signing in, offer to migrate local data into Firestore.
+
+## 18. Import and export
+
+Allow export as:
+
+* JSON backup
+* CSV for Major System
+* CSV for daily results
+* Printable progress report
+
+Allow JSON import with validation and error messages.
+
+Never overwrite existing data without warning.
+
+## 19. Accessibility and usability
+
+Requirements:
+
+* Large tap targets
+* Readable font sizes
+* Good colour contrast
+* Keyboard support where relevant
+* Labels for form controls
+* No essential information conveyed by colour alone
+* Reduced-motion option
+* Dark mode
+* Light mode
+* Clear confirmation before deleting data
+* Autosave forms where sensible
+* Progress preserved after refresh
+
+## 20. Visual design
+
+Use a calm martial-arts dojo theme without becoming cartoonish.
+
+Possible visual ideas:
+
+* Belt-colour progress bands
+* Training cards
+* Dojo-style headings
+* Simple badge icons
+* Clean cream, charcoal and muted belt colours
+* Plenty of white space
+* Minimal animations
+
+The app should feel serious, encouraging and suitable for adults and children.
+
+Each belt should have a recognisable colour, but accessibility must be maintained.
+
+## 21. File structure
+
+Create a logical repository structure similar to:
+
+* index.html
+* app.html
+* css/
+
+  * styles.css
+  * print.css
+* js/
+
+  * app.js
+  * firebase.js
+  * auth.js
+  * storage.js
+  * router.js
+  * dashboard.js
+  * training.js
+  * reviews.js
+  * exams.js
+  * palaces.js
+  * major-system.js
+  * pao.js
+  * analytics.js
+  * export-import.js
+  * utils.js
+* data/
+
+  * belts.json
+  * curriculum.json
+  * starter-major-system.json
+  * starter-symbols.json
+  * real-life-missions.json
+* pages or templates as needed
+* assets/
+* README.md
+* firestore.rules
+* firestore.indexes.json
+
+Adjust the structure if a cleaner vanilla-JavaScript design is preferable.
+
+## 22. README
+
+The README must explain:
+
+* What the app does
+* How the belt system works
+* File structure
+* How to run locally
+* How to create a Firebase project
+* How to enable Authentication
+* How to create Firestore
+* Where to place Firebase configuration
+* How to deploy Firestore rules
+* How to deploy to GitHub Pages
+* How to edit curriculum JSON
+* How to back up data
+* How guest mode works
+* Common troubleshooting steps
+
+Assume the user may be working from an iPad.
+
+Keep setup steps explicit and minimal.
+
+## 23. Seed content
+
+Include complete usable seed content, not empty placeholders.
+
+At minimum provide:
+
+* All eight belts
+* All four phases
+* 84 daily training sessions
+* 25 starter mnemonic symbols
+* One example 10-location palace
+* A complete editable 00–99 starter list
+* At least 30 real-life missions
+* Belt examinations
+* Warm-up guidance
+* Technique guidance
+* Example mastery projects
+* Sample user progress for demonstration mode
+
+Use placeholders only for genuinely personal data.
+
+## 24. Quality requirements
+
+Before finishing:
+
+* Check every navigation link
+* Check mobile layouts
+* Check localStorage persistence
+* Check sign-in and sign-out logic
+* Check Firestore paths
+* Check import and export
+* Check review scheduling
+* Check scoring
+* Check belt unlocking
+* Check that exercises hide source material during recall
+* Check that delayed reviews are created correctly
+* Check A4 print layout
+* Remove console errors
+* Add useful comments
+* Avoid duplicated code
+* Avoid incomplete “coming soon” sections
+
+## 25. Delivery process
+
+Work in this order:
+
+1. Create the data model and JSON curriculum.
+2. Build the app shell and navigation.
+3. Implement guest storage.
+4. Implement daily training.
+5. Implement recall scoring.
+6. Implement review scheduling.
+7. Implement belt progression.
+8. Implement palace, Major System, PAO and symbol builders.
+9. Add Firebase Authentication and Firestore synchronisation.
+10. Add analytics.
+11. Add print views.
+12. Test the complete user journey.
+13. Write the README.
+
+Commit the work in logical stages.
+
+At the end, provide:
+
+* A summary of what was built
+* The final file tree
+* Setup instructions
+* Any decisions or limitations
+* A test checklist
+* Suggested next enhancements
+
+The first usable version must allow a new user to open the app, complete onboarding, create a first palace, perform Day 1, take a recall test, receive a score, and have a delayed review scheduled.

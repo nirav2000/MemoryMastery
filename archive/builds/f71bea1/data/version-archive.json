@@ -1,0 +1,400 @@
+{
+  "schema": 1,
+  "generatedFrom": "git log --oneline --date=short --pretty=format:'%h %ad %s'",
+  "purpose": "Developer-facing archive of important Memory Mastery builds with full static snapshots and first-load screenshots for quick comparison.",
+  "rebuildPolicy": {
+    "recommended": "Create git tags for important milestones, then rebuild or inspect a historical version with git worktree or checkout when needed.",
+    "whyNotBundleEveryBuild": "Full snapshots are useful for developer analysis, but should still focus on meaningful commits to avoid uncontrolled repository growth.",
+    "commands": [
+      "git tag archive/v0-first-static-app 2ea5e55",
+      "git worktree add ../MemoryMastery-2ea5e55 2ea5e55",
+      "python3 -m http.server 8000 --directory ../MemoryMastery-2ea5e55"
+    ]
+  },
+  "versions": [
+    {
+      "commit": "5f042f1",
+      "date": "2026-07-26",
+      "label": "Firebase-backed Design Studio",
+      "status": "current",
+      "summary": "Adds an owner-only visual editor with safe global, route and element scopes, persists reviewed overrides in Firebase, and tightens footer whitespace across responsive layouts.",
+      "keyChanges": [
+        "Design Studio can select approved interface groups and preview validated CSS properties without exposing editor controls in learner flows.",
+        "Personal overrides travel with the signed-in account while owner-published global overrides are read from Firebase app configuration.",
+        "Footer spacing uses one responsive clearance path so mobile navigation remains reachable without dead whitespace."
+      ],
+      "screenshot": "archive/screenshots/5f042f1.png",
+      "archivePath": "archive/builds/5f042f1/",
+      "latestDataPath": "archive/builds/5f042f1/?useLatestData=1",
+      "compatibilityNote": "Uses Memory Dojo v1 storage, Firebase appConfig/designOverrides, and the documented safe Design Studio selector contract."
+    },
+    {
+      "commit": "c17c0f7",
+      "date": "2026-07-24",
+      "label": "Phone sign-in, mobile notes icon and single stylesheet",
+      "status": "archived",
+      "summary": "Adds Firebase phone verification from Settings, moves notes to the bottom navigation on mobile, shrinks the desktop notes tab, and consolidates print CSS into the single app stylesheet.",
+      "keyChanges": [
+        "Firebase sync now offers Google and phone-number authentication paths from the same Settings panel.",
+        "The notes drawer uses a smaller side tab on desktop and a bottom-navigation icon on mobile so it no longer overlays reading flow.",
+        "Root app CSS is consolidated into css/styles.css, including print rules, so global fixes are managed in one stylesheet."
+      ],
+      "screenshot": "archive/screenshots/c17c0f7.png",
+      "archivePath": "archive/builds/c17c0f7/",
+      "latestDataPath": "archive/builds/c17c0f7/?data=latest",
+      "compatibilityNote": "Uses Memory Dojo v1 local storage and Firebase Auth v10 phone verification with invisible reCAPTCHA."
+    },
+    {
+      "commit": "38b9a65",
+      "date": "2026-07-21",
+      "label": "Review dedupe cleanup and floating notes drawer",
+      "status": "archived",
+      "summary": "Retires duplicate active review rows, keys review identity by material, adds a context-aware notes drawer, and busts cached modules so GitHub Pages serves the fix.",
+      "keyChanges": [
+        "Existing duplicate review cards are compacted at startup and after cloud merge instead of only hidden in the current render.",
+        "The floating Notes tab follows the current route, warm-up, recall test, or retrieval card and stores an editable note with a reference link.",
+        "Inline note boxes were replaced with a single pull-out drawer to keep practice and retrieval screens focused."
+      ],
+      "screenshot": "archive/screenshots/38b9a65.png",
+      "archivePath": "archive/builds/38b9a65/",
+      "latestDataPath": "archive/builds/38b9a65/?data=latest",
+      "compatibilityNote": "Uses Memory Dojo v1 local storage and preserves existing notes and review history while retiring duplicate active rows."
+    },
+    {
+      "label": "Work branch retrieval fixes",
+      "date": "2026-07-20",
+      "commit": "49d5809",
+      "status": "archived branch snapshot",
+      "summary": "archived the temporary work branch before merging its useful review, scoring and notes changes into main",
+      "keyChanges": [
+        "Captured the temporary work branch state before removing the branch",
+        "Included review deduplication, recall scoring and editable retrieval-note experiments for comparison",
+        "First page-load screenshot available in the archive"
+      ],
+      "archivePath": "archive/builds/49d5809/",
+      "latestDataPath": "archive/builds/49d5809/?useLatestData=1",
+      "screenshot": "archive/screenshots/49d5809.png",
+      "compatibilityNote": "Archived branch snapshot; use main for the merged production path."
+    },
+    {
+      "label": "Training warm-up and footer layout details",
+      "date": "2026-07-20",
+      "commit": "116c987",
+      "status": "archived milestone",
+      "summary": "fixed the training warm-up flow and footer layout details before the card-navigation repair",
+      "keyChanges": [
+        "Fixed training warm-up and footer layout details",
+        "Full static build copy available for developer comparison",
+        "First page-load screenshot available in the archive"
+      ],
+      "archivePath": "archive/builds/116c987/",
+      "latestDataPath": "archive/builds/116c987/?useLatestData=1",
+      "screenshot": "archive/screenshots/116c987.png",
+      "compatibilityNote": "Archived developer snapshot; use bundled data for exact historical behaviour or try latest data when compatible."
+    },
+    {
+      "label": "Object illustrations in tools",
+      "date": "2026-07-19",
+      "commit": "34afef6",
+      "status": "archived",
+      "summary": "replaced letter thumbnails with object illustrations for palace and Major examples",
+      "keyChanges": [
+        "Replaced letter thumbnails with object illustrations for palace and Major examples",
+        "Full static build copy available for developer comparison",
+        "First page-load screenshot available in the archive"
+      ],
+      "archivePath": "archive/builds/34afef6/",
+      "latestDataPath": "archive/builds/34afef6/?useLatestData=1",
+      "screenshot": "archive/screenshots/34afef6.png",
+      "compatibilityNote": "Archived developer snapshot; use bundled data for exact historical behaviour or try latest data when compatible."
+    },
+    {
+      "label": "Review labels and inline thumbnails",
+      "date": "2026-07-19",
+      "commit": "fe25b5a",
+      "status": "archived milestone",
+      "summary": "clarified review labels and added inline memory thumbnails",
+      "keyChanges": [
+        "Clarified review labels and added inline memory thumbnails",
+        "Full static build copy available for developer comparison",
+        "First page-load screenshot available in the archive"
+      ],
+      "archivePath": "archive/builds/fe25b5a/",
+      "latestDataPath": "archive/builds/fe25b5a/?useLatestData=1",
+      "screenshot": "archive/screenshots/fe25b5a.png",
+      "compatibilityNote": "Archived developer snapshot; use bundled data for exact historical behaviour or try latest data when compatible."
+    },
+    {
+      "label": "Review recall flow and library visuals",
+      "date": "2026-07-19",
+      "commit": "df32438",
+      "status": "archived milestone",
+      "summary": "made reviews retrieval-first and improved library visuals",
+      "keyChanges": [
+        "Made reviews retrieval-first and improved library visuals",
+        "Full static build copy available for developer comparison",
+        "First page-load screenshot available in the archive"
+      ],
+      "archivePath": "archive/builds/df32438/",
+      "latestDataPath": "archive/builds/df32438/?useLatestData=1",
+      "screenshot": "archive/screenshots/df32438.png",
+      "compatibilityNote": "Archived developer snapshot; use bundled data for exact historical behaviour or try latest data when compatible."
+    },
+    {
+      "label": "Training detail polish",
+      "date": "2026-07-19",
+      "commit": "33d7cf0",
+      "status": "archived milestone",
+      "summary": "refined training details and footer copy",
+      "keyChanges": [
+        "Refined training details and footer copy",
+        "Full static build copy available for developer comparison",
+        "First page-load screenshot available in the archive"
+      ],
+      "archivePath": "archive/builds/33d7cf0/",
+      "latestDataPath": "archive/builds/33d7cf0/?useLatestData=1",
+      "screenshot": "archive/screenshots/33d7cf0.png",
+      "compatibilityNote": "Archived developer snapshot; use bundled data for exact historical behaviour or try latest data when compatible."
+    },
+    {
+      "label": "Archive thumbnails and footer links",
+      "date": "2026-07-19",
+      "commit": "cb6c218",
+      "status": "archived milestone",
+      "summary": "added archive screenshots and footer navigation links",
+      "keyChanges": [
+        "Added archive screenshots and footer navigation links",
+        "Full static build copy available for developer comparison",
+        "First page-load screenshot available in the archive"
+      ],
+      "archivePath": "archive/builds/cb6c218/",
+      "latestDataPath": "archive/builds/cb6c218/?useLatestData=1",
+      "screenshot": "archive/screenshots/cb6c218.png",
+      "compatibilityNote": "Archived developer snapshot; use bundled data for exact historical behaviour or try latest data when compatible."
+    },
+    {
+      "label": "Dark-mode QA and archive builds",
+      "date": "2026-07-19",
+      "commit": "c6dfeff",
+      "status": "archived milestone",
+      "summary": "improved dark-mode QA agents and archived builds",
+      "keyChanges": [
+        "Improved dark-mode QA agents and archived builds",
+        "Full static build copy available for developer comparison",
+        "First page-load screenshot available in the archive"
+      ],
+      "archivePath": "archive/builds/c6dfeff/",
+      "latestDataPath": "archive/builds/c6dfeff/?useLatestData=1",
+      "screenshot": "archive/screenshots/c6dfeff.png",
+      "compatibilityNote": "Archived developer snapshot; use bundled data for exact historical behaviour or try latest data when compatible."
+    },
+    {
+      "label": "Lightweight version archive",
+      "date": "2026-07-19",
+      "commit": "267f536",
+      "status": "archived milestone",
+      "summary": "introduced version archive policy and ledger",
+      "keyChanges": [
+        "Introduced version archive policy and ledger",
+        "Full static build copy available for developer comparison",
+        "First page-load screenshot available in the archive"
+      ],
+      "archivePath": "archive/builds/267f536/",
+      "latestDataPath": "archive/builds/267f536/?useLatestData=1",
+      "screenshot": "archive/screenshots/267f536.png",
+      "compatibilityNote": "Archived developer snapshot; use bundled data for exact historical behaviour or try latest data when compatible."
+    },
+    {
+      "label": "Panel spacing and cloud merge",
+      "date": "2026-07-19",
+      "commit": "0e1f1d5",
+      "status": "archived milestone",
+      "summary": "fixed panel spacing and preserved cloud/device progress",
+      "keyChanges": [
+        "Fixed panel spacing and preserved cloud/device progress",
+        "Full static build copy available for developer comparison",
+        "First page-load screenshot available in the archive"
+      ],
+      "archivePath": "archive/builds/0e1f1d5/",
+      "latestDataPath": "archive/builds/0e1f1d5/?useLatestData=1",
+      "screenshot": "archive/screenshots/0e1f1d5.png",
+      "compatibilityNote": "Archived developer snapshot; use bundled data for exact historical behaviour or try latest data when compatible."
+    },
+    {
+      "label": "Clean design system",
+      "date": "2026-07-19",
+      "commit": "238ded7",
+      "status": "archived milestone",
+      "summary": "removed legacy CSS remnants and tightened first-time flow",
+      "keyChanges": [
+        "Removed legacy CSS remnants and tightened first-time flow",
+        "Full static build copy available for developer comparison",
+        "First page-load screenshot available in the archive"
+      ],
+      "archivePath": "archive/builds/238ded7/",
+      "latestDataPath": "archive/builds/238ded7/?useLatestData=1",
+      "screenshot": "archive/screenshots/238ded7.png",
+      "compatibilityNote": "Archived developer snapshot; use bundled data for exact historical behaviour or try latest data when compatible."
+    },
+    {
+      "label": "Progress badge spacing fix",
+      "date": "2026-07-19",
+      "commit": "3f8f7e6",
+      "status": "archived milestone",
+      "summary": "fixed due-review badge spacing around Progress",
+      "keyChanges": [
+        "Fixed due-review badge spacing around Progress",
+        "Full static build copy available for developer comparison",
+        "First page-load screenshot available in the archive"
+      ],
+      "archivePath": "archive/builds/3f8f7e6/",
+      "latestDataPath": "archive/builds/3f8f7e6/?useLatestData=1",
+      "screenshot": "archive/screenshots/3f8f7e6.png",
+      "compatibilityNote": "Archived developer snapshot; use bundled data for exact historical behaviour or try latest data when compatible."
+    },
+    {
+      "label": "First-success quality pass",
+      "date": "2026-07-19",
+      "commit": "a496f81",
+      "status": "archived milestone",
+      "summary": "improved first-time learner journey quality",
+      "keyChanges": [
+        "Improved first-time learner journey quality",
+        "Full static build copy available for developer comparison",
+        "First page-load screenshot available in the archive"
+      ],
+      "archivePath": "archive/builds/a496f81/",
+      "latestDataPath": "archive/builds/a496f81/?useLatestData=1",
+      "screenshot": "archive/screenshots/a496f81.png",
+      "compatibilityNote": "Archived developer snapshot; use bundled data for exact historical behaviour or try latest data when compatible."
+    },
+    {
+      "label": "Navigation and settings clarification",
+      "date": "2026-07-19",
+      "commit": "023b05f",
+      "status": "archived milestone",
+      "summary": "clarified redesigned navigation and settings organisation",
+      "keyChanges": [
+        "Clarified redesigned navigation and settings organisation",
+        "Full static build copy available for developer comparison",
+        "First page-load screenshot available in the archive"
+      ],
+      "archivePath": "archive/builds/023b05f/",
+      "latestDataPath": "archive/builds/023b05f/?useLatestData=1",
+      "screenshot": "archive/screenshots/023b05f.png",
+      "compatibilityNote": "Archived developer snapshot; use bundled data for exact historical behaviour or try latest data when compatible."
+    },
+    {
+      "label": "First-success redesign",
+      "date": "2026-07-19",
+      "commit": "067a2fc",
+      "status": "archived milestone",
+      "summary": "reorganised the app around Today, Learn, Library and Progress",
+      "keyChanges": [
+        "Reorganised the app around Today, Learn, Library and Progress",
+        "Full static build copy available for developer comparison",
+        "First page-load screenshot available in the archive"
+      ],
+      "archivePath": "archive/builds/067a2fc/",
+      "latestDataPath": "archive/builds/067a2fc/?useLatestData=1",
+      "screenshot": "archive/screenshots/067a2fc.png",
+      "compatibilityNote": "Archived developer snapshot; use bundled data for exact historical behaviour or try latest data when compatible."
+    },
+    {
+      "label": "Clickable Today session",
+      "date": "2026-07-19",
+      "commit": "ab72ab2",
+      "status": "archived milestone",
+      "summary": "made the Today session card open the lesson",
+      "keyChanges": [
+        "Made the Today session card open the lesson",
+        "Full static build copy available for developer comparison",
+        "First page-load screenshot available in the archive"
+      ],
+      "archivePath": "archive/builds/ab72ab2/",
+      "latestDataPath": "archive/builds/ab72ab2/?useLatestData=1",
+      "screenshot": "archive/screenshots/ab72ab2.png",
+      "compatibilityNote": "Archived developer snapshot; use bundled data for exact historical behaviour or try latest data when compatible."
+    },
+    {
+      "label": "SmartPaper-style shell",
+      "date": "2026-07-19",
+      "commit": "7c0f1cd",
+      "status": "archived milestone",
+      "summary": "broad visual redesign with larger typography and softer learning-app direction",
+      "keyChanges": [
+        "Broad visual redesign with larger typography and softer learning-app direction",
+        "Full static build copy available for developer comparison",
+        "First page-load screenshot available in the archive"
+      ],
+      "archivePath": "archive/builds/7c0f1cd/",
+      "latestDataPath": "archive/builds/7c0f1cd/?useLatestData=1",
+      "screenshot": "archive/screenshots/7c0f1cd.png",
+      "compatibilityNote": "Archived developer snapshot; use bundled data for exact historical behaviour or try latest data when compatible."
+    },
+    {
+      "label": "SmartPaper-inspired dashboard",
+      "date": "2026-07-19",
+      "commit": "1c9731e",
+      "status": "archived milestone",
+      "summary": "dashboard visual direction experiment",
+      "keyChanges": [
+        "Dashboard visual direction experiment",
+        "Full static build copy available for developer comparison",
+        "First page-load screenshot available in the archive"
+      ],
+      "archivePath": "archive/builds/1c9731e/",
+      "latestDataPath": "archive/builds/1c9731e/?useLatestData=1",
+      "screenshot": "archive/screenshots/1c9731e.png",
+      "compatibilityNote": "Archived developer snapshot; use bundled data for exact historical behaviour or try latest data when compatible."
+    },
+    {
+      "label": "Pastel themes and layout options",
+      "date": "2026-07-19",
+      "commit": "ff4e0b1",
+      "status": "archived milestone",
+      "summary": "added pastel colour themes and layout choices",
+      "keyChanges": [
+        "Added pastel colour themes and layout choices",
+        "Full static build copy available for developer comparison",
+        "First page-load screenshot available in the archive"
+      ],
+      "archivePath": "archive/builds/ff4e0b1/",
+      "latestDataPath": "archive/builds/ff4e0b1/?useLatestData=1",
+      "screenshot": "archive/screenshots/ff4e0b1.png",
+      "compatibilityNote": "Archived developer snapshot; use bundled data for exact historical behaviour or try latest data when compatible."
+    },
+    {
+      "label": "Google sign-in and theme settings",
+      "date": "2026-07-19",
+      "commit": "0393208",
+      "status": "archived milestone",
+      "summary": "Firebase Google sign-in plus theme/settings controls",
+      "keyChanges": [
+        "Firebase Google sign-in plus theme/settings controls",
+        "Full static build copy available for developer comparison",
+        "First page-load screenshot available in the archive"
+      ],
+      "archivePath": "archive/builds/0393208/",
+      "latestDataPath": "archive/builds/0393208/?useLatestData=1",
+      "screenshot": "archive/screenshots/0393208.png",
+      "compatibilityNote": "Archived developer snapshot; use bundled data for exact historical behaviour or try latest data when compatible."
+    },
+    {
+      "label": "Initial full app build",
+      "date": "2026-07-19",
+      "commit": "2ea5e55",
+      "status": "archived milestone",
+      "summary": "first complete Memory Dojo app with curriculum, builders and guest persistence",
+      "keyChanges": [
+        "First complete Memory Dojo app with curriculum, builders and guest persistence",
+        "Full static build copy available for developer comparison",
+        "First page-load screenshot available in the archive"
+      ],
+      "archivePath": "archive/builds/2ea5e55/",
+      "latestDataPath": "archive/builds/2ea5e55/?useLatestData=1",
+      "screenshot": "archive/screenshots/2ea5e55.png",
+      "compatibilityNote": "Archived developer snapshot; use bundled data for exact historical behaviour or try latest data when compatible."
+    }
+  ]
+}

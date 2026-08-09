@@ -145,24 +145,29 @@ Memory Mastery includes a lightweight version archive in `data/version-archive.j
 
 ### Release version
 
-The current public application version lives in `VERSION` and is displayed in the site footer. **Increment the semantic version for every push to GitHub**, update the matching footer text in `index.html`, and run `node scripts/check-version.mjs` before pushing. Use a patch increment for fixes, a minor increment for backwards-compatible features, and a major increment for incompatible data or workflow changes.
+The current public application version lives in `VERSION`. The footer loads that file dynamically with `js/version.js`, so the displayed value has no manually duplicated version string. The archived release ledger repeats the value as `currentVersion` for validation and historical context.
+
+**Increment the semantic version for every commit that will be pushed to GitHub**, update `data/version-archive.json` when the change is an archive-worthy milestone, and run `node scripts/check-version.mjs` before pushing. Use a patch increment for fixes and archive maintenance, a minor increment for backwards-compatible features, and a major increment for incompatible data or workflow changes.
 
 ## File structure
 
 ```text
 .
+├── VERSION                    # canonical semantic application version
 ├── index.html                 # application shell
 ├── app.html / 404.html        # friendly entry and Pages fallback
 ├── css/
 │   └── styles.css             # responsive design, dark mode and print rules
 ├── js/
 │   ├── app.js                 # router, screens, builders and events
+│   ├── version.js             # dynamic footer version loader
 │   ├── training.js            # source-hidden recall and scoring
 │   ├── reviews.js             # spaced-review scheduler
 │   ├── storage.js             # versioned localStorage repository
 │   ├── firebase.js            # public Firebase configuration/loader
 │   └── utils.js               # safe rendering, averages and downloads
-├── data/                      # editable programme configuration
+├── data/                      # programme configuration and release archive
+├── scripts/check-version.mjs  # release/footer consistency check
 ├── firestore.rules
 ├── firestore.indexes.json
 ├── ChatGPT_response.txt       # original programme response

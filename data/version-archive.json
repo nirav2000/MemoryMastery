@@ -13,10 +13,61 @@
   },
   "versions": [
     {
+      "commit": "9061fc7",
+      "version": "4.1.2",
+      "date": "2026-08-06",
+      "label": "Canonical footer version",
+      "status": "latest archived release",
+      "summary": "Introduces a canonical semantic version file, displays the release in the footer, and validates that release metadata stays consistent before a push.",
+      "keyChanges": [
+        "Added the canonical VERSION file and visible footer release label.",
+        "Added an automated version consistency check and documented the per-push increment policy.",
+        "Adjusted the narrow footer so version text and the floating Notes action do not overlap."
+      ],
+      "screenshot": "archive/screenshots/9061fc7.png",
+      "archivePath": "archive/builds/9061fc7/",
+      "latestDataPath": "archive/builds/9061fc7/?useLatestData=1",
+      "compatibilityNote": "Uses Memory Dojo v1 storage and the v4 release line established by the historical archive generations."
+    },
+    {
+      "commit": "f71bea1",
+      "version": "4.1.1",
+      "date": "2026-08-06",
+      "label": "Durable authentication preference",
+      "status": "archived release",
+      "summary": "Requests the longest Firebase authentication persistence the browser permits and explains why private sessions cannot retain login after closing.",
+      "keyChanges": [
+        "Firebase Auth prefers browser-local persistence with a session fallback.",
+        "Settings explains normal-window and incognito persistence limits.",
+        "Authentication guidance rejects MAC-address access and device fingerprinting."
+      ],
+      "screenshot": "archive/screenshots/f71bea1.png",
+      "archivePath": "archive/builds/f71bea1/",
+      "latestDataPath": "archive/builds/f71bea1/?useLatestData=1",
+      "compatibilityNote": "Uses Firebase Auth v10 and Memory Dojo v1 local/cloud state."
+    },
+    {
+      "commit": "6f0f37e",
+      "version": "4.1.0",
+      "date": "2026-08-02",
+      "label": "On-device learning analytics",
+      "status": "archived release",
+      "summary": "Adds a learner-focused Progress dashboard with local recall trends, technique comparisons, error coaching and review health.",
+      "keyChanges": [
+        "Introduced pure on-device analytics without a separate tracking stream.",
+        "Progress now recommends one useful next action based on results and due reviews.",
+        "Added responsive dashboard layouts, honest empty states and analytics regression checks."
+      ],
+      "screenshot": "archive/screenshots/6f0f37e.png",
+      "archivePath": "archive/builds/6f0f37e/",
+      "latestDataPath": "archive/builds/6f0f37e/?useLatestData=1",
+      "compatibilityNote": "Uses existing Memory Dojo v1 result and review records; no storage migration required."
+    },
+    {
       "commit": "5f042f1",
       "date": "2026-07-26",
       "label": "Firebase-backed Design Studio",
-      "status": "current",
+      "status": "archived milestone",
       "summary": "Adds an owner-only visual editor with safe global, route and element scopes, persists reviewed overrides in Firebase, and tightens footer whitespace across responsive layouts.",
       "keyChanges": [
         "Design Studio can select approved interface groups and preview validated CSS properties without exposing editor controls in learner flows.",
@@ -26,7 +77,8 @@
       "screenshot": "archive/screenshots/5f042f1.png",
       "archivePath": "archive/builds/5f042f1/",
       "latestDataPath": "archive/builds/5f042f1/?useLatestData=1",
-      "compatibilityNote": "Uses Memory Dojo v1 storage, Firebase appConfig/designOverrides, and the documented safe Design Studio selector contract."
+      "compatibilityNote": "Uses Memory Dojo v1 storage, Firebase appConfig/designOverrides, and the documented safe Design Studio selector contract.",
+      "version": "4.0.0"
     },
     {
       "commit": "c17c0f7",
@@ -396,5 +448,6 @@
       "screenshot": "archive/screenshots/2ea5e55.png",
       "compatibilityNote": "Archived developer snapshot; use bundled data for exact historical behaviour or try latest data when compatible."
     }
-  ]
+  ],
+  "currentVersion": "4.1.3"
 }
