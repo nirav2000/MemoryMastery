@@ -221,6 +221,8 @@ None
 
 ## T06 — Establish the visual QA matrix and screenshot baselines
 
+READY
+
 **Objective**
 
 Create reviewable screenshot evidence for every important route and state before learner-facing redesign begins.
@@ -263,6 +265,8 @@ T05
 
 ## T07 — Fix issues confirmed by automated and visual QA
 
+READY
+
 **Objective**
 
 Resolve foundation defects with the smallest coherent changes before any later product work is allowed to build on the shell.
@@ -303,6 +307,8 @@ T06
 - Canonical shell, route renderers, navigation/history, storage adapters, CSS/design tokens, tests and approved screenshot baselines.
 
 ## T08 — Focus the pre-success application shell
+
+READY
 
 **Objective**
 
@@ -345,6 +351,8 @@ T07
 - Today/pre-success renderer, primary navigation, Library/Progress disclosure, Settings entry, introductory content, responsive CSS.
 
 ## T09 — Move handbook content into structured data and deepen it
+
+READY
 
 **Objective**
 
@@ -389,6 +397,8 @@ T08
 
 ## T10 — Define ethical product and learning measurements
 
+READY
+
 **Objective**
 
 Specify decision-useful, consent-respecting measures before collecting new behavioral data.
@@ -429,6 +439,8 @@ T09
 - Measurement plan and event schema, privacy/legal documentation, consent design specification, synthetic metric fixtures, pilot decision rubric.
 
 ## T11 — Add guided real-life mastery projects
+
+READY
 
 **Objective**
 
@@ -472,6 +484,8 @@ T10
 
 ## T12 — Add explainable next-action coaching
 
+READY
+
 **Objective**
 
 Offer one transparent, dismissible next action based on learning state, with a safe deterministic fallback.
@@ -513,6 +527,8 @@ T11
 - Coaching rules module, Today recommendation renderer, explanation/alternatives UI, preferences/storage, navigation, measurement hooks.
 
 ## T13 — Add targeted error-repair exercises
+
+READY
 
 **Objective**
 
@@ -556,6 +572,8 @@ T12
 - Learning/scoring module, repair rules and exercise data, training/review renderers, scheduler, storage, Today coaching integration.
 
 ## T14 — Add an opt-in installable/offline and reminder experience
+
+READY
 
 **Objective**
 
