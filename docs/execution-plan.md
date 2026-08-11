@@ -221,7 +221,9 @@ None
 
 ## T06 — Establish the visual QA matrix and screenshot baselines
 
-READY
+**Status**
+
+DONE — 2026-08-11
 
 **Objective**
 
@@ -262,6 +264,47 @@ T05
 **Likely affected components**
 
 - Visual test specs, screenshot manifest and baselines, fixture data, CI artifact configuration, visual-QA documentation.
+
+**Implementation summary**
+
+- Added an authoritative visual matrix covering 20 routes, empty/returning/due/maximum states, light and dark themes, reduced motion, and 320, 375, 768, 1024 and 1440 pixel viewports.
+- Committed 300 deterministic viewport baselines plus 24 visible-focus baselines for the four primary navigation items and every route’s dominant available action.
+- Added a pixel comparator with a 0.1% changed-pixel threshold, no default masks, automated overflow/control containment checks, and expected/actual/diff/result failure artifacts.
+- Added pinned Pillow support, documented baseline approval rules, and added the visual comparison to CI.
+- Sharded visual execution into 30 independent browser processes to keep captures deterministic and resource-bounded without omitting any matrix cell.
+
+**Files changed**
+
+- `.github/workflows/browser-tests.yml`
+- `docs/visual-qa.md`
+- `package.json`
+- `requirements-dev.txt`
+- `tests/entry-points.spec.py`
+- `tests/visual-matrix.json`
+- `tests/visual-matrix.spec.py`
+- `tests/visual-baselines/*.png`
+- `docs/execution-plan.md`
+- `VERSION`
+- `data/version-archive.json`
+
+**Tests performed**
+
+- `python3 -m py_compile tests/visual-matrix.spec.py` — passed.
+- `python3 tests/visual-matrix.spec.py --update --shard <0–29> --shard-count 30` — captured all 300 manifest cells and 24 focus states.
+- `python3 tests/visual-matrix.spec.py --shard <0–29> --shard-count 30` — a fresh capture matched every approved baseline within the 0.1% threshold; every shard passed.
+- Automated checks found no document-width overflow or visible control outside the viewport in any of the 300 cells.
+- Human contact-sheet review covered every route at the narrow light-theme and wide dark-theme extremes; focused screenshots were separately inspected. No clipping, touching panels, overlap, heading collision, unreadably narrow card, escaped button, obsolete-style flash or competing dominant action was confirmed.
+- The T05 Axe WCAG AA light/dark scans were re-used for computed contrast assurance of shared shell tokens; the T06 review inspected those tokens across every route/theme baseline.
+- `node tests-static-regression.mjs` — passed.
+- `node scripts/check-version.mjs` — passed for 4.1.9.
+- `git diff --check` — passed.
+
+**Problems discovered**
+
+- Full-matrix capture exceeded the local command window when run as one long-lived browser process; 30 deterministic shards resolve the runner limitation and CI executes the same complete inventory.
+- The original single-threaded local test server could retain browser requests during large capture runs; the shared test server now uses daemonised request threads.
+- Firebase is optional but its configured CDN calls introduce visual-test network nondeterminism. Visual contexts replace only the Firebase client module with an unconfigured test equivalent; application data, layout and learner routes remain unchanged.
+- No masking was required. Dynamic dates and learner content are controlled exclusively through sanitised fixtures.
 
 ## T07 — Fix issues confirmed by automated and visual QA
 

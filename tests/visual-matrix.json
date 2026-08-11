@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "baselinePolicy": {
+    "comparison": "RGBA pixel difference",
+    "maximumChangedPixelRatio": 0.001,
+    "masking": "None. Add a mask only with a documented nondeterministic element and reviewer approval.",
+    "approval": "A human must inspect every changed expected image and record the review in docs/execution-plan.md before running --update.",
+    "artifacts": "On failure retain expected, actual, diff, and results.json for 14 days in CI.",
+    "naming": "<route>--<state>--<theme>--<width>.png; focus--<route-or-nav>--375.png"
+  },
+  "viewports": [320, 375, 768, 1024, 1440],
+  "themes": ["light", "dark"],
+  "motion": "reduce",
+  "routes": [
+    {"route": "dashboard", "states": ["empty", "returning"], "focus": "#main a.button, #main button"},
+    {"route": "learn", "states": ["empty", "returning"], "focus": "#main button, #main a.button"},
+    {"route": "library", "states": ["returning", "maximum"], "focus": "#main a"},
+    {"route": "progress", "states": ["empty", "returning"], "focus": "#main a.button, #main button"},
+    {"route": "train", "states": ["returning"], "focus": "#main button, #main a.button"},
+    {"route": "reviews", "states": ["empty", "due"], "focus": "#main summary, #main button, #main a.button"},
+    {"route": "palaces", "states": ["returning", "maximum"], "focus": "#main button, #main a.button"},
+    {"route": "major", "states": ["returning"], "focus": "#main button, #main a.button"},
+    {"route": "pao", "states": ["returning", "maximum"], "focus": "#main button, #main input"},
+    {"route": "symbols", "states": ["returning", "maximum"], "focus": "#main button, #main input"},
+    {"route": "names", "states": ["returning", "maximum"], "focus": "#main button, #main input"},
+    {"route": "belts", "states": ["returning"], "focus": "#main a.button, #main button"},
+    {"route": "guidance", "states": ["returning"], "focus": "#main a.button, #main button"},
+    {"route": "contract", "states": ["returning", "maximum"], "focus": "#main button, #main input"},
+    {"route": "poster", "states": ["returning"], "focus": "#main button, #main a.button"},
+    {"route": "settings", "states": ["returning"], "focus": "#main button, #main select"},
+    {"route": "versions", "states": ["returning"], "focus": "#main a.button, #main a"},
+    {"route": "terms", "states": ["returning"], "focus": "#main a.button, #main a"},
+    {"route": "privacy", "states": ["returning"], "focus": "#main a.button, #main a"},
+    {"route": "cookies", "states": ["returning"], "focus": "#main a.button, #main a"}
+  ],
+  "specialStates": {
+    "longHeading": "maximum fixtures use deliberately long learner-controlled labels",
+    "zeroState": "empty fixtures contain no results, reviews, projects, or first success",
+    "maximumContent": "maximum fixtures include long safe labels in builders and contract fields",
+    "errorState": "404 fallback is covered by tests/entry-points.spec.py because it immediately resolves to the canonical shell",
+    "successState": "returning fixture contains a completed first success and scored result"
+  }
+}

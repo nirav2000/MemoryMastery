@@ -55,7 +55,8 @@ class ProjectHandler(http.server.SimpleHTTPRequestHandler):
 @contextlib.contextmanager
 def serve():
     handler = lambda *args, **kwargs: ProjectHandler(*args, directory=ROOT, **kwargs)
-    with socketserver.TCPServer(("127.0.0.1", 0), handler) as server:
+    with socketserver.ThreadingTCPServer(("127.0.0.1", 0), handler) as server:
+        server.daemon_threads = True
         thread = threading.Thread(target=server.serve_forever, daemon=True)
         thread.start()
         try:
